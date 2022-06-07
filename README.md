@@ -4,6 +4,9 @@ For Year 2 Semester 2 Database Concept &amp; Design Project.
 Resources:
 
     PHP and MySQL Guide:
+        PHP Built-in web server
+            https://www.php.net/manual/en/features.commandline.webserver.php
+
         PHP MySQL Database
             https://www.w3schools.com/php/php_mysql_intro.asp
 
