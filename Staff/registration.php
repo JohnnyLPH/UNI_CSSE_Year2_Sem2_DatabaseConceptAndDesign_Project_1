@@ -29,7 +29,7 @@
         </header>
 
         <main>
-            
+            <a href="/login.php">Back to Login</a><br>
         </main>
 
         <footer>
