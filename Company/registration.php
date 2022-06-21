@@ -35,6 +35,8 @@
             $tempRPass = cleanInput($_POST["ReconfirmPassword"]);
             $tempEDate = cleanInput($_POST["EstablishDate"]);
 
+            $tempID = $tempHash = "";
+
             if (
                 empty($tempName) ||
                 empty($tempRName) ||
@@ -46,12 +48,72 @@
                 $registrationMsg = "* Fill in ALL Fields! *";
             }
             else {
+                // Set to true at first.
+                $passRegistration = true;
+
                 // Check Username.
                 if (checkExistUsername($conn, $tempName)) {
                     $registrationMsg = "* Username is used by another user! *";
+                    $passRegistration = false;
                 }
 
-                // $registrationMsg = "* Invalid Registration Credentials! *";
+                // Check Email.
+                if ($passRegistration && checkExistEmail($conn, $tempEmail)) {
+                    $registrationMsg = "* Email is used by another user! *";
+                    $passRegistration = false;
+                }
+
+                // Check Password.
+                if ($passRegistration && empty($tempHash = checkReconfirmPassword($tempPass, $tempRPass))) {
+                    $registrationMsg = "* Reenter the EXACT SAME Password! *";
+                    $passRegistration = false;
+                }
+
+                // Insert to DB.
+                if ($passRegistration) {
+                    // Insert to User table with UserType CO.
+                    $query = "INSERT INTO `User`(`Username`, `Email`, `PasswordHash`, `RealName`, `UserType`)";
+                    $query .= " VALUES ('$tempName','$tempEmail','$tempHash','$tempRName','CO')";
+
+                    $rs = $conn->query($query);
+                    if (!$rs) {
+                        $registrationMsg = "* Fail to insert to User table! *";
+                        $passRegistration = false;
+                    }
+
+                    // Insert to Company table.
+                    if ($passRegistration) {
+                        $passRegistration = false;
+
+                        // Get UserID from UserTable.
+                        $query = "SELECT `UserID` FROM `User` WHERE `Username` = '$tempName'";
+                        $rs = $conn->query($query);
+                        if ($rs) {
+                            if ($user = mysqli_fetch_assoc($rs)) {
+                                $tempID = $user["UserID"];
+                                
+                                // Insert with the obtained UserID.
+                                $query = "INSERT INTO `Company`(`UserID`, `EstablishDate`)";
+                                $query .= " VALUES ('$tempID','$tempEDate')";
+                                $rs = $conn->query($query);
+
+                                if (!$rs) {
+                                    $registrationMsg = "* Fail to insert to Company table! *";
+                                }
+                                else {
+                                    $passRegistration = true;
+                                }
+                            }
+                        }
+                    }
+
+                    // Check if the data is successfully inserted.
+                    if ($passRegistration) {
+                        // Reset to empty.
+                        $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempEDate = "";
+                        $registrationMsg = "* User is successfully registered and can be used for login! *";
+                    }
+                }
             }
         }
     }
@@ -88,9 +150,7 @@
                                     Username:
                                 </label><br>
                                 <input id="Username" type="text" name="Username" value="<?php
-                                    if (!empty($tempName)) {
-                                        echo($tempName);
-                                    }
+                                    echo($tempName);
                                 ?>" placeholder="Username" required>
                             </div>
                         </td>
@@ -102,9 +162,7 @@
                                     Company Name:
                                 </label><br>
                                 <input id="RealName" type="text" name="RealName" value="<?php
-                                    if (!empty($tempRName)) {
-                                        echo($tempRName);
-                                    }
+                                    echo($tempRName);
                                 ?>" placeholder="Company Name" required>
                             </div>
                         </td>
@@ -118,9 +176,7 @@
                                     Email:
                                 </label><br>
                                 <input id="Email" type="email" name="Email" value="<?php
-                                    if (!empty($tempEmail)) {
-                                        echo($tempEmail);
-                                    }
+                                    echo($tempEmail);
                                 ?>" placeholder="abc@email.com" required>
                             </div>
                         </td>
@@ -156,9 +212,7 @@
                                     Establish Date:
                                 </label><br>
                                 <input id="EstablishDate" type="date" name="EstablishDate" value="<?php
-                                    if (!empty($tempEDate)) {
-                                        echo($tempEDate);
-                                    }
+                                    echo($tempEDate);
                                 ?>" placeholder="Establish Date" required>
                             </div>
                         </td>

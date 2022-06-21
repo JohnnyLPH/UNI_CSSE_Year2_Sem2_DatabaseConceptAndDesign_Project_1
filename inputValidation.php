@@ -34,4 +34,12 @@
         }
         return false;
     }
+
+    // Return PasswordHash if both match.
+    function checkReconfirmPassword($pass, $rPass) {
+        if ($pass == $rPass) {
+            return password_hash($pass, PASSWORD_DEFAULT);
+        }
+        return "";
+    }
 ?>
