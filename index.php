@@ -33,7 +33,6 @@
     <body>
         <header class="title">
             <h1>Group 1: DB Project</h1>
-            <h2>Tree Profiling Management System</h2>
         </header>
 
         <main>
