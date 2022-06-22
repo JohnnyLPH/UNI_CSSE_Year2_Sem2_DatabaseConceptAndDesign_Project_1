@@ -29,6 +29,7 @@
         </header>
 
         <main>
+            <a href="update.php">Update Tree</a><br>
             <a href="/logout.php">Log Out</a><br>
         </main>
 
