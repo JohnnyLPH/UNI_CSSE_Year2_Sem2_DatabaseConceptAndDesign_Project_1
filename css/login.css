@@ -1,70 +1,106 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
+/* BASIC */
+
 html {
-  font-family: "Poppins", sans-serif;  
-  background-color: #86C7B2;
-  }
+    font-family: "Poppins", sans-serif;
+    background-color: #86C7B2;
+}
 
 body {
-  font-family: "Poppins", sans-serif;
-  /*height: 100vh;*/
+    font-family: "Poppins", sans-serif;
+    height: 100vh;
 }
 
-.title {
-  text-align: center;
+a {
+  /*color: #92badd;*/
+  color: #51a98d;
+  display:inline-block;
+  text-decoration: none;
+  font-weight: 400;
 }
+
+h2 {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  display:inline-block;
+  margin: 40px 8px 10px 8px; 
+  color: #cccccc;
+}
+
+h1 {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    text-transform: uppercase;
+    display:inline-block;
+    margin: 40px 8px 10px 8px; 
+    color: #000000;
+  }
+
+
+
+/* STRUCTURE */
 
 .wrapper {
   display: flex;
-  background: rgb(69, 169, 173);
   align-items: center;
-  flex-wrap: wrap;
-  flex-direction: row;
+  flex-direction: column; 
   justify-content: center;
   width: 100%;
   min-height: 100%;
   padding: 20px;
 }
 
-.bgImgTree{
-  background-image: url("https://wallpaperaccess.com/full/3350072.jpg");
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.card {
+#formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;
-  margin:10px;
   padding: 30px;
-  width: 25%;
-  /*max-width: 350px;*/
+  width: 90%;
+  max-width: 450px;
   position: relative;
-  display:inline-block;
-  padding: 20px;
+  padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   text-align: center;
-  transition:0.2s;
 }
 
-.card:hover{
-  transform:translateY(-10px);
+#formFooter {
+  background-color: #f6f6f6;
+  border-top: 1px solid #dce8f1;
+  padding: 5px;
+  text-align: center;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
 }
+
+
+
+/* TABS */
+
+h2.inactive {
+  color: #cccccc;
+}
+
+h2.active {
+  color: #0d0d0d;
+  border-bottom: 2px solid #86C7B2;
+}
+
+
 
 /* FORM TYPOGRAPHY*/
 
-button  {
+input[type=button], input[type=submit], input[type=reset]  {
   background-color: #51a98d;
   border: none;
   color: white;
   padding: 15px 80px;
   text-align: center;
   text-decoration: none;
-  position:relative;
   display: inline-block;
   text-transform: uppercase;
   font-size: 13px;
@@ -80,17 +116,48 @@ button  {
   transition: all 0.3s ease-in-out;
 }
 
-button:hover  {
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
   background-color: #86C7B2;
 }
 
-button:active  {
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
   -ms-transform: scale(0.95);
   transform: scale(0.95);
 }
+
+input[type=text], input[type=password] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 85%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #86C7B2;
+}
+
+input[type=text]:placeholder, input[type=password]:placeholder {
+  color: #cccccc;
+}
+
 
 
 /* ANIMATIONS */
@@ -198,16 +265,17 @@ button:active  {
 
 
 /* OTHERS */
+
 *:focus {
-  outline: none;
+    outline: none;
 } 
 
 #icon {
-width:60%;
--webkit-border-radius: 10px 10px 10px 10px;
-border-radius: 10px 10px 10px 10px;
+  width:45%;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
 }
 
 * {
-box-sizing: border-box;
+  box-sizing: border-box;
 }

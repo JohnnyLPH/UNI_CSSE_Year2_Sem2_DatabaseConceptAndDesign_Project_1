@@ -31,18 +31,35 @@
     </head>
 
     <body>
-        <header>
+        <header class="title">
             <h1>Group 1: DB Project</h1>
             <h2>Tree Profiling Management System</h2>
         </header>
 
         <main>
-            <p>
-                Select User Type:
-            </p>
-            <a href="/login.php?UserType=CO">Company</a><br>
-            <a href="/login.php?UserType=ST">Staff</a><br>
-            <a href="/login.php?UserType=CL">Client</a><br>
+            <div class="wrapper fadeIn ">
+                <h2>Select User Type:</h2>
+            </div>
+            <div class="wrapper bgImgTree fadeIn ">
+               
+                <div class="card fadeIn first">
+                    <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
+                    <br>
+                    <button onclick="document.location='/login.php?UserType=CO'">Company</button>
+                </div>
+
+                <div class="card fadeIn second">
+                    <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
+                    <br>
+                    <button onclick="document.location='/login.php?UserType=ST'">Staff</button>
+                </div>
+
+                <div class="card fadeIn third">
+                    <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
+                    <br>
+                    <button onclick="document.location='/login.php?UserType=CL'">Client</button>
+                </div>
+            </div>
         </main>
 
         <footer>

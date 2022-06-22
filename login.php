@@ -113,70 +113,102 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
-        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/login.css">
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
 
     <body>
         <header>
-            <h1><?php
-                if (isset($queryString["UserType"])) {
-                    if ($queryString["UserType"] == "CO") {
-                        echo("Company: ");
-                    }
-                    else if ($queryString["UserType"] == "ST") {
-                        echo("Staff: ");
-                    }
-                    else if ($queryString["UserType"] == "CL") {
-                        echo("Client: ");
-                    }
-                }
-            ?>Login Page</h1>
+            <div>
+            <!--
+                <h1><?php
+                    /*
+                    if (isset($queryString["UserType"])) {
+                        if ($queryString["UserType"] == "CO") {
+                            echo("Company: ");
+                        }
+                        else if ($queryString["UserType"] == "ST") {
+                            echo("Staff: ");
+                        }
+                        else if ($queryString["UserType"] == "CL") {
+                            echo("Client: ");
+                        }
+                    }*/
+                ?>Login Page</h1>
+            -->
+            </div>
+            
         </header>
 
         <main>
-            <span><?php
-                echo($loginMsg);
-            ?></span>
-            <form method="post" action="/login.php?UserType=<?php
-                echo($queryString["UserType"]);
-            ?>">
-                <div>
-                    <label for="Username">
-                        Username:
-                    </label><br>
-                    <input id="Username" type="text" name="Username" placeholder="Username" required>
-                </div>
-                <br>
-                <div>
-                    <label for="Password">
-                        Password:
-                    </label><br>
-                    <input id="Password" type="password" name="Password" placeholder="Password" required>
-                </div>
-                <br>
-                <div>
-                    <button type="submit">
-                        Log In
-                    </button>
-                </div>
-            </form>
-            <br>
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <span><?php
+                    echo($loginMsg);
+                ?></span>
 
-            <a href="/<?php
-                if (isset($queryString["UserType"])) {
-                    if ($queryString["UserType"] == "CO") {
-                        echo("Company");
-                    }
-                    else if ($queryString["UserType"] == "ST") {
-                        echo("Staff");
-                    }
-                    else if ($queryString["UserType"] == "CL") {
-                        echo("Client");
-                    }
-                }
-            ?>/registration.php">Register New User</a><br>
-            <a href="/index.php">Choose Different User Type</a><br>
+                <form method="post" action="/login.php?UserType=<?php
+                    echo($queryString["UserType"]);
+                ?>">
+
+                    <h1><?php
+                        if (isset($queryString["UserType"])) {
+                            if ($queryString["UserType"] == "CO") {
+                                echo("Company: ");
+                            }
+                            else if ($queryString["UserType"] == "ST") {
+                                echo("Staff: ");
+                            }
+                            else if ($queryString["UserType"] == "CL") {
+                                echo("Client: ");
+                            }
+                        }
+                    ?>Login Page</h1>
+
+                    <div class="fadeIn first">
+                        <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
+                    </div>
+                
+                    <div>
+                        <label for="Username">
+                            Username:
+                        </label><br>
+                        <input id="Username" type="text" name="Username" placeholder="Username"  class="fadeIn second" required>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="Password">
+                            Password:
+                        </label><br>
+                        <input id="Password" type="password" name="Password" placeholder="Password" class="fadeIn third" required>
+                    </div>
+                    <br>
+                    <div>
+                        <input type="submit" class="fadeIn fourth" value="Login"></input>
+                    </div>
+                </form>
+
+                <br>
+
+                <div id="formFooter">
+                    <h2><a class="underlineHover" href="/<?php
+                        if (isset($queryString["UserType"])) {
+                            if ($queryString["UserType"] == "CO") {
+                                echo("Company");
+                            }
+                            else if ($queryString["UserType"] == "ST") {
+                                echo("Staff");
+                            }
+                            else if ($queryString["UserType"] == "CL") {
+                                echo("Client");
+                            }
+                        }
+                    ?>/registration.php">Register New User</a></h2>
+                    <h2><a class="underlineHover" href="/index.php">Choose Different User Type</a><h2>
+                </div>
+                
+            </div>
+        </div>
         </main>
 
         <footer>
