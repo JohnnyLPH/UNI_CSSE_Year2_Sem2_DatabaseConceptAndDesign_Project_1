@@ -114,7 +114,8 @@
         <meta charset="utf-8">
         
         <link rel="stylesheet" href="/css/login.css">
-        <link rel="shortcut icon" href="/favicon.ico">
+        <!--<link rel="shortcut icon" href="/favicon.ico">-->
+        <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
     </head>
 
     <body>
@@ -154,16 +155,16 @@
                     <h1><?php
                         if (isset($queryString["UserType"])) {
                             if ($queryString["UserType"] == "CO") {
-                                echo("Company: ");
+                                echo("Company ");
                             }
                             else if ($queryString["UserType"] == "ST") {
-                                echo("Staff: ");
+                                echo("Staff ");
                             }
                             else if ($queryString["UserType"] == "CL") {
-                                echo("Client: ");
+                                echo("Client ");
                             }
                         }
-                    ?>Login Page</h1>
+                    ?>Login</h1>
 
                     <div class="fadeIn first">
                         <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
