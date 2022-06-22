@@ -208,8 +208,8 @@ div.data-value div.data-group span.data-title {
 }
 
 #formContentW2 {
-    /*-webkit-border-radius: 10px 10px 10px 10px;
-    border-radius: 10px 10px 10px 10px;*/
+    -webkit-border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 10px 10px;
     background: #fff;
     padding: 30px;
     width: 90%;
