@@ -144,9 +144,6 @@
         <main>
         <div class="wrapper fadeInDown">
             <div id="formContent">
-                <span><?php
-                    echo($loginMsg);
-                ?></span>
 
                 <form method="post" action="/login.php?UserType=<?php
                     echo($queryString["UserType"]);
@@ -169,7 +166,7 @@
                     <div class="fadeIn first">
                         <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
                     </div>
-                
+                    <br>
                     <div>
                         <label for="Username">
                             Username:
@@ -183,6 +180,12 @@
                         </label><br>
                         <input id="Password" type="password" name="Password" placeholder="Password" class="fadeIn third" required>
                     </div>
+                    
+                    <span class="fadeIn first"><?php
+                        echo($loginMsg);
+                    ?></span>
+
+                    <br>
                     <br>
                     <div>
                         <input type="submit" class="fadeIn fourth" value="Login"></input>
