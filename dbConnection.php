@@ -1,7 +1,7 @@
 <?php
     // For connecting to DB.
     $serverName = "localhost";
-    // Change username and password if needed, but remember don't commit your password :)
+    // Change username and password if needed, but remember DON'T COMMIT YOUR PASSWORD :)
     $username = "root";
     $password = "";
     // Database name, change if needed.

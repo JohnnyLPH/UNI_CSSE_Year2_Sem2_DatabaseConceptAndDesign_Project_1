@@ -71,7 +71,7 @@
                         <span class='overall-data'><?php
                             echo($totalPurchase);
                         ?></span>
-                        <span class='data-title'>Total Purchase by Client</span>
+                        <span class='data-title'>Total Client Purchase</span>
                     </div>
                 </div>
             </div>
