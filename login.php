@@ -114,7 +114,8 @@
         <meta charset="utf-8">
         
         <link rel="stylesheet" href="/css/login.css">
-        <link rel="shortcut icon" href="/favicon.ico">
+        <!--<link rel="shortcut icon" href="/favicon.ico">-->
+        <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
     </head>
 
     <body>
@@ -143,9 +144,6 @@
         <main>
         <div class="wrapper fadeInDown">
             <div id="formContent">
-                <span><?php
-                    echo($loginMsg);
-                ?></span>
 
                 <form method="post" action="/login.php?UserType=<?php
                     echo($queryString["UserType"]);
@@ -154,21 +152,21 @@
                     <h1><?php
                         if (isset($queryString["UserType"])) {
                             if ($queryString["UserType"] == "CO") {
-                                echo("Company: ");
+                                echo("Company ");
                             }
                             else if ($queryString["UserType"] == "ST") {
-                                echo("Staff: ");
+                                echo("Staff ");
                             }
                             else if ($queryString["UserType"] == "CL") {
-                                echo("Client: ");
+                                echo("Client ");
                             }
                         }
-                    ?>Login Page</h1>
+                    ?>Login</h1>
 
                     <div class="fadeIn first">
                         <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
                     </div>
-                
+                    <br>
                     <div>
                         <label for="Username">
                             Username:
@@ -182,6 +180,12 @@
                         </label><br>
                         <input id="Password" type="password" name="Password" placeholder="Password" class="fadeIn third" required>
                     </div>
+                    
+                    <span class="fadeIn first"><?php
+                        echo($loginMsg);
+                    ?></span>
+
+                    <br>
                     <br>
                     <div>
                         <input type="submit" class="fadeIn fourth" value="Login"></input>

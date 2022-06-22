@@ -11,7 +11,7 @@ html {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    ;
+    transition: 0.3s ease-in-out;
       
 }
 
@@ -413,6 +413,19 @@ input[type=text]:placeholder, input[type=password]:placeholder, input[type=email
   -moz-animation-delay: 1s;
   animation-delay: 1s;
 }
+
+.fadeIn.fifth {
+    -webkit-animation-delay: 1.2s;
+    -moz-animation-delay: 1.2s;
+    animation-delay: 1.2s;
+  }
+
+.fadeIn.sixth {
+    -webkit-animation-delay: 1.4s;
+    -moz-animation-delay: 1.4s;
+    animation-delay: 1.4s;
+}
+
 
 /* Simple CSS3 Fade-in Animation */
 .underlineHover:after {

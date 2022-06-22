@@ -129,7 +129,8 @@
         
         <!--<link rel="stylesheet" href="/css/main.css">-->
         <link rel="stylesheet" href="/css/login.css">
-        <link rel="shortcut icon" href="/favicon.ico">
+        <!--<link rel="shortcut icon" href="/favicon.ico">-->
+        <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
     </head>
 
     <body>
@@ -143,7 +144,7 @@
                     <h1>Company Sign Up</h1>
                 </div>
                 <div id="formContentW2">
-                    <img src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="Comp Icon" />
+                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="Comp Icon" />
 
                     <span class="<?php
                         echo(($passRegistration) ? "success": "error");
@@ -152,7 +153,7 @@
                     ?></span>
                     <form method="post" action="/Company/registration.php">
                         <table>
-                            <tr>
+                            <tr class="fadeIn second">
                                 <!-- Username -->
                                 <td>
                                     <div>
@@ -178,7 +179,7 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr class="fadeIn third">
                                 <!-- Email -->
                                 <td>
                                     <div>
@@ -192,7 +193,7 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr class="fadeIn fourth">
                                 <!-- Password -->
                                 <td>
                                     <div>
@@ -214,7 +215,7 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr class="fadeIn fifth">
                                 <!-- EstablishDate -->
                                 <td>
                                     <div>
@@ -228,7 +229,7 @@
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr class="fadeIn sixth">
                                 <td colspan="2">
                                     <div>
                                         <br>
