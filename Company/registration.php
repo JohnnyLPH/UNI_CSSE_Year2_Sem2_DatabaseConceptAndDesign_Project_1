@@ -127,114 +127,123 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
-        <link rel="stylesheet" href="/css/main.css">
+        <!--<link rel="stylesheet" href="/css/main.css">-->
+        <link rel="stylesheet" href="/css/login.css">
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
 
     <body>
         <header>
-            <h1>Company: Registration Page</h1>
+            <!--<h1>Company Sign Up</h1>-->
         </header>
 
         <main>
-            <div class="main-content">
-                <span class="<?php
-                    echo(($passRegistration) ? "success": "error");
-                ?>-message"><?php
-                    echo($registrationMsg);
-                ?></span>
-                <form method="post" action="/Company/registration.php">
-                    <table>
-                        <tr>
-                            <!-- Username -->
-                            <td>
-                                <div>
-                                    <label for="Username">
-                                        Username:
-                                    </label><br>
-                                    <input id="Username" type="text" name="Username" value="<?php
-                                        echo($tempName);
-                                    ?>" placeholder="Username" required>
-                                </div>
-                            </td>
+            <div class="wrapper fadeInDown">
+                <div id="formHeader">
+                    <h1>Company Sign Up</h1>
+                </div>
+                <div id="formContentW2">
+                    <img src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="Comp Icon" />
 
-                            <!-- RealName -->
-                            <td>
-                                <div>
-                                    <label for="RealName">
-                                        Company Name:
-                                    </label><br>
-                                    <input id="RealName" type="text" name="RealName" value="<?php
-                                        echo($tempRName);
-                                    ?>" placeholder="Company Name" required>
-                                </div>
-                            </td>
-                        </tr>
+                    <span class="<?php
+                        echo(($passRegistration) ? "success": "error");
+                    ?>-message"><?php
+                        echo($registrationMsg);
+                    ?></span>
+                    <form method="post" action="/Company/registration.php">
+                        <table>
+                            <tr>
+                                <!-- Username -->
+                                <td>
+                                    <div>
+                                        <label for="Username">
+                                            Username:
+                                        </label><br>
+                                        <input id="Username" type="text" name="Username" value="<?php
+                                            echo($tempName);
+                                        ?>" placeholder="Username" required>
+                                    </div>
+                                </td>
 
-                        <tr>
-                            <!-- Email -->
-                            <td>
-                                <div>
-                                    <label for="Email">
-                                        Email:
-                                    </label><br>
-                                    <input id="Email" type="email" name="Email" value="<?php
-                                        echo($tempEmail);
-                                    ?>" placeholder="abc@email.com" required>
-                                </div>
-                            </td>
-                        </tr>
+                                <!-- RealName -->
+                                <td>
+                                    <div>
+                                        <label for="RealName">
+                                            Company Name:
+                                        </label><br>
+                                        <input id="RealName" type="text" name="RealName" value="<?php
+                                            echo($tempRName);
+                                        ?>" placeholder="Company Name" required>
+                                    </div>
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <!-- Password -->
-                            <td>
-                                <div>
-                                    <label for="Password">
-                                        Password:
-                                    </label><br>
-                                    <input id="Password" type="password" name="Password" placeholder="Password" required>
-                                </div>
-                            </td>
+                            <tr>
+                                <!-- Email -->
+                                <td>
+                                    <div>
+                                        <label for="Email">
+                                            Email:
+                                        </label><br>
+                                        <input id="Email" type="email" name="Email" value="<?php
+                                            echo($tempEmail);
+                                        ?>" placeholder="abc@email.com" required>
+                                    </div>
+                                </td>
+                            </tr>
 
-                            <!-- ReconfirmPassword -->
-                            <td>
-                                <div>
-                                    <label for="ReconfirmPassword">
-                                        Reconfirm Password:
-                                    </label><br>
-                                    <input id="ReconfirmPassword" type="password" name="ReconfirmPassword" placeholder="Reconfirm Password" required>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <!-- Password -->
+                                <td>
+                                    <div>
+                                        <label for="Password">
+                                            Password:
+                                        </label><br>
+                                        <input id="Password" type="password" name="Password" placeholder="Password" required>
+                                    </div>
+                                </td>
 
-                        <tr>
-                            <!-- EstablishDate -->
-                            <td>
-                                <div>
-                                    <label for="EstablishDate">
-                                        Establish Date:
-                                    </label><br>
-                                    <input id="EstablishDate" type="date" name="EstablishDate" value="<?php
-                                        echo($tempEDate);
-                                    ?>" placeholder="Establish Date" required>
-                                </div>
-                            </td>
-                        </tr>
+                                <!-- ReconfirmPassword -->
+                                <td>
+                                    <div>
+                                        <label for="ReconfirmPassword">
+                                            Reconfirm Password:
+                                        </label><br>
+                                        <input id="ReconfirmPassword" type="password" name="ReconfirmPassword" placeholder="Reconfirm Password" required>
+                                    </div>
+                                </td>
+                            </tr>
 
-                        <tr>
-                            <td colspan="2">
-                                <div>
-                                    <button type="submit">
-                                        Register Now
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-                <br>
+                            <tr>
+                                <!-- EstablishDate -->
+                                <td>
+                                    <div>
+                                        <label for="EstablishDate">
+                                            Establish Date:
+                                        </label><br>
+                                        <input id="EstablishDate" type="date" name="EstablishDate" value="<?php
+                                            echo($tempEDate);
+                                        ?>" placeholder="Establish Date" required>
+                                    </div>
+                                </td>
+                            </tr>
 
-                <a href="/login.php?UserType=CO">Back to Login</a><br>
+                            <tr>
+                                <td colspan="2">
+                                    <div>
+                                        <br>
+                                        <input type="submit" value="Sign Up"></input>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    <br>
+                    <div id="formFooter">
+                        <h2><a class="underlineHover" href="/login.php?UserType=CO">Back to Login</a><br></h2>
+                    </div>
+                    
+                </div>
             </div>
         </main>
 

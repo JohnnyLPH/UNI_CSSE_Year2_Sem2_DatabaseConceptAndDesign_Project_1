@@ -203,8 +203,8 @@
                                 echo("Client");
                             }
                         }
-                    ?>/registration.php">Register New User</a></h2>
-                    <h2><a class="underlineHover" href="/index.php">Choose Different User Type</a><h2>
+                    ?>/registration.php">Sign Up</a></h2>
+                    <h2><a class="underlineHover" href="/index.php">Switch UserType</a></h2>
                 </div>
                 
             </div>

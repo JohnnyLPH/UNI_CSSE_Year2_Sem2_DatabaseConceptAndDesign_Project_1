@@ -40,6 +40,145 @@ h1 {
     color: #000000;
   }
 
+header {
+    color: white;
+    background-color: var(--theme-color);
+    z-index: 1;
+    top: 0;
+    font-size: large;
+}
+
+header h1 {
+    margin: 0;
+    text-align: center;
+    padding: 20px 0;
+    font-weight: bold;
+}
+
+nav.fixed_nav_bar {
+    padding: 0;
+    background-color: var(--theme-color);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    overflow:auto;
+}
+
+nav.fixed_nav_bar ul {
+    list-style-type: none;
+    margin: 0;
+    position: relative;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+    padding: 0 15px;
+}
+
+nav.fixed_nav_bar li {
+    display: inline-block;
+    min-width: 11%;
+}
+
+nav.fixed_nav_bar li:last-child {
+    float: right;
+}
+
+nav.fixed_nav_bar li a {
+    color: white;
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+nav.fixed_nav_bar li a:hover {
+    color: var(--theme-color);
+    background-color: var(--hover-color);
+}
+
+div.main-content {
+    display: block;
+    margin: auto;
+    width: fit-content;
+    min-width: fit-content;
+    margin-bottom: 10px;
+}
+
+main table{
+    width: 100%;
+}
+
+.error-message {
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: red;
+    text-align: center;
+    font-size: medium;
+    font-style: italic;
+}
+
+.success-message {
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: green;
+    text-align: center;
+    font-size: medium;
+    font-style: italic;
+}
+
+div.report-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    min-width: 60vw;
+}
+
+div.report-content div.data-value {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    min-width: 400px;
+    padding: 5px;
+    margin: 10px;
+}
+
+div.data-value {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+div.data-value div.data-group {
+    margin: 15px;
+}
+
+div.data-value div.data-group span.overall-data {
+    text-align: center;
+    font-size: 30px;
+    display: block;
+    margin: auto;
+    margin-bottom: 7px;
+}
+
+div.data-value div.data-group span.data-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: overline;
+    display: block;
+    margin: auto;
+}
+
 
 
 /* STRUCTURE */
@@ -68,13 +207,38 @@ h1 {
   text-align: center;
 }
 
+#formContentW2 {
+    /*-webkit-border-radius: 10px 10px 10px 10px;
+    border-radius: 10px 10px 10px 10px;*/
+    background: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 750px;
+    position: relative;
+    padding: 0px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    text-align: center;
+  }
+
+#formHeader {
+    background-color: #f6f6f6;
+    border-top: 1px solid #dce8f1;
+    padding: 5px;
+    text-align: center;
+    -webkit-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+    width: 90%;
+    max-width: 750px;
+}
+
 #formFooter {
-  background-color: #f6f6f6;
-  border-top: 1px solid #dce8f1;
-  padding: 5px;
-  text-align: center;
-  -webkit-border-radius: 0 0 10px 10px;
-  border-radius: 0 0 10px 10px;
+    background-color: #f6f6f6;
+    border-top: 1px solid #dce8f1;
+    padding: 5px;
+    text-align: center;
+    -webkit-border-radius: 0 0 10px 10px;
+    border-radius: 0 0 10px 10px;
 }
 
 
@@ -94,7 +258,7 @@ h2.active {
 
 /* FORM TYPOGRAPHY*/
 
-input[type=button], input[type=submit], input[type=reset]  {
+input[type=button], input[type=reset], input[type=submit] {
   background-color: #51a98d;
   border: none;
   color: white;
@@ -120,7 +284,7 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
   background-color: #86C7B2;
 }
 
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active  {
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -128,7 +292,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
   transform: scale(0.95);
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email], input[type=date] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -138,7 +302,7 @@ input[type=text], input[type=password] {
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 85%;
+  width: 95%;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -149,12 +313,12 @@ input[type=text], input[type=password] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus, input[type=password]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus {
   background-color: #fff;
   border-bottom: 2px solid #86C7B2;
 }
 
-input[type=text]:placeholder, input[type=password]:placeholder {
+input[type=text]:placeholder, input[type=password]:placeholder, input[type=email]:placeholder, input[type=date]:placeholder {
   color: #cccccc;
 }
 
