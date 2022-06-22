@@ -43,19 +43,19 @@
             <div class="wrapper bgImgTree fadeIn ">
                
                 <div class="card fadeIn first">
-                    <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
+                    <img src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="User Icon" />
                     <br>
                     <button onclick="document.location='/login.php?UserType=CO'">Company</button>
                 </div>
 
                 <div class="card fadeIn second">
-                    <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
+                    <img src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="User Icon" />
                     <br>
                     <button onclick="document.location='/login.php?UserType=ST'">Staff</button>
                 </div>
 
                 <div class="card fadeIn third">
-                    <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
+                    <img src="https://png.pngtree.com/png-vector/20190721/ourlarge/pngtree-business-meeting-with-client-illustration-concept-modern-flat-design-concept-png-image_1567633.jpg" id="icon" alt="User Icon" />
                     <br>
                     <button onclick="document.location='/login.php?UserType=CL'">Client</button>
                 </div>
