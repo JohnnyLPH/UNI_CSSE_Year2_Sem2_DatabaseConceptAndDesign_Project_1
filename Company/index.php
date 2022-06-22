@@ -11,9 +11,10 @@
         exit;
     }
 
-    $totalOrchard = $totalBlock = $totalTree = $totalPurchase = "";
-
     $totalOrchard = getCompanyOrchardCount($conn, $_SESSION["UserID"]);
+    $totalBlock = getCompanyBlockCount($conn, $_SESSION["UserID"]);
+    $totalTree = getCompanyTreeCount($conn, $_SESSION["UserID"]);
+    $totalPurchase = getCompanyPurchaseCount($conn, $_SESSION["UserID"]);
 
     $conn->close();
 ?>
@@ -40,23 +41,37 @@
                 echo($_SESSION["Username"]);
             ?></h2>
 
-            <div class="main-content">
-                <div class="report-content">
-                    <div class='data-value'>
-                        <div class='data-group'>
-                            <span class='overall-data'><?php
-                                echo($totalOrchard);
-                            ?></span>
-                            <span class='data-title'>Total Orchard Owned</span>
-                        </div>
+            <div class="report-content">
+                <div class='data-value'>
+                    <div class='data-group'>
+                        <span class='overall-data'><?php
+                            echo($totalOrchard);
+                        ?></span>
+                        <span class='data-title'>Total Orchard Owned</span>
                     </div>
-                    <div class='data-value'>
-                        <div class='data-group'>
-                            <span class='overall-data'><?php
-                                echo("2");
-                            ?></span>
-                            <span class='data-title'>Total Block Owned</span>
-                        </div>
+                </div>
+                <div class='data-value'>
+                    <div class='data-group'>
+                        <span class='overall-data'><?php
+                            echo($totalBlock);
+                        ?></span>
+                        <span class='data-title'>Total Block Owned</span>
+                    </div>
+                </div>
+                <div class='data-value'>
+                    <div class='data-group'>
+                        <span class='overall-data'><?php
+                            echo($totalTree);
+                        ?></span>
+                        <span class='data-title'>Total Tree Planted</span>
+                    </div>
+                </div>
+                <div class='data-value'>
+                    <div class='data-group'>
+                        <span class='overall-data'><?php
+                            echo($totalPurchase);
+                        ?></span>
+                        <span class='data-title'>Total Purchase by Client</span>
                     </div>
                 </div>
             </div>
