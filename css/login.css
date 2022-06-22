@@ -4,7 +4,15 @@
 
 html {
     font-family: "Poppins", sans-serif;
-    background-color: #86C7B2;
+    /*background-color: #86C7B2;*/
+
+    background-image: url("https://wallpaperaccess.com/full/3350072.jpg");
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    ;
+      
 }
 
 body {
