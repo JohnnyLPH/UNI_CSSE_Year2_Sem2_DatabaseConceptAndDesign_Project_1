@@ -16,7 +16,8 @@ body {
 
 .wrapper {
   display: flex;
-  background: rgb(69, 169, 173);
+  /*background: rgb(69, 169, 173);*/
+  background-color: #51a98d;
   align-items: center;
   flex-wrap: wrap;
   flex-direction: row;
@@ -210,4 +211,5 @@ border-radius: 10px 10px 10px 10px;
 
 * {
 box-sizing: border-box;
+padding:0px;
 }

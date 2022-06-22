@@ -37,8 +37,8 @@
         </header>
 
         <main>
-            <div class="wrapper fadeIn ">
-                <h2>Select User Type:</h2>
+            <div class="wrapper fadeIn" style="padding: 10px;">
+                <h3>Select User Type:</h3>
             </div>
             <div class="wrapper bgImgTree fadeIn ">
                
