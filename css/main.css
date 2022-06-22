@@ -1,0 +1,184 @@
+:root {
+    --main-body-color: #EDF6F9;
+    --theme-color: #264861;
+    --hover-color: #FFDDD2;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: var(--main-body-color);
+    font-size: 17px;
+    min-height: 100vh;
+}
+
+header {
+    color: white;
+    background-color: var(--theme-color);
+    z-index: 1;
+    top: 0;
+    font-size: large;
+}
+
+header h1 {
+    margin: 0;
+    text-align: center;
+    padding: 20px 0;
+    font-weight: bold;
+}
+
+nav.fixed_nav_bar {
+    padding: 0;
+    background-color: var(--theme-color);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    overflow:auto;
+}
+
+nav.fixed_nav_bar ul {
+    list-style-type: none;
+    margin: 0;
+    position: relative;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+    padding: 0 15px;
+}
+
+nav.fixed_nav_bar li {
+    display: inline-block;
+    min-width: 11%;
+}
+
+nav.fixed_nav_bar li:last-child {
+    float: right;
+}
+
+nav.fixed_nav_bar li a {
+    color: white;
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+nav.fixed_nav_bar li a:hover {
+    color: var(--theme-color);
+    background-color: var(--hover-color);
+}
+
+main {
+    display: block;
+    margin: auto;
+    min-height: 85vh;
+    overflow-x: auto;
+}
+
+main h2 {
+    text-decoration: underline;
+}
+
+main h2, h3 {
+    margin: 0;
+    padding-top: 25px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+main a {
+    display: block;
+    text-align: center;
+}
+
+div.main-content {
+    display: block;
+    margin: auto;
+    width: fit-content;
+    min-width: fit-content;
+    margin-bottom: 10px;
+}
+
+main form {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+main form button, form input {
+    min-width: 90%;
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.error-message {
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: red;
+    text-align: center;
+    font-size: medium;
+    font-style: italic;
+}
+
+.success-message {
+    display: block;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: green;
+    text-align: center;
+    font-size: medium;
+    font-style: italic;
+}
+
+div.report-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    min-width: 60vw;
+}
+
+div.report-content div.data-value {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    min-width: 400px;
+    padding: 5px;
+    margin: 10px;
+}
+
+div.data-value {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+div.data-value div.data-group {
+    margin: 15px;
+}
+
+div.data-value div.data-group span.overall-data {
+    text-align: center;
+    font-size: 30px;
+    display: block;
+    margin: auto;
+    margin-bottom: 7px;
+}
+
+div.data-value div.data-group span.data-title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    font-style: italic;
+    text-decoration: overline;
+    display: block;
+    margin: auto;
+}

@@ -135,48 +135,50 @@
         </header>
 
         <main>
-            <span><?php
-                echo($loginMsg);
-            ?></span>
-            <form method="post" action="/login.php?UserType=<?php
-                echo($queryString["UserType"]);
-            ?>">
-                <div>
-                    <label for="Username">
-                        Username:
-                    </label><br>
-                    <input id="Username" type="text" name="Username" placeholder="Username" required>
-                </div>
+            <div class="main-content">
+                <span class="error-message"><?php
+                    echo($loginMsg);
+                ?></span>
+                <form method="post" action="/login.php?UserType=<?php
+                    echo($queryString["UserType"]);
+                ?>">
+                    <div>
+                        <label for="Username">
+                            Username:
+                        </label><br>
+                        <input id="Username" type="text" name="Username" placeholder="Username" required>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="Password">
+                            Password:
+                        </label><br>
+                        <input id="Password" type="password" name="Password" placeholder="Password" required>
+                    </div>
+                    <br>
+                    <div>
+                        <button type="submit">
+                            Log In
+                        </button>
+                    </div>
+                </form>
                 <br>
-                <div>
-                    <label for="Password">
-                        Password:
-                    </label><br>
-                    <input id="Password" type="password" name="Password" placeholder="Password" required>
-                </div>
-                <br>
-                <div>
-                    <button type="submit">
-                        Log In
-                    </button>
-                </div>
-            </form>
-            <br>
 
-            <a href="/<?php
-                if (isset($queryString["UserType"])) {
-                    if ($queryString["UserType"] == "CO") {
-                        echo("Company");
+                <a href="/<?php
+                    if (isset($queryString["UserType"])) {
+                        if ($queryString["UserType"] == "CO") {
+                            echo("Company");
+                        }
+                        else if ($queryString["UserType"] == "ST") {
+                            echo("Staff");
+                        }
+                        else if ($queryString["UserType"] == "CL") {
+                            echo("Client");
+                        }
                     }
-                    else if ($queryString["UserType"] == "ST") {
-                        echo("Staff");
-                    }
-                    else if ($queryString["UserType"] == "CL") {
-                        echo("Client");
-                    }
-                }
-            ?>/registration.php">Register New User</a><br>
-            <a href="/index.php">Choose Different User Type</a><br>
+                ?>/registration.php">Register New User</a><br>
+                <a href="/index.php">Choose Different User Type</a><br>
+            </div>
         </main>
 
         <footer>

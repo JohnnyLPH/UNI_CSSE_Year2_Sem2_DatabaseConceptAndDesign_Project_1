@@ -111,7 +111,7 @@
                     if ($passRegistration) {
                         // Reset to empty.
                         $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempEDate = "";
-                        $registrationMsg = "* User is successfully registered and can be used for login! *";
+                        $registrationMsg = "* User is successfully registered! *";
                     }
                 }
             }
@@ -127,8 +127,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
-        <!-- <link rel="stylesheet" href="/css/main.css"> -->
-        <!-- <link rel="shortcut icon" href="/favicon.ico"> -->
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="shortcut icon" href="/favicon.ico">
     </head>
 
     <body>
@@ -137,101 +137,105 @@
         </header>
 
         <main>
-            <span><?php
-                echo($registrationMsg);
-            ?></span>
-            <form method="post" action="/Company/registration.php">
-                <table>
-                    <tr>
-                        <!-- Username -->
-                        <td>
-                            <div>
-                                <label for="Username">
-                                    Username:
-                                </label><br>
-                                <input id="Username" type="text" name="Username" value="<?php
-                                    echo($tempName);
-                                ?>" placeholder="Username" required>
-                            </div>
-                        </td>
+            <div class="main-content">
+                <span class="<?php
+                    echo(($passRegistration) ? "success": "error");
+                ?>-message"><?php
+                    echo($registrationMsg);
+                ?></span>
+                <form method="post" action="/Company/registration.php">
+                    <table>
+                        <tr>
+                            <!-- Username -->
+                            <td>
+                                <div>
+                                    <label for="Username">
+                                        Username:
+                                    </label><br>
+                                    <input id="Username" type="text" name="Username" value="<?php
+                                        echo($tempName);
+                                    ?>" placeholder="Username" required>
+                                </div>
+                            </td>
 
-                        <!-- RealName -->
-                        <td>
-                            <div>
-                                <label for="RealName">
-                                    Company Name:
-                                </label><br>
-                                <input id="RealName" type="text" name="RealName" value="<?php
-                                    echo($tempRName);
-                                ?>" placeholder="Company Name" required>
-                            </div>
-                        </td>
-                    </tr>
+                            <!-- RealName -->
+                            <td>
+                                <div>
+                                    <label for="RealName">
+                                        Company Name:
+                                    </label><br>
+                                    <input id="RealName" type="text" name="RealName" value="<?php
+                                        echo($tempRName);
+                                    ?>" placeholder="Company Name" required>
+                                </div>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <!-- Email -->
-                        <td>
-                            <div>
-                                <label for="Email">
-                                    Email:
-                                </label><br>
-                                <input id="Email" type="email" name="Email" value="<?php
-                                    echo($tempEmail);
-                                ?>" placeholder="abc@email.com" required>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <!-- Email -->
+                            <td>
+                                <div>
+                                    <label for="Email">
+                                        Email:
+                                    </label><br>
+                                    <input id="Email" type="email" name="Email" value="<?php
+                                        echo($tempEmail);
+                                    ?>" placeholder="abc@email.com" required>
+                                </div>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <!-- Password -->
-                        <td>
-                            <div>
-                                <label for="Password">
-                                    Password:
-                                </label><br>
-                                <input id="Password" type="password" name="Password" placeholder="Password" required>
-                            </div>
-                        </td>
+                        <tr>
+                            <!-- Password -->
+                            <td>
+                                <div>
+                                    <label for="Password">
+                                        Password:
+                                    </label><br>
+                                    <input id="Password" type="password" name="Password" placeholder="Password" required>
+                                </div>
+                            </td>
 
-                        <!-- ReconfirmPassword -->
-                        <td>
-                            <div>
-                                <label for="ReconfirmPassword">
-                                    Reconfirm Password:
-                                </label><br>
-                                <input id="ReconfirmPassword" type="password" name="ReconfirmPassword" placeholder="Reconfirm Password" required>
-                            </div>
-                        </td>
-                    </tr>
+                            <!-- ReconfirmPassword -->
+                            <td>
+                                <div>
+                                    <label for="ReconfirmPassword">
+                                        Reconfirm Password:
+                                    </label><br>
+                                    <input id="ReconfirmPassword" type="password" name="ReconfirmPassword" placeholder="Reconfirm Password" required>
+                                </div>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <!-- EstablishDate -->
-                        <td>
-                            <div>
-                                <label for="EstablishDate">
-                                    Establish Date:
-                                </label><br>
-                                <input id="EstablishDate" type="date" name="EstablishDate" value="<?php
-                                    echo($tempEDate);
-                                ?>" placeholder="Establish Date" required>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <!-- EstablishDate -->
+                            <td>
+                                <div>
+                                    <label for="EstablishDate">
+                                        Establish Date:
+                                    </label><br>
+                                    <input id="EstablishDate" type="date" name="EstablishDate" value="<?php
+                                        echo($tempEDate);
+                                    ?>" placeholder="Establish Date" required>
+                                </div>
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td>
-                            <div>
-                                <button type="submit">
-                                    Register Now
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <br>
+                        <tr>
+                            <td colspan="2">
+                                <div>
+                                    <button type="submit">
+                                        Register Now
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <br>
 
-            <a href="/login.php?UserType=CO">Back to Login</a><br>
+                <a href="/login.php?UserType=CO">Back to Login</a><br>
+            </div>
         </main>
 
         <footer>

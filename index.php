@@ -33,16 +33,19 @@
     <body>
         <header>
             <h1>Group 1: DB Project</h1>
-            <h2>Tree Profiling Management System</h2>
         </header>
 
         <main>
-            <p>
-                Select User Type:
-            </p>
-            <a href="/login.php?UserType=CO">Company</a><br>
-            <a href="/login.php?UserType=ST">Staff</a><br>
-            <a href="/login.php?UserType=CL">Client</a><br>
+            <h2>Tree Profiling Management System</h2>
+
+            <div class="main-content">
+                <p>
+                    Select User Type:
+                </p>
+                <a href="/login.php?UserType=CO">Company</a><br>
+                <a href="/login.php?UserType=ST">Staff</a><br>
+                <a href="/login.php?UserType=CL">Client</a><br>
+            </div>
         </main>
 
         <footer>
