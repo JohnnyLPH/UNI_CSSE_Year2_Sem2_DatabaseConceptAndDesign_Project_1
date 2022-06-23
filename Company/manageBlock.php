@@ -69,7 +69,7 @@
                 <form id="reset-search" method="get" action="/Company/manageBlock.php"></form>
 
                 <form class="w3-center" method="get" action="/Company/manageBlock.php">
-                    <input id="SearchKey" type="number" name="SearchKey" value="<?php
+                    <input style="width:98%" id="SearchKey" type="number" name="SearchKey" value="<?php
                         // Valid SearchKey.
                         if ($orchardID > 0) {
                             echo($orchardID);
@@ -104,7 +104,8 @@
                 </form>
 
                 <?php if (count($allBlock) > 0): ?>
-                    <table>
+                    <div class="w3-container w3-center" style="align-content:center;">
+                    <table class=" w3-center w3-table-all w3-hoverable" style="width:100%">
                         <tr>
                             <th>Block ID</th>
                             <th>Orchard ID</th>
@@ -145,6 +146,7 @@
                             </tr>
                         <?php endforeach; ?>
                     </table>
+                    <br>
                 <?php else: ?>
                     <span>* <?php
                         if ($searchOption == 1) {
@@ -157,6 +159,7 @@
                         echo($_SESSION["Username"]);
                     ?>! *</span>
                 <?php endif; ?>
+                </div>
             </div>
         </main>
 

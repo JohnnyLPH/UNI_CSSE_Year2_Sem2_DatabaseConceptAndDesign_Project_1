@@ -52,6 +52,12 @@ body {
 }
 */
 
+.sticky {
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+}
+
 table {
   color:#000;
   width:95%;

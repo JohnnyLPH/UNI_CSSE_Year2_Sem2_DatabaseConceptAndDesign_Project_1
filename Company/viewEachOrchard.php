@@ -169,36 +169,36 @@
                         <!--Google map will be embedded here-->
                     </div>
 
-            </div>
-            <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
-            <br>
-                <form method="get" action="/Company/manageBlock.php">
-                    <input type="hidden" name="SearchKey" value="<?php
-                        echo($orchardID);
-                    ?>">
-                    <input type="hidden" name="SearchOption" value="1">
-                    <input type="submit" value="View Related Blocks" style="max-width:100%;">
-                </form>
+                </div>
+                <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
+                    <br>
+                    <form method="get" action="/Company/manageBlock.php">
+                        <input type="hidden" name="SearchKey" value="<?php
+                            echo($orchardID);
+                        ?>">
+                        <input type="hidden" name="SearchOption" value="1">
+                        <input type="submit" value="View Related Blocks" style="max-width:100%;">
+                    </form>
 
-                <form method="get" action="/Company/manageTree.php">
-                    <input type="hidden" name="SearchKey" value="<?php
-                        echo($orchardID);
-                    ?>">
-                    <input type="hidden" name="SearchOption" value="1">
-                    <input type="submit" value="View Related Trees">
-                </form>
-                
-                <form method="get" action="/Company/managePurchase.php">
-                    <input type="hidden" name="SearchKey" value="<?php
-                        echo($orchardID);
-                    ?>">
-                    <input type="hidden" name="SearchOption" value="1">
-                    <input type="submit" value="View Related Purchases">
-                </form>
-                
-                <form method="get" action="/Company/manageOrchard.php">
-                    <input type="submit" value="Back to View All Orchards">
-                </form>
+                    <form method="get" action="/Company/manageTree.php">
+                        <input type="hidden" name="SearchKey" value="<?php
+                            echo($orchardID);
+                        ?>">
+                        <input type="hidden" name="SearchOption" value="1">
+                        <input type="submit" value="View Related Trees">
+                    </form>
+                    
+                    <form method="get" action="/Company/managePurchase.php">
+                        <input type="hidden" name="SearchKey" value="<?php
+                            echo($orchardID);
+                        ?>">
+                        <input type="hidden" name="SearchOption" value="1">
+                        <input type="submit" value="View Related Purchases">
+                    </form>
+                    
+                    <form method="get" action="/Company/manageOrchard.php">
+                        <input type="submit" value="Back to View All Orchards">
+                    </form>
                 </div>
                 <!--
                 <a class="w3-bar-item w3-button btnAnim w3-padding-16" href="/Company/manageBlock.php">View Related Blocks</a>

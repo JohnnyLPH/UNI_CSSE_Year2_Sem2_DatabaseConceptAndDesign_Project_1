@@ -46,11 +46,11 @@
                     ?></h2>
                 </div>
                 
-                <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%">
+                <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;">
                     <h2>Your Summary:</h2>
                 </div>
 
-                <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%">                        
+                <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">                        
                     <div class='data-value card fadeIn first'>
                         <div class='data-group'>
                             <img src="https://us.123rf.com/450wm/goodstudio/goodstudio1910/goodstudio191000131/131189697-family-working-in-fruit-garden-together-flat-vector-illustration-people-gathering-apples-berries-and.jpg" id="icon" alt="User Icon" />
