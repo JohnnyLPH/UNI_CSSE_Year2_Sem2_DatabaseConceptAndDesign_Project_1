@@ -58,34 +58,63 @@
 
             <table>
                 <tr>
-                    <td>OrchardID</td>
+                    <td>Orchard ID</td>
                     <td><?php
                         echo($result["OrchardID"]);
                     ?></td>
                 </tr>
+
                 <tr>
                     <td>Address</td>
                     <td><?php
                         echo($result["Address"]);
                     ?></td>
                 </tr>
+
                 <tr>
                     <td>Latitude</td>
                     <td><?php
                         echo($result["Latitude"]);
                     ?></td>
                 </tr>
+
                 <tr>
                     <td>Longitude</td>
                     <td><?php
                         echo($result["Longitude"]);
                     ?></td>
                 </tr>
+
                 <tr>
-                    <td>CompanyID</td>
+                    <td>Company ID</td>
                     <td><?php
                         echo($result["CompanyID"]);
                     ?></td>
+                </tr>
+
+                <tr>
+                    <td>Total Block</td>
+                    <td><?php
+                        echo(getBlockCount($conn, $_SESSION["UserID"], $result["OrchardID"]));
+                    ?></td>
+                </tr>
+
+                <tr>
+                    <td>Total Tree</td>
+                    <td><?php
+                        echo(getTreeCount($conn, $_SESSION["UserID"], $result["OrchardID"]));
+                    ?></td>
+                </tr>
+
+                <tr>
+                    <td>Total Purchase</td>
+                    <td><?php
+                        echo(getPurchaseRequestCount($conn, 1, $_SESSION["UserID"], $result["OrchardID"]));
+                    ?></td>
+                </tr>
+
+                <tr>
+                    <td></td>
                 </tr>
             </table>
         </main>

@@ -14,7 +14,7 @@
     $totalOrchard = getOrchardCount($conn, $_SESSION["UserID"]);
     $totalBlock = getBlockCount($conn, $_SESSION["UserID"]);
     $totalTree = getTreeCount($conn, $_SESSION["UserID"]);
-    $totalTransaction = getPurchaseRequestCount($conn, 1, $_SESSION["UserID"]);
+    $totalPurchase = getPurchaseRequestCount($conn, 1, $_SESSION["UserID"]);
 
     $conn->close();
 ?>
@@ -86,9 +86,9 @@
                             <img src="https://img.freepik.com/free-vector/shop-with-sign-we-are-open_23-2148547718.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
-                                echo($totalTransaction);
+                                echo($totalPurchase);
                             ?></span>
-                            <span class='data-title'>Total Client Purchase</span>
+                            <span class='data-title'>Success Client Purchase</span>
                         </div>
                     </div>
                 </div>
