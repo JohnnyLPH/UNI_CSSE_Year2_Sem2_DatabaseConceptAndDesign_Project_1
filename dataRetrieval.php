@@ -40,16 +40,17 @@
         return 0;
     }
 
-    // Count purchase of block owned by a company.
+    // Count purchase of block (approved PurchaseRequest) owned by a company.
     function getCompanyPurchaseCount($conn, $id) {
-        $query = "SELECT COUNT(`Purchase`.`BlockID`) FROM `Purchase`";
-        $query .= " INNER JOIN `Block` ON `Purchase`.`BlockID` = `Block`.`BlockID`";
+        $query = "SELECT COUNT(`PurchaseRequest`.`RequestID`) FROM `PurchaseRequest`";
+        $query .= " INNER JOIN `OnSale` ON `PurchaseRequest`.`SaleID` = `OnSale`.`SaleID`";
+        $query .= " INNER JOIN `Block` ON `OnSale`.`BlockID` = `Block`.`BlockID`";
         $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
-        $query .= " WHERE `CompanyID` = $id;";
+        $query .= " WHERE `PurchaseRequest`.`ApprovalStatus` = 1 AND `CompanyID` = $id;";
         $rs = $conn->query($query);
         if ($rs) {
             if ($resultRow = mysqli_fetch_assoc($rs)) {
-                return $resultRow["COUNT(`Purchase`.`BlockID`)"];
+                return $resultRow["COUNT(`PurchaseRequest`.`RequestID`)"];
             }
         }
         return 0;
