@@ -66,8 +66,8 @@
                     ?>>
                 </form>
 
-                <?php if (count($allOrchard) > 0): ?>
-                    <div class="w3-container w3-center" style="align-content:center;">
+                <div class="w3-container w3-center" style="align-content:center;">
+                    <?php if (count($allOrchard) > 0): ?>
                         <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
                             <tr>
                                 <th>Orchard ID</th>
@@ -93,47 +93,26 @@
                                     <td><?php
                                         echo(getPurchaseRequestCount($conn, 1, $_SESSION["UserID"], $result["OrchardID"]));
                                     ?></td>
-                                    
+                            
                                     <td>
                                         <form method="get" action="/Company/viewEachOrchard.php">
                                             <input type="hidden" name="OrchardID" value="<?php
                                                 echo($result["OrchardID"]);
-                                            ?></td>
-
-                                            <td><?php
-                                                echo(getBlockCount($conn, $_SESSION["UserID"], $result["OrchardID"]));
-                                            ?></td>
-
-                                            <td><?php
-                                                echo(getTreeCount($conn, $_SESSION["UserID"], $result["OrchardID"]));
-                                            ?></td>
-
-                                            <td><?php
-                                                echo(getPurchaseRequestCount($conn, 1, $_SESSION["UserID"], $result["OrchardID"]));
-                                            ?></td>
-                                            
-                                            <td>
-                                                <form method="get" action="/Company/viewEachOrchard.php">
-                                                    <input type="hidden" name="OrchardID" value="<?php
-                                                        echo($result["OrchardID"]);
-                                                    ?>">
-                                                    <input type="submit" value="View">
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </table>
-                                <br>
-                        </div>
-                        <?php else: ?>
-                            <span>* Orchard ID <?php
-                                echo($orchardID);
-                            ?> is not associated with any orchards of <?php
-                                echo($_SESSION["Username"]);
-                            ?>! *</span>
-                        <?php endif; ?>
-                        <br>
-                    </div>
+                                            ?>">
+                                            <input type="submit" value="View">
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    <?php else: ?>
+                        <span>* Orchard ID <?php
+                            echo($orchardID);
+                        ?> is not associated with any orchards of <?php
+                            echo($_SESSION["Username"]);
+                        ?>! *</span>
+                    <?php endif; ?>
+                    <br>
                 </div>
             </div>
         </main>
