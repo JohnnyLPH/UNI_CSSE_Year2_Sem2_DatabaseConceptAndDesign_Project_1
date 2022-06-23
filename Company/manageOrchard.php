@@ -18,7 +18,7 @@
     }
 
     // Check if valid OrchardID is provided for search, set to 0 if not.
-    $orchardID = (!isset($queryString["OrchardID"]) || $queryString["OrchardID"] < 1) ? 0: $queryString["OrchardID"];
+    $orchardID = (!isset($queryString["SearchKey"]) || $queryString["SearchKey"] < 1) ? 0: $queryString["SearchKey"];
 
     // Return all the orchard.
     $allOrchard = getAllOrchard($conn, $_SESSION["UserID"], $orchardID);
@@ -49,7 +49,7 @@
             <form id="reset-search" method="get" action="/Company/manageOrchard.php"></form>
 
             <form method="get" action="/Company/manageOrchard.php">
-                <input id="OrchardID" type="number" name="OrchardID" value="<?php
+                <input id="SearchKey" type="number" name="SearchKey" value="<?php
                     // Valid OrchardID.
                     if ($orchardID > 0) {
                         echo($orchardID);

@@ -11,7 +11,19 @@
         exit;
     }
 
-    $conn->close();
+    $queryString = array();
+
+    if (isset($_SERVER['QUERY_STRING'])) {
+        parse_str($_SERVER['QUERY_STRING'], $queryString);
+    }
+
+    // Check if valid OrchardID is provided for search, set to 0 if not.
+    $orchardID = (!isset($queryString["SearchKey"]) || $queryString["SearchKey"] < 1) ? 0: $queryString["SearchKey"];
+    // Check if valid BlockID is provided for search, set to 0 if not.
+    $blockID = (!isset($queryString["SearchKey"]) || $queryString["SearchKey"] < 1) ? 0: $queryString["SearchKey"];
+
+    // Return all the block.
+    $allBlock = getAllBlock($conn, $_SESSION["UserID"], $orchardID, $blockID);
 ?>
 <!DOCTYPE html>
 <html lang="en">

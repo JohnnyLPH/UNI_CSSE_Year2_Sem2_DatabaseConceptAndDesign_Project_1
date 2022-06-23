@@ -115,21 +115,21 @@
             </table>
 
             <form method="get" action="/Company/manageBlock.php">
-                <input type="hidden" name="OrchardID" value="<?php
+                <input type="hidden" name="SearchKey" value="<?php
                     echo($orchardID);
                 ?>">
                 <input type="submit" value="View Related Blocks">
             </form>
 
             <form method="get" action="/Company/manageTree.php">
-                <input type="hidden" name="OrchardID" value="<?php
+                <input type="hidden" name="SearchKey" value="<?php
                     echo($orchardID);
                 ?>">
                 <input type="submit" value="View Related Trees">
             </form>
             
             <form method="get" action="/Company/managePurchase.php">
-                <input type="hidden" name="OrchardID" value="<?php
+                <input type="hidden" name="SearchKey" value="<?php
                     echo($orchardID);
                 ?>">
                 <input type="submit" value="View Related Purchases">

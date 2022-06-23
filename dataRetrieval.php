@@ -185,4 +185,37 @@
         }
         return $allRow;
     }
+
+    // Return all rows of Orchard (based on CompanyID, OrchardID, BlockID if provided).
+    function getAllBlock($conn, $companyID = 0, $orchardID = 0, $blockID = 0) {
+        $query = "SELECT * FROM `Orchard`";
+        
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $multiWhere = true;
+        }
+
+        if ($orchardID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $multiWhere = true;
+            }
+        }
+
+        $query .= ";";
+        $allRow = array();
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                array_push($allRow, $resultRow);
+            }
+        }
+        return $allRow;
+    }
 ?>
