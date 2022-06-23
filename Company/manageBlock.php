@@ -152,7 +152,7 @@
                     else {
                         echo("Block ID $blockID");
                     }
-                ?> does not exist or is not associated with <?php
+                ?> is not associated with any blocks of <?php
                     echo($_SESSION["Username"]);
                 ?>! *</span>
             <?php endif; ?>

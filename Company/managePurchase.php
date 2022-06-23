@@ -34,7 +34,7 @@
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
 
         <main>
-            <h2>Purchase:</h2>
+            <h2>All Purchase Requests:</h2>
 
         </main>
 

@@ -107,7 +107,7 @@
             <?php else: ?>
                 <span>* Orchard ID <?php
                     echo($orchardID);
-                ?> does not exist or is not associated with <?php
+                ?> is not associated with any orchards of <?php
                     echo($_SESSION["Username"]);
                 ?>! *</span>
             <?php endif; ?>
