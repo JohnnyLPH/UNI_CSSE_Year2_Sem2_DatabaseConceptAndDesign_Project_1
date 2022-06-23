@@ -19,6 +19,7 @@
         <meta charset="utf-8">
         
         <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
     </head>

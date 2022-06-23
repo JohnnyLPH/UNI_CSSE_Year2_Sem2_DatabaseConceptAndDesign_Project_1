@@ -1,5 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins');
 
+/* theme */
+.w3-theme-l5 {color:#000 !important; background-color:#eafffd !important}
+.w3-theme-l4 {color:#000 !important; background-color:#bafff7 !important}
+.w3-theme-l3 {color:#000 !important; background-color:#74ffef !important}
+.w3-theme-l2 {color:#000 !important; background-color:#2fffe7 !important}
+.w3-theme-l1 {color:#fff !important; background-color:#00e9cd !important}
+.w3-theme-d1 {color:#fff !important; background-color:#009382 !important}
+.w3-theme-d2 {color:#fff !important; background-color:#008373 !important}
+.w3-theme-d3 {color:#fff !important; background-color:#007265 !important}
+.w3-theme-d4 {color:#fff !important; background-color:#006256 !important}
+.w3-theme-d5 {color:#fff !important; background-color:#005248 !important}
+
+.w3-theme-light {color:#000 !important; background-color:#eafffd !important}
+.w3-theme-dark {color:#fff !important; background-color:#005248 !important}
+.w3-theme-action {color:#fff !important; background-color:#005248 !important}
+
+.w3-theme {color:#fff !important; background-color:#00a591 !important}
+.w3-text-theme {color:#00a591 !important}
+.w3-border-theme {border-color:#00a591 !important}
+
+.w3-hover-theme:hover {color:#fff !important; background-color:#00a591 !important}
+.w3-hover-text-theme:hover {color:#00a591 !important}
+.w3-hover-border-theme:hover {border-color:#00a591 !important}
+
 :root {
     --main-body-color: #EDF6F9;
     /*--theme-color: #264861;*/
@@ -37,10 +61,9 @@ body {
   background-color: #51a98d;
   align-items: center;
   flex-wrap: wrap;
-  flex-direction: row;
+  /*flex-direction: column;*/
   justify-content: center;
-  width: 100%;
-  min-height: 100%;
+  width: auto;
   padding: 20px;
 }
 
@@ -58,10 +81,10 @@ body {
   background: #fff;
   margin:10px;
   padding: 30px;
-  width: 25%;
+  /*width: 25%;
   /*max-width: 350px;*/
   position: relative;
-  display:inline-block;
+  display: inline-block;
   padding: 20px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
@@ -103,6 +126,30 @@ button:hover  {
 }
 
 button:active  {
+  -moz-transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+.btnAnim {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.btnAnim:hover  {
+  -moz-transform: scale(1.05);
+  -webkit-transform: scale(1.05);
+  -o-transform: scale(1.05);
+  -ms-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+.btnAnim:active  {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -221,9 +268,11 @@ button:active  {
 } 
 
 #icon {
-width:60%;
--webkit-border-radius: 10px 10px 10px 10px;
-border-radius: 10px 10px 10px 10px;
+  object-fit: cover;
+  height: 200px;
+  width: 200px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
 }
 
 * {
