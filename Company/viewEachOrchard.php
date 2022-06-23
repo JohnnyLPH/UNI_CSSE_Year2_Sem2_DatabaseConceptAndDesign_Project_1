@@ -107,16 +107,37 @@
                 </tr>
 
                 <tr>
-                    <td>Total Purchase</td>
+                    <td>Client Purchase</td>
                     <td><?php
                         echo(getPurchaseRequestCount($conn, 1, $_SESSION["UserID"], $result["OrchardID"]));
                     ?></td>
                 </tr>
-
-                <tr>
-                    <td></td>
-                </tr>
             </table>
+
+            <form method="get" action="/Company/manageBlock.php">
+                <input type="hidden" name="OrchardID" value="<?php
+                    echo($orchardID);
+                ?>">
+                <input type="submit" value="View Related Blocks">
+            </form>
+
+            <form method="get" action="/Company/manageTree.php">
+                <input type="hidden" name="OrchardID" value="<?php
+                    echo($orchardID);
+                ?>">
+                <input type="submit" value="View Related Trees">
+            </form>
+            
+            <form method="get" action="/Company/managePurchase.php">
+                <input type="hidden" name="OrchardID" value="<?php
+                    echo($orchardID);
+                ?>">
+                <input type="submit" value="View Related Purchases">
+            </form>
+            
+            <form method="get" action="/Company/manageOrchard.php">
+                <input type="submit" value="Back to View All Orchards">
+            </form>
         </main>
 
         <footer>

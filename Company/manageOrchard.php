@@ -72,7 +72,7 @@
                         <th>Orchard ID</th>
                         <th>Total Block</th>
                         <th>Total Tree</th>
-                        <th>Total Purchase</th>
+                        <th>Client Purchase</th>
                         <th>Action</th>
                     </tr>
                     <?php foreach ($allOrchard as $result): ?>
