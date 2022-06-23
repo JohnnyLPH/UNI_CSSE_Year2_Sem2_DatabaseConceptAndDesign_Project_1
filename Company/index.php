@@ -11,10 +11,10 @@
         exit;
     }
 
-    $totalOrchard = getOrchardCount($conn, $_SESSION["UserID"]);
-    $totalBlock = getBlockCount($conn, $_SESSION["UserID"]);
-    $totalTree = getTreeCount($conn, $_SESSION["UserID"]);
-    $totalPurchase = getPurchaseRequestCount($conn, 1, $_SESSION["UserID"]);
+    $totalOrchard = getCompanyOrchardCount($conn, $_SESSION["UserID"]);
+    $totalBlock = getCompanyBlockCount($conn, $_SESSION["UserID"]);
+    $totalTree = getCompanyTreeCount($conn, $_SESSION["UserID"]);
+    $totalPurchase = getCompanyPurchaseCount($conn, $_SESSION["UserID"]);
 
     $conn->close();
 ?>
