@@ -30,6 +30,10 @@
 
     $blockID = $queryString["BlockID"];
     $result = $allBlock[0];
+    
+    $allPurchaseRequest = getAllPurchaseRequest($conn, -1, $_SESSION["UserID"], 0, $queryString["BlockID"]);
+    $allOnSale = getAllOnSale($conn, $_SESSION["UserID"], 0, $queryString["BlockID"]);
+    $allSale = "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,6 +120,76 @@
             <form method="get" action="/Company/manageBlock.php">
                 <input type="submit" value="Back to View All Blocks">
             </form>
+            
+            <h3>Purchase Request:</h3>
+            <?php if (count($allPurchaseRequest) > 0): ?>
+                <table>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Request Date</th>
+                        <th>Approval Status</th>
+                        <th>Action</th>
+                    </tr>
+                    <?php foreach ($allPurchaseRequest as $result): ?>
+                        <tr>
+                            <td><?php
+                                echo($result["RequestID"]);
+                            ?></td>
+
+                            <td><?php
+                                echo($result["RequestDate"]);
+                            ?></td>
+
+                            <td><?php
+                                echo(getApprovalStatusStr($result["ApprovalStatus"]));
+                            ?></td>
+
+                            <td>
+                                <form method="get" action="/Company/viewEachPurchase.php">
+                                    <input type="hidden" name="RequestID" value="<?php
+                                        echo($result["RequestID"]);
+                                    ?>">
+                                    <input type="submit" value="View">
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php else: ?>
+                <span>* No Purchase Request for Block ID <?php
+                    echo($blockID);
+                ?>! *</span>
+            <?php endif; ?>
+            
+            <h3>On Sale History:</h3>
+            <?php if (count($allOnSale) > 0): ?>
+                <table>
+                    <tr>
+                        <th>Sale ID</th>
+                        <th>Sale Date</th>
+                        <th>Sale Price</th>
+                    </tr>
+                    <?php foreach ($allOnSale as $result): ?>
+                        <tr>
+                            <td><?php
+                                echo($result["SaleID"]);
+                            ?></td>
+
+                            <td><?php
+                                echo($result["SaleDate"]);
+                            ?></td>
+
+                            <td><?php
+                                echo($result["SalePrice"]);
+                            ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php else: ?>
+                <span>* No On Sale History for Block ID <?php
+                    echo($blockID);
+                ?>! *</span>
+            <?php endif; ?>
         </main>
 
         <footer>
