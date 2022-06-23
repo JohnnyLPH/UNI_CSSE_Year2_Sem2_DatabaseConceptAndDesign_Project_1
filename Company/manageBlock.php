@@ -63,99 +63,101 @@
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
 
         <main>
-            <h2>All Blocks:</h2>
+            <div class="w3-container w3-theme-d4 w3-animate-opacity">
+                <h2 class="w3-center">All Blocks:</h2>
 
-            <form id="reset-search" method="get" action="/Company/manageBlock.php"></form>
+                <form id="reset-search" method="get" action="/Company/manageBlock.php"></form>
 
-            <form method="get" action="/Company/manageBlock.php">
-                <input id="SearchKey" type="number" name="SearchKey" value="<?php
-                    // Valid SearchKey.
-                    if ($orchardID > 0) {
-                        echo($orchardID);
-                    }
-                    elseif ($blockID > 0) {
-                        echo($blockID);
-                    }
-                ?>" placeholder="Enter Orchard/Block ID" min="1" required>
-
-                <!-- <label for="SearchOption">Search By:</label> -->
-                <select id="SearchOption" name="SearchOption">
-                    <option value="1"<?php
-                        if ($searchOption == 1) {
-                            echo(" selected");
+                <form class="w3-center" method="get" action="/Company/manageBlock.php">
+                    <input id="SearchKey" type="number" name="SearchKey" value="<?php
+                        // Valid SearchKey.
+                        if ($orchardID > 0) {
+                            echo($orchardID);
                         }
-                    ?>>OrchardID</option>
-                    <option value="2"<?php
-                        if ($searchOption == 2) {
-                            echo(" selected");
+                        elseif ($blockID > 0) {
+                            echo($blockID);
                         }
-                    ?>>BlockID</option>
-                </select>
-                
-                <input type="submit" value="Search">
+                    ?>" placeholder="Enter Orchard/Block ID" min="1" required>
 
-                <input form="reset-search" type="submit" value="Reset"<?php
-                    // Disable if not searching.
-                    if ($orchardID < 1 && $blockID < 1) {
-                        echo(" disabled");
-                    }
-                ?>>
-            </form>
+                    <!-- <label for="SearchOption">Search By:</label> -->
+                    <select id="SearchOption" name="SearchOption">
+                        <option value="1"<?php
+                            if ($searchOption == 1) {
+                                echo(" selected");
+                            }
+                        ?>>OrchardID</option>
+                        <option value="2"<?php
+                            if ($searchOption == 2) {
+                                echo(" selected");
+                            }
+                        ?>>BlockID</option>
+                    </select>
+                    
+                    <input type="submit" value="Search">
 
-            <?php if (count($allBlock) > 0): ?>
-                <table>
-                    <tr>
-                        <th>Block ID</th>
-                        <th>Orchard ID</th>
-                        <th>Total Tree</th>
-                        <th>Client Purchase</th>
-                        <th>Action</th>
-                    </tr>
-                    <?php foreach ($allBlock as $result): ?>
+                    <input form="reset-search" type="submit" value="Reset"<?php
+                        // Disable if not searching.
+                        if ($orchardID < 1 && $blockID < 1) {
+                            echo(" disabled");
+                        }
+                    ?>>
+                </form>
+
+                <?php if (count($allBlock) > 0): ?>
+                    <table>
                         <tr>
-                            <td><?php
-                                echo($result["BlockID"]);
-                            ?></td>
-
-                            <td><?php
-                                echo($result["OrchardID"]);
-                            ?></td>
-
-                            <td><?php
-                                echo(getTreeCount(
-                                    $conn, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
-                                ));
-                            ?></td>
-
-                            <td><?php
-                                echo(getPurchaseRequestCount(
-                                    $conn, 1, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
-                                ));
-                            ?></td>
-                            
-                            <td>
-                                <form method="get" action="/Company/viewEachBlock.php">
-                                    <input type="hidden" name="BlockID" value="<?php
-                                        echo($result["BlockID"]);
-                                    ?>">
-                                    <input type="submit" value="View">
-                                </form>
-                            </td>
+                            <th>Block ID</th>
+                            <th>Orchard ID</th>
+                            <th>Total Tree</th>
+                            <th>Client Purchase</th>
+                            <th>Action</th>
                         </tr>
-                    <?php endforeach; ?>
-                </table>
-            <?php else: ?>
-                <span>* <?php
-                    if ($searchOption == 1) {
-                        echo("Orchard ID $orchardID");
-                    }
-                    else {
-                        echo("Block ID $blockID");
-                    }
-                ?> is not associated with any blocks of <?php
-                    echo($_SESSION["Username"]);
-                ?>! *</span>
-            <?php endif; ?>
+                        <?php foreach ($allBlock as $result): ?>
+                            <tr>
+                                <td><?php
+                                    echo($result["BlockID"]);
+                                ?></td>
+
+                                <td><?php
+                                    echo($result["OrchardID"]);
+                                ?></td>
+
+                                <td><?php
+                                    echo(getTreeCount(
+                                        $conn, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
+                                    ));
+                                ?></td>
+
+                                <td><?php
+                                    echo(getPurchaseRequestCount(
+                                        $conn, 1, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
+                                    ));
+                                ?></td>
+                                
+                                <td>
+                                    <form method="get" action="/Company/viewEachBlock.php">
+                                        <input type="hidden" name="BlockID" value="<?php
+                                            echo($result["BlockID"]);
+                                        ?>">
+                                        <input type="submit" value="View">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+                <?php else: ?>
+                    <span>* <?php
+                        if ($searchOption == 1) {
+                            echo("Orchard ID $orchardID");
+                        }
+                        else {
+                            echo("Block ID $blockID");
+                        }
+                    ?> is not associated with any blocks of <?php
+                        echo($_SESSION["Username"]);
+                    ?>! *</span>
+                <?php endif; ?>
+            </div>
         </main>
 
         <footer>
