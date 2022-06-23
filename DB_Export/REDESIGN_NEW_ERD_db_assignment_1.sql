@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2022 at 09:16 AM
+-- Generation Time: Jun 23, 2022 at 09:53 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -184,9 +184,13 @@ CREATE TABLE `purchaserequest` (
 --
 
 INSERT INTO `purchaserequest` (`RequestID`, `SaleID`, `ClientID`, `RequestDate`, `RequestPrice`, `AdminID`, `ApprovalStatus`) VALUES
-(1, 1, 2, '2022-05-23 08:42:33', 15000, NULL, 0),
+(1, 1, 2, '2022-05-23 08:42:33', 15000, 23, 2),
 (2, 4, 5, '2022-05-23 14:48:07', 16500, 23, 1),
-(3, 6, 1, '2022-06-23 14:48:34', 15000, NULL, 0);
+(3, 6, 1, '2022-06-23 14:48:34', 15000, 23, 2),
+(4, 5, 3, '2022-06-23 15:42:26', 20000, 23, 1),
+(5, 6, 4, '2022-06-23 14:48:34', 15000, 23, 1),
+(6, 2, 1, '2022-06-23 15:46:28', 14000, 23, 1),
+(7, 3, 5, '2022-06-23 15:46:28', 17000, 23, 1);
 
 -- --------------------------------------------------------
 
@@ -482,7 +486,7 @@ ALTER TABLE `orchard`
 -- AUTO_INCREMENT for table `purchaserequest`
 --
 ALTER TABLE `purchaserequest`
-  MODIFY `RequestID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `RequestID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tree`
