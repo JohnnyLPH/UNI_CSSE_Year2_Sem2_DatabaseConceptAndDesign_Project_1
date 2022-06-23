@@ -1,3 +1,16 @@
+<?php
+    // Staff Home Page.
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
+
+    $tempLoginCheck = checkLogin($conn);
+
+    // Not logged in as Staff.
+    if ($tempLoginCheck != 2) {
+        header("Location: /index.php");
+        exit;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
