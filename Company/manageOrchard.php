@@ -10,8 +10,6 @@
         header("Location: /index.php");
         exit;
     }
-
-    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +31,7 @@
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
 
         <main>
-            <h2>Orchard:</h2>
+            <h2>All Orchards:</h2>
 
         </main>
 

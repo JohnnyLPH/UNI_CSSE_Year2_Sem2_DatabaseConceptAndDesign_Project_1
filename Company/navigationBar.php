@@ -1,4 +1,4 @@
-<nav class="fixed_nav_bar">
+<nav>
     <ul>
         <li>
             <a href="/Company/index.php">Home</a>
