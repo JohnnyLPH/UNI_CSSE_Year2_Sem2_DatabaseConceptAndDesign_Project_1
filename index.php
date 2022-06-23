@@ -16,6 +16,10 @@
         header("Location: /Client/index.php");
         exit;
     }
+    else if ($tempLoginCheck == 4) {
+        header("Location: /Admin/index.php");
+        exit;
+    }
 
     $conn->close();
 ?>

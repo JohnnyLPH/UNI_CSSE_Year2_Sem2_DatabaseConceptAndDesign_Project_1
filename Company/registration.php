@@ -233,7 +233,7 @@
                                 <td colspan="2">
                                     <div>
                                         <br>
-                                        <input type="submit" value="Sign Up"></input>
+                                        <input type="submit" value="Sign Up">
                                     </div>
                                 </td>
                             </tr>

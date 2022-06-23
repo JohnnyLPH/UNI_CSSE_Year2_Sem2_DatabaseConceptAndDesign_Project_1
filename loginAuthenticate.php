@@ -6,7 +6,7 @@
     }
 
     // Return 0 if none is logged in or active.
-    // 1 if Company is logged in, 2 if Staff is logged in, 3 if Client is logged in.
+    // 1 if Company is logged in, 2 if Staff is logged in, 3 if Client is logged in, 4 if Admin is logged in.
     function checkLogin($conn) {
         $expireMin = 30;
 
@@ -54,6 +54,9 @@
                     }
                     else if ($tempType == "CL") {
                         return 3;
+                    }
+                    else if ($tempType == "AD") {
+                        return 4;
                     }
                 }
             }

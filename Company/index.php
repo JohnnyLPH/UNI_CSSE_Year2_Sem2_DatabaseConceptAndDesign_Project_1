@@ -14,7 +14,7 @@
     $totalOrchard = getOrchardCount($conn, $_SESSION["UserID"]);
     $totalBlock = getBlockCount($conn, $_SESSION["UserID"]);
     $totalTree = getTreeCount($conn, $_SESSION["UserID"]);
-    $totalPurchase = getPurchaseRequestCount($conn, 1, $_SESSION["UserID"]);
+    $totalTransaction = getPurchaseRequestCount($conn, 1, $_SESSION["UserID"]);
 
     $conn->close();
 ?>
@@ -70,9 +70,9 @@
                 <div class='data-value'>
                     <div class='data-group'>
                         <span class='overall-data'><?php
-                            echo($totalPurchase);
+                            echo($totalTransaction);
                         ?></span>
-                        <span class='data-title'>Total Client Purchase</span>
+                        <span class='data-title'>Total Transaction</span>
                     </div>
                 </div>
             </div>

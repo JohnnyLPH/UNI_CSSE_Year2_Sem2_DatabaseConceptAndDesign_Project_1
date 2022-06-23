@@ -7,7 +7,7 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `CompanyID` = $companyID";
+            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
             $multiWhere = true;
         }
 
@@ -30,16 +30,16 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `CompanyID` = $companyID";
+            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
             $multiWhere = true;
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
             }
             else {
-                $query .= " WHERE `OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
                 $multiWhere = true;
             }
         }
@@ -70,20 +70,20 @@
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
             }
             else {
-                $query .= " WHERE `OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
                 $multiWhere = true;
             }
         }
 
         if ($blockID > 0) {
             if ($multiWhere) {
-                $query .= " AND `BlockID` = $blockID";
+                $query .= " AND `Block`.`BlockID` = $blockID";
             }
             else {
-                $query .= " WHERE `BlockID` = $blockID";
+                $query .= " WHERE `Block`.`BlockID` = $blockID";
                 $multiWhere = true;
             }
         }
@@ -115,30 +115,30 @@
 
         if ($companyID > 0) {
             if ($multiWhere) {
-                $query .= " AND `CompanyID` = $companyID";
+                $query .= " AND `Orchard`.`CompanyID` = $companyID";
             }
             else {
-                $query .= " WHERE `CompanyID` = $companyID";
+                $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
                 $multiWhere = true;
             }
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
             }
             else {
-                $query .= " WHERE `OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
                 $multiWhere = true;
             }
         }
 
         if ($blockID > 0) {
             if ($multiWhere) {
-                $query .= " AND `BlockID` = $blockID";
+                $query .= " AND `Block`.`BlockID` = $blockID";
             }
             else {
-                $query .= " WHERE `BlockID` = $blockID";
+                $query .= " WHERE `Block`.`BlockID` = $blockID";
                 $multiWhere = true;
             }
         }
@@ -155,18 +155,27 @@
 
     // Return all rows of Orchard (based on CompanyID, OrchardID if provided).
     function getAllOrchard($conn, $companyID = 0, $orchardID = 0) {
-        $query = "SELECT * FROM `Orchard` WHERE `CompanyID` = $companyID;";
+        $query = "SELECT * FROM `Orchard`";
         
-        if ($companyID > 0 && $orchardID > 0) {
-            $query .= " WHERE `CompanyID` = $companyID AND `OrchardID` = `$orchardID`;";
-        }
-        else if ($companyID > 0) {
-            $query .= " WHERE `CompanyID` = $companyID;";
-        }
-        else if ($orchardID > 0) {
-            $query .= " WHERE `OrchardID` = `$orchardID`;";
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $multiWhere = true;
         }
 
+        if ($orchardID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $multiWhere = true;
+            }
+        }
+
+        $query .= ";";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
