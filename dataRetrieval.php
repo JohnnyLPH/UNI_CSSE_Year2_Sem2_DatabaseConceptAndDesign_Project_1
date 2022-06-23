@@ -229,4 +229,195 @@
         }
         return $allRow;
     }
+
+    // Return all rows of Orchard (based on CompanyID, OrchardID, BlockID, TreeID if provided).
+    function getAllTree($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $treeID = 0) {
+        $query = "SELECT * FROM `Tree`";
+        $query .= " INNER JOIN `Block` ON `Tree`.`BlockID` = `Block`.`BlockID`";
+        $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
+        
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $multiWhere = true;
+        }
+
+        if ($orchardID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($blockID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Block`.`BlockID` = $blockID";
+            }
+            else {
+                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($treeID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Tree`.`TreeID` = $treeID";
+            }
+            else {
+                $query .= " WHERE `Tree`.`TreeID` = $treeID";
+                $multiWhere = true;
+            }
+        }
+
+        $query .= ";";
+        $allRow = array();
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                array_push($allRow, $resultRow);
+            }
+        }
+        return $allRow;
+    }
+
+    // Return all rows of Purchase Request (based on ApprovalStatus, CompanyID, OrchardID, BlockID, RequestID if provided).
+    function getAllPurchaseRequest($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $requestID = 0) {
+        $query = "SELECT * FROM `PurchaseRequest`";
+        $query .= " INNER JOIN `OnSale` ON `PurchaseRequest`.`SaleID` = `OnSale`.`SaleID`";
+        $query .= " INNER JOIN `Block` ON `OnSale`.`BlockID` = `Block`.`BlockID`";
+        $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($approvalStatus > -1 && $approvalStatus < 3) {
+            $query .= " WHERE `PurchaseRequest`.`ApprovalStatus` = $approvalStatus";
+            $multiWhere = true;
+        }
+
+        if ($companyID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`CompanyID` = $companyID";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($orchardID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($blockID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Block`.`BlockID` = $blockID";
+            }
+            else {
+                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($requestID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `PurchaseRequest`.`RequestID` = $requestID";
+            }
+            else {
+                $query .= " WHERE `PurchaseRequest`.`RequestID` = $requestID";
+                $multiWhere = true;
+            }
+        }
+
+        // Latest PurchaseRequest.
+        $query .= " ORDER BY `PurchaseRequest`.`RequestDate` DESC, `PurchaseRequest`.`RequestID` DESC;";
+        $allRow = array();
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                array_push($allRow, $resultRow);
+            }
+        }
+        return $allRow;
+    }
+
+    // Return all rows of On Sale (based on CompanyID, OrchardID, BlockID, SaleID if provided).
+    function getAllOnSale($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $saleID = 0) {
+        $query = "SELECT * FROM `OnSale`";
+        $query .= " INNER JOIN `Block` ON `OnSale`.`BlockID` = `Block`.`BlockID`";
+        $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $multiWhere = true;
+        }
+
+        if ($orchardID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($blockID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Block`.`BlockID` = $blockID";
+            }
+            else {
+                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($saleID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `OnSale`.`SaleID` = $saleID";
+            }
+            else {
+                $query .= " WHERE `OnSale`.`SaleID` = $saleID";
+                $multiWhere = true;
+            }
+        }
+
+        // Latest On Sale.
+        $query .= " ORDER BY `OnSale`.`SaleDate` DESC, `OnSale`.`SaleID` DESC;";
+        $allRow = array();
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                array_push($allRow, $resultRow);
+            }
+        }
+        return $allRow;
+    }
+
+    // Return PurchaseRequest ApprovalStatus string.
+    function getApprovalStatusStr($approvalStatus) {
+        if ($approvalStatus < 1) {
+            return "Not Processed";
+        }
+        elseif ($approvalStatus == 1) {
+            return "Approved";
+        }
+        else {
+            return "Rejected";
+        }
+    }
 ?>
