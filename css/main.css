@@ -24,12 +24,13 @@
 .w3-hover-text-theme:hover {color:#00a591 !important}
 .w3-hover-border-theme:hover {border-color:#00a591 !important}
 
+/*
 :root {
     --main-body-color: #EDF6F9;
-    /*--theme-color: #264861;*/
+    --theme-color: #264861;
     --theme-color: #51a98d;
     --hover-color: #FFDDD2;
-}
+}*/
 
 html {
   font-family: "Poppins", sans-serif;  
@@ -50,6 +51,19 @@ body {
     min-height: 100vh;
 }
 */
+
+table {
+  color:#000;
+  width:95%;
+}
+
+tr {
+  height: 50px;
+}
+
+td {
+  max-height: 50px
+}
 
 .title {
   text-align: center;
@@ -97,6 +111,93 @@ body {
 }
 
 /* FORM TYPOGRAPHY*/
+
+.btnMaxWidth {
+  max-width: 100%;
+}
+
+input[type=button], input[type=reset], input[type=submit] {
+  background-color: #51a98d;
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: uppercase;
+  font-size: 13px;
+  -webkit-box-shadow: 0 10px 30px 0 rgba(134,199,178,0.4);
+  box-shadow: 0 10px 30px 0 rgba(134,199,178,0.4);
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+  margin: 5px 20px 40px 20px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+  background-color: #86C7B2;
+}
+
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
+  -moz-transform: scale(0.95);
+  -webkit-transform: scale(0.95);
+  -o-transform: scale(0.95);
+  -ms-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+select {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 8px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=date], input[type=number] {
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 5px;
+  width: 95%;
+  border: 2px solid #f6f6f6;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus, input[type=number]:focus {
+  background-color: #fff;
+  border-bottom: 2px solid #86C7B2;
+}
+
+input[type=text]:placeholder, input[type=password]:placeholder, input[type=email]:placeholder, input[type=date]:placeholder, input[type=number]:placeholder {
+  color: #cccccc;
+}
 
 button  {
   background-color: #51a98d;
