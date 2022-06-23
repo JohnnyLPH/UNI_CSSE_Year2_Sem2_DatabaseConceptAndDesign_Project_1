@@ -17,10 +17,27 @@
         parse_str($_SERVER['QUERY_STRING'], $queryString);
     }
 
-    // Check if valid OrchardID is provided for search, set to 0 if not.
-    $orchardID = (!isset($queryString["SearchKey"]) || $queryString["SearchKey"] < 1) ? 0: $queryString["SearchKey"];
-    // Check if valid BlockID is provided for search, set to 0 if not.
-    $blockID = (!isset($queryString["SearchKey"]) || $queryString["SearchKey"] < 1) ? 0: $queryString["SearchKey"];
+    // Check if valid OrchardID or BlockID is provided for search, set to 0 if not.
+    $orchardID = $blockID = (
+        !isset($queryString["SearchKey"]) ||
+        $queryString["SearchKey"] < 1
+    ) ? 0: $queryString["SearchKey"];
+
+    // Check if valid SearchOption is provided.
+    $searchOption = (
+        !isset($queryString["SearchOption"]) ||
+        $queryString["SearchOption"] < 1 ||
+        $queryString["SearchOption"] > 2
+    ) ? 1: $queryString["SearchOption"];
+
+    // Search by OrchardID.
+    if ($searchOption == 1) {
+        $blockID = 0;
+    }
+    // Search by BlockID.
+    else {
+        $orchardID = 0;
+    }
 
     // Return all the block.
     $allBlock = getAllBlock($conn, $_SESSION["UserID"], $orchardID, $blockID);
@@ -46,8 +63,99 @@
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
 
         <main>
-            <h2>Block:</h2>
+            <h2>All Blocks:</h2>
 
+            <form id="reset-search" method="get" action="/Company/manageBlock.php"></form>
+
+            <form method="get" action="/Company/manageBlock.php">
+                <input id="SearchKey" type="number" name="SearchKey" value="<?php
+                    // Valid SearchKey.
+                    if ($orchardID > 0) {
+                        echo($orchardID);
+                    }
+                    elseif ($blockID > 0) {
+                        echo($blockID);
+                    }
+                ?>" placeholder="Enter Orchard/Block ID" min="1" required>
+
+                <!-- <label for="SearchOption">Search By:</label> -->
+                <select id="SearchOption" name="SearchOption">
+                    <option value="1"<?php
+                        if ($searchOption == 1) {
+                            echo(" selected");
+                        }
+                    ?>>OrchardID</option>
+                    <option value="2"<?php
+                        if ($searchOption == 2) {
+                            echo(" selected");
+                        }
+                    ?>>BlockID</option>
+                </select>
+                
+                <input type="submit" value="Search">
+
+                <input form="reset-search" type="submit" value="Reset"<?php
+                    // Disable if not searching.
+                    if ($orchardID < 1 && $blockID < 1) {
+                        echo(" disabled");
+                    }
+                ?>>
+            </form>
+
+            <?php if (count($allBlock) > 0): ?>
+                <table>
+                    <tr>
+                        <th>Block ID</th>
+                        <th>Orchard ID</th>
+                        <th>Total Tree</th>
+                        <th>Client Purchase</th>
+                        <th>Action</th>
+                    </tr>
+                    <?php foreach ($allBlock as $result): ?>
+                        <tr>
+                            <td><?php
+                                echo($result["BlockID"]);
+                            ?></td>
+
+                            <td><?php
+                                echo($result["OrchardID"]);
+                            ?></td>
+
+                            <td><?php
+                                echo(getTreeCount(
+                                    $conn, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
+                                ));
+                            ?></td>
+
+                            <td><?php
+                                echo(getPurchaseRequestCount(
+                                    $conn, 1, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
+                                ));
+                            ?></td>
+                            
+                            <td>
+                                <form method="get" action="/Company/viewEachBlock.php">
+                                    <input type="hidden" name="BlockID" value="<?php
+                                        echo($result["BlockID"]);
+                                    ?>">
+                                    <input type="submit" value="View">
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php else: ?>
+                <span>* <?php
+                    if ($searchOption == 1) {
+                        echo("Orchard ID $orchardID");
+                    }
+                    else {
+                        echo("Block ID $blockID");
+                    }
+                ?> does not exist or is not associated with <?php
+                    echo($_SESSION["Username"]);
+                ?>! *</span>
+            <?php endif; ?>
         </main>
 
         <footer>

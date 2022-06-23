@@ -188,7 +188,8 @@
 
     // Return all rows of Orchard (based on CompanyID, OrchardID, BlockID if provided).
     function getAllBlock($conn, $companyID = 0, $orchardID = 0, $blockID = 0) {
-        $query = "SELECT * FROM `Orchard`";
+        $query = "SELECT * FROM `Block`";
+        $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
         
         // Add WHERE Clause.
         $multiWhere = false;
@@ -204,6 +205,16 @@
             }
             else {
                 $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($blockID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Block`.`BlockID` = $blockID";
+            }
+            else {
+                $query .= " WHERE `Block`.`BlockID` = $blockID";
                 $multiWhere = true;
             }
         }

@@ -54,7 +54,7 @@
                     if ($orchardID > 0) {
                         echo($orchardID);
                     }
-                ?>" placeholder="Search Orchard ID" min="1" required>
+                ?>" placeholder="Enter Orchard ID" min="1" required>
                 
                 <input type="submit" value="Search">
 
