@@ -11,7 +11,8 @@
         exit;
     }
 
-    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempSalary = $tempEDate = $isManager = "";
+    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempSalary = $tempEDate = "";
+    $tempCompany = 14;
     $registrationMsg = "";
     $passRegistration = false;
 
@@ -25,7 +26,7 @@
             !isset($_POST["ReconfirmPassword"]) || empty($_POST["ReconfirmPassword"]) ||
             !isset($_POST["EmploymentDate"]) || empty($_POST["EmploymentDate"] ||
             !isset($_POST["tempSalary"]) || empty($_POST["tempSalary"]) ||
-            !isset($_POST["isManager"]) || empty($_POST["isManager"]))
+            !isset($_POST["tempCompany"]) || empty($_POST["tempCompany"]))
         ) {
             $registrationMsg = "* Fill in ALL Fields! *";
         }
@@ -37,7 +38,7 @@
             $tempRPass = cleanInput($_POST["ReconfirmPassword"]);
             $tempEDate = cleanInput($_POST["EmploymentDate"]);
             $tempSalary = cleanInput($_POST["tempSalary"]);
-            $isManager = cleanInput($_POST["isManager"]);
+            // $tempCompany = cleanInput($_POST["tempCompany"]);
 
             $tempID = $tempHash = "";
 
@@ -49,7 +50,7 @@
                 empty($tempRPass) ||
                 empty($tempEDate) ||
                 empty($tempSalary) ||
-                empty($isManager)
+                empty($tempCompany)
             ) {
                 $registrationMsg = "* Fill in ALL Fields! *";
             }
@@ -99,8 +100,8 @@
                                 $tempID = $user["UserID"];
                                 
                                 // Insert with the obtained UserID.
-                                $query = "INSERT INTO `Staff`(`UserID`, `EmployDate`, `Salary`, `isManager`)";
-                                $query .= " VALUES ('$tempID','$tempEDate', '$tempSalary', '$isManager')";
+                                $query = "INSERT INTO `Staff`(`UserID`, `EmployDate`, `Salary`, `CompanyID`)";
+                                $query .= " VALUES ('$tempID','$tempEDate', '$tempSalary', '$tempCompany')";
                                 $rs = $conn->query($query);
 
                                 if (!$rs) {
@@ -116,7 +117,7 @@
                     // Check if the data is successfully inserted.
                     if ($passRegistration) {
                         // Reset to empty.
-                        $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempSalary = $tempEDate = $isManager = "";
+                        $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempSalary = $tempEDate = $tempCompany = "";
                         $registrationMsg = "* User is successfully registered and can be used for login! *";
                     }
                 }
@@ -188,20 +189,19 @@
                         </td>
                     </tr>
 
-                    <tr>
-                        <!-- isManager -->
+                    <!-- <tr>
                         <td>
                             <div>
-                                <label for="isManager">
-                                    Is he/she a manager?
+                                <label for="tempCompany">
+                                    Company?
                                 </label><br>
-                                <input id="isManager_true" type="radio" name="isManager" required>
-                                <label for="isManager_true">Yes</label>
-                                <input id="isManager_false" type="radio" name="isManager" required>
-                                <label for="isManager_false">No</label>
+                                <input id="tempCompany_true" type="radio" name="tempCompany" required>
+                                <label for="tempCompany_true">A</label>
+                                <input id="tempCompany_false" type="radio" name="tempCompany" required>
+                                <label for="tempCompany_false">B</label>
                             </div>
                         </td>
-                    </tr>
+                    </tr> -->
 
                     <tr>
                         <!-- Salary -->
