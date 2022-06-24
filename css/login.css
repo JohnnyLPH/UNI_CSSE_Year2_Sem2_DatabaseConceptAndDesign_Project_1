@@ -48,32 +48,32 @@ body {
 a {
   font-family: "Poppins", sans-serif !important;
   /*color: #92badd;*/
-  color: #51a98d;
-  display:inline-block;
-  text-decoration: none;
-  font-weight: 400;
+  color: #51a98d !important;
+  display:inline-block !important;
+  text-decoration: none !important;
+  font-weight: 400 !important;
 }
 
 h2 {
   font-family: "Poppins", sans-serif !important;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  display:inline-block;
-  margin: 40px 8px 10px 8px; 
-  color: #cccccc;
+  text-align: center !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  display:inline-block !important;
+  margin: 40px 8px 10px 8px !important; 
+  color: #cccccc !important;
 }
 
 h1 {
     font-family: "Poppins", sans-serif !important;
-    text-align: center;
-    font-size: 28px;
-    font-weight: 600;
-    text-transform: uppercase;
-    display:inline-block;
-    margin: 40px 8px 10px 8px; 
-    color: #000000;
+    text-align: center !important;
+    font-size: 28px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    display:inline-block !important;
+    margin: 40px 8px 10px 8px !important; 
+    color: #000000 !important;
   }
 
 header {
@@ -282,12 +282,12 @@ div.data-value div.data-group span.data-title {
 /* TABS */
 
 h2.inactive {
-  color: #cccccc;
+  color: #cccccc !important;
 }
 
 h2.active {
-  color: #0d0d0d;
-  border-bottom: 2px solid #86C7B2;
+  color: #0d0d0d !important;
+  border-bottom: 2px solid #86C7B2 !important;
 }
 
 
@@ -328,7 +328,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
   transform: scale(0.95);
 }
 
-input[type=text], input[type=password], input[type=email], input[type=date] {
+input[type=text], input[type=password], input[type=email], input[type=date], input[type=number] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -349,12 +349,12 @@ input[type=text], input[type=password], input[type=email], input[type=date] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus, input[type=number]:focus {
   background-color: #fff;
   border-bottom: 2px solid #86C7B2;
 }
 
-input[type=text]:placeholder, input[type=password]:placeholder, input[type=email]:placeholder, input[type=date]:placeholder {
+input[type=text]:placeholder, input[type=password]:placeholder, input[type=email]:placeholder, input[type=date]:placeholder, input[type=number]:placeholder {
   color: #cccccc;
 }
 

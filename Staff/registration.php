@@ -134,140 +134,150 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
-        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/login.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
     </head>
 
     <body>
         <header>
-            <h1>Staff: Registration Page</h1>
+            <!--<h1>Staff: Registration Page</h1>-->
         </header>
 
         <main>
-            <span><?php
-                echo($registrationMsg);
-            ?></span>
-            <form method="post" action="/Staff/registration.php">
-                <table>
-                    <tr>
-                        <!-- Username -->
-                        <td>
-                            <div>
-                                <label for="Username">
-                                    Username:
-                                </label><br>
-                                <input id="Username" type="text" name="Username" value="<?php 
-                                    echo($tempName);
-                                ?>" placeholder="Username" required>
-                            </div>
-                        </td>
+            <div class="wrapper fadeInDown">
+                <div id="formHeader">
+                    <h1>Staff Sign Up</h1>
+                </div>
 
-                        <!-- RealName -->
-                        <td>
-                            <div>
-                                <label for="RealName">
-                                    Staff Name:
-                                </label><br>
-                                <input id="RealName" type="text" name="RealName" value="<?php
-                                    echo($tempRName);
-                                ?>" placeholder="Staff Name" required>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <!-- Email -->
-                        <td>
-                            <div>
-                                <label for="Email">
-                                    Email:
-                                </label><br>
-                                <input id="Email" type="email" name="Email" value="<?php
-                                    echo($tempEmail);
-                                ?>" placeholder="abc@email.com" required>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <!-- <tr>
-                        <td>
-                            <div>
-                                <label for="tempCompany">
-                                    Company?
-                                </label><br>
-                                <input id="tempCompany_true" type="radio" name="tempCompany" required>
-                                <label for="tempCompany_true">A</label>
-                                <input id="tempCompany_false" type="radio" name="tempCompany" required>
-                                <label for="tempCompany_false">B</label>
-                            </div>
-                        </td>
-                    </tr> -->
-
-                    <tr>
-                        <!-- Salary -->
-                        <td>
-                            <div>
-                                <label for="tempSalary">
-                                    Salary:
-                                </label><br>
-                                <input id="tempSalary" type="number" name="tempSalary" value="<?php
-                                    echo($tempSalary);
-                                ?>" placeholder="Salary" required>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <!-- EmploymentDate -->
-                        <td>
-                            <div>
-                                <label for="EmploymentDate">
-                                    Employment Date:
-                                </label><br>
-                                <input id="EmploymentDate" type="date" name="EmploymentDate" value="<?php
-                                    echo($tempEDate);
-                                ?>" placeholder="Employment Date" required>
-                            </div>
-                        </td>
-                    </tr>
+                <div id="formContentW2">
+                    <img class="fadeIn first" src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="Comp Icon" />
                     
-                    <tr>
-                        <!-- Password -->
-                        <td>
-                            <div>
-                                <label for="Password">
-                                    Password:
-                                </label><br>
-                                <input id="Password" type="password" name="Password" placeholder="Password" required>
-                            </div>
-                        </td>
+                    <span><?php
+                    echo($registrationMsg);
+                    ?></span>
+                    
+                    <form method="post" action="/Staff/registration.php">
+                        <table>
+                            <tr class="fadeIn second">
+                                <!-- Username -->
+                                <td>
+                                    <div>
+                                        <label for="Username">
+                                            Username:
+                                        </label><br>
+                                        <input id="Username" type="text" name="Username" value="<?php 
+                                            echo($tempName);
+                                        ?>" placeholder="Username" required>
+                                    </div>
+                                </td>
 
-                        <!-- ReconfirmPassword -->
-                        <td>
-                            <div>
-                                <label for="ReconfirmPassword">
-                                    Reconfirm Password:
-                                </label><br>
-                                <input id="ReconfirmPassword" type="password" name="ReconfirmPassword" placeholder="Reconfirm Password" required>
-                            </div>
-                        </td> 
-                    </tr>
+                                <!-- RealName -->
+                                <td>
+                                    <div>
+                                        <label for="RealName">
+                                            Staff Name:
+                                        </label><br>
+                                        <input id="RealName" type="text" name="RealName" value="<?php
+                                            echo($tempRName);
+                                        ?>" placeholder="Staff Name" required>
+                                    </div>
+                                </td>
+                            </tr>
 
-                    <tr>
-                        <td>
-                            <div>
-                                <button type="submit">
-                                    Register Now
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <br>
+                            <tr class="fadeIn third">
+                                <!-- Email -->
+                                <td>
+                                    <div>
+                                        <label for="Email">
+                                            Email:
+                                        </label><br>
+                                        <input id="Email" type="email" name="Email" value="<?php
+                                            echo($tempEmail);
+                                        ?>" placeholder="abc@email.com" required>
+                                    </div>
+                                </td>
+                            </tr>
 
-            <a href="/login.php?UserType=ST">Back to Login</a><br>
+                            <!-- <tr>
+                                <td>
+                                    <div>
+                                        <label for="tempCompany">
+                                            Company?
+                                        </label><br>
+                                        <input id="tempCompany_true" type="radio" name="tempCompany" required>
+                                        <label for="tempCompany_true">A</label>
+                                        <input id="tempCompany_false" type="radio" name="tempCompany" required>
+                                        <label for="tempCompany_false">B</label>
+                                    </div>
+                                </td>
+                            </tr> -->
+
+                            <tr class="fadeIn fourth">
+                                <!-- Salary -->
+                                <td>
+                                    <div>
+                                        <label for="tempSalary">
+                                            Salary:
+                                        </label><br>
+                                        <input id="tempSalary" type="number" name="tempSalary" value="<?php
+                                            echo($tempSalary);
+                                        ?>" placeholder="Salary" required>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="fadeIn fifth">
+                                <!-- EmploymentDate -->
+                                <td>
+                                    <div>
+                                        <label for="EmploymentDate">
+                                            Employment Date:
+                                        </label><br>
+                                        <input id="EmploymentDate" type="date" name="EmploymentDate" value="<?php
+                                            echo($tempEDate);
+                                        ?>" placeholder="Employment Date" required>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                            <tr class="fadeIn sixth">
+                                <!-- Password -->
+                                <td>
+                                    <div>
+                                        <label for="Password">
+                                            Password:
+                                        </label><br>
+                                        <input id="Password" type="password" name="Password" placeholder="Password" required>
+                                    </div>
+                                </td>
+
+                                <!-- ReconfirmPassword -->
+                                <td>
+                                    <div>
+                                        <label for="ReconfirmPassword">
+                                            Reconfirm Password:
+                                        </label><br>
+                                        <input id="ReconfirmPassword" type="password" name="ReconfirmPassword" placeholder="Reconfirm Password" required>
+                                    </div>
+                                </td> 
+                            </tr>
+
+                            <tr class="fadeIn sixth">
+                                <td colspan="2">
+                                    <br>
+                                    <input type="submit" value="Sign Up"></input>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+
+                    <div id="formFooter">
+                        <h2><a class="underlineHover" href="/login.php?UserType=ST">Back to Login</a></h2><br>
+                    </div>
+                </div>
+            </div>
         </main>
 
         <footer>

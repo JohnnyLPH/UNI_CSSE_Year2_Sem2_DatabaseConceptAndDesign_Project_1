@@ -242,7 +242,7 @@
                     </form>
                     <br>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/login.php?UserType=CO">Back to Login</a><br></h2>
+                        <h2><a class="underlineHover" href="/login.php?UserType=CO">Back to Login</a><h2><br>
                     </div>
                     
                 </div>
