@@ -30,10 +30,9 @@
 
     $blockID = $queryString["BlockID"];
     $result = $allBlock[0];
-    
+
     $allPurchaseRequest = getAllPurchaseRequest($conn, -1, $_SESSION["UserID"], 0, $queryString["BlockID"]);
     $allOnSale = getAllOnSale($conn, $_SESSION["UserID"], 0, $queryString["BlockID"]);
-    $allSale = "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +90,6 @@
                     </form>
                 </div>
                 <div class="w3-container w3-threequarter w3-theme-d4 w3-animate-left" style="margin-left:25%; padding-bottom:2%;">
-
                     <h2>Block ID <?php
                         echo($blockID);
                     ?>:</h2>
@@ -136,6 +134,7 @@
                             <tr>
                                 <th>Request ID</th>
                                 <th>Request Date</th>
+                                <th>Request Price (RM)</th>
                                 <th>Approval Status</th>
                                 <th>Action</th>
                             </tr>
@@ -147,6 +146,10 @@
 
                                     <td><?php
                                         echo($result["RequestDate"]);
+                                    ?></td>
+
+                                    <td><?php
+                                        echo($result["RequestPrice"]);
                                     ?></td>
 
                                     <td><?php
@@ -169,14 +172,14 @@
                             echo($blockID);
                         ?>! *</span>
                     <?php endif; ?>
-                
+
                     <h3>On Sale History:</h3>
                     <?php if (count($allOnSale) > 0): ?>
                         <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
                             <tr>
                                 <th>Sale ID</th>
                                 <th>Sale Date</th>
-                                <th>Sale Price</th>
+                                <th>Sale Price (RM)</th>
                             </tr>
                             <?php foreach ($allOnSale as $result): ?>
                                 <tr>

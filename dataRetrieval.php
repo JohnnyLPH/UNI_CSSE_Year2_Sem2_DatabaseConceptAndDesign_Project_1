@@ -285,9 +285,68 @@
         return $allRow;
     }
 
-    // Return all rows of Purchase Request (based on ApprovalStatus, CompanyID, OrchardID, BlockID, RequestID if provided).
-    function getAllPurchaseRequest($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $requestID = 0) {
+    // Return all rows of Orchard (based on CompanyID, OrchardID, BlockID, TreeID if provided).
+    function getAllTreeUpdate($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $treeID = 0) {
+        $query = "SELECT * FROM `TreeUpdate`";
+        $query .= " INNER JOIN `Tree` ON `TreeUpdate`.`TreeID` = `Tree`.`TreeID`";
+        $query .= " INNER JOIN `Block` ON `Tree`.`BlockID` = `Block`.`BlockID`";
+        $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
+        
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $multiWhere = true;
+        }
+
+        if ($orchardID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($blockID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Block`.`BlockID` = $blockID";
+            }
+            else {
+                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($treeID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Tree`.`TreeID` = $treeID";
+            }
+            else {
+                $query .= " WHERE `Tree`.`TreeID` = $treeID";
+                $multiWhere = true;
+            }
+        }
+
+        // Latest TreeUpdate.
+        $query .= " ORDER BY `TreeUpdate`.`UpdateDate` DESC, `TreeUpdate`.`UpdateID` DESC;";
+        $allRow = array();
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                array_push($allRow, $resultRow);
+            }
+        }
+        return $allRow;
+    }
+
+    // Return all rows of Purchase Request (based on ApprovalStatus, CompanyID, OrchardID, BlockID, RequestID, SaleID, ClientID if provided).
+    function getAllPurchaseRequest($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $requestID = 0, $saleID = 0, $clientID = 0) {
         $query = "SELECT * FROM `PurchaseRequest`";
+        $query .= " INNER JOIN `Client` ON `PurchaseRequest`.`ClientID` = `Client`.`UserID`";
+        $query .= " INNER JOIN `User` ON `Client`.`UserID` = `User`.`UserID`";
         $query .= " INNER JOIN `OnSale` ON `PurchaseRequest`.`SaleID` = `OnSale`.`SaleID`";
         $query .= " INNER JOIN `Block` ON `OnSale`.`BlockID` = `Block`.`BlockID`";
         $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
@@ -336,6 +395,26 @@
             }
             else {
                 $query .= " WHERE `PurchaseRequest`.`RequestID` = $requestID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($saleID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `PurchaseRequest`.`SaleID` = $saleID";
+            }
+            else {
+                $query .= " WHERE `PurchaseRequest`.`SaleID` = $saleID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($clientID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `PurchaseRequest`.`ClientID` = $clientID";
+            }
+            else {
+                $query .= " WHERE `PurchaseRequest`.`ClientID` = $clientID";
                 $multiWhere = true;
             }
         }
@@ -418,6 +497,19 @@
         }
         else {
             return "Rejected";
+        }
+    }
+
+    // Return TreeUpdate Status string.
+    function getTreeUpdateStatus($status) {
+        if ($status == 'Y') {
+            return "Yellow";
+        }
+        elseif ($status == 'R') {
+            return "Red";
+        }
+        else {
+            return "Green";
         }
     }
 ?>
