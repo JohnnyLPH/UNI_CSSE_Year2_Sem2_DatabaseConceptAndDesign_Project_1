@@ -54,71 +54,79 @@
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
 
         <main>
-            <h2>Tree ID <?php
-                echo($treeID);
-            ?>:</h2>
+            <div class="w3-row">
+            <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
+                <br>
+                <form method="get" action="/Company/viewEachOrchard.php">
+                    <input type="hidden" name="OrchardID" value="<?php
+                        echo($result["OrchardID"]);
+                    ?>">
+                    <input type="submit" value="View Related Orchard">
+                </form>
 
-            <table>
-                <tr>
-                    <td>Tree ID</td>
-                    <td><?php
-                        echo($result["TreeID"]);
-                    ?></td>
-                </tr>
-
-                <tr>
-                    <td>Species Name</td>
-                    <td><?php
-                        echo($result["SpeciesName"]);
-                    ?></td>
-                </tr>
-
-                <tr>
-                    <td>Latitude</td>
-                    <td><?php
-                        echo($result["Latitude"]);
-                    ?></td>
-                </tr>
-
-                <tr>
-                    <td>Longitude</td>
-                    <td><?php
-                        echo($result["Longitude"]);
-                    ?></td>
-                </tr>
-
-                <tr>
-                    <td>Plant Date</td>
-                    <td><?php
-                        echo($result["PlantDate"]);
-                    ?></td>
-                </tr>
-
-                <tr>
-                    <td>Block ID</td>
-                    <td><?php
+                <form method="get" action="/Company/viewEachBlock.php">
+                    <input type="hidden" name="BlockID" value="<?php
                         echo($result["BlockID"]);
-                    ?></td>
-                </tr>
-            </table>
+                    ?>">
+                    <input type="submit" value="View Related Block">
+                </form>
 
-            <form method="get" action="/Company/viewEachOrchard.php">
-                <input type="hidden" name="OrchardID" value="<?php
-                    echo($result["OrchardID"]);
-                ?>">
-                <input type="submit" value="View Related Orchard">
-            </form>
+                <form method="get" action="/Company/manageTree.php">
+                    <input type="submit" value="Back to View All Trees">
+                </form>
+            </div>
 
-            <form method="get" action="/Company/viewEachBlock.php">
-                <input type="hidden" name="BlockID" value="<?php
-                    echo($result["BlockID"]);
-                ?>">
-                <input type="submit" value="View Related Block">
-            </form>
+            <div class="w3-container w3-threequarter w3-theme-d4 w3-animate-left" style="margin-left:25%; padding-bottom:2%;">
+                <h2>Tree ID <?php
+                    echo($treeID);
+                ?>:</h2>
 
-            <form method="get" action="/Company/manageTree.php">
-                <input type="submit" value="Back to View All Trees">
-            </form>
+                <table class=" w3-center w3-table-all" style="width:100%">
+                    <tr>
+                        <td>Tree ID</td>
+                        <td><?php
+                            echo($result["TreeID"]);
+                        ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Species Name</td>
+                        <td><?php
+                            echo($result["SpeciesName"]);
+                        ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Latitude</td>
+                        <td><?php
+                            echo($result["Latitude"]);
+                        ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Longitude</td>
+                        <td><?php
+                            echo($result["Longitude"]);
+                        ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Plant Date</td>
+                        <td><?php
+                            echo($result["PlantDate"]);
+                        ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Block ID</td>
+                        <td><?php
+                            echo($result["BlockID"]);
+                        ?></td>
+                    </tr>
+                </table>
+
+                
+            </div>
         </main>
 
         <footer>

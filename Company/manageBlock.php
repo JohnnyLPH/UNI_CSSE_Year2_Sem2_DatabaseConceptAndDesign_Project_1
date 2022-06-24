@@ -105,7 +105,7 @@
 
                 <div class="w3-container w3-center" style="align-content:center;">
                     <?php if (count($allBlock) > 0): ?>
-                        <table class=" w3-center w3-table-all w3-hoverable" style="width:100%">
+                        <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
                             <tr>
                                 <th>Block ID</th>
                                 <th>Orchard ID</th>
