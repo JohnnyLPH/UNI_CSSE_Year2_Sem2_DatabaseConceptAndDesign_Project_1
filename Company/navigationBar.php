@@ -1,4 +1,4 @@
-<nav div class="w3-bar w3-theme-d5">
+<nav div class="w3-bar w3-theme-d5 sticky_nav_bar">
     <a href="/Company/index.php" class="w3-bar-item w3-button btnAnim w3-padding-16">Home</a>
     <a href="/Company/manageOrchard.php" class="w3-bar-item w3-button btnAnim w3-padding-16">Manage Orchard</a>
     <a href="/Company/manageBlock.php" class="w3-bar-item w3-button btnAnim w3-padding-16">Manage Block</a>

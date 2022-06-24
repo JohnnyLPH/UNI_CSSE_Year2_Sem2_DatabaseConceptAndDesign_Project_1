@@ -32,7 +32,15 @@
     --hover-color: #FFDDD2;
 }*/
 
-
+nav.sticky_nav_bar {
+  padding: 0;
+  background-color: var(--medium-dark-shade-of-cyan-);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  overflow: hidden;
+}
 
 html {
   font-family: "Poppins", sans-serif !important;  
