@@ -153,6 +153,68 @@
         return 0;
     }
 
+    // Get Block Latest Client (can be used to find Current Owner of the Block).
+    function getBlockLatestClient($conn, $companyID = 0, $orchardID = 0, $blockID = 0) {
+        // SQL:
+        // SELECT * FROM `Block`
+        // INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`
+        // LEFT JOIN `OnSale` ON `Block`.`BlockID` = `OnSale`.`BlockID`
+        // LEFT JOIN `PurchaseRequest` ON `OnSale`.`SaleID` = `PurchaseRequest`.`SaleID`
+        // LEFT JOIN `Client` ON `PurchaseRequest`.`ClientID` = `Client`.`UserID`
+        // LEFT JOIN `User` ON `Client`.`UserID` = `User`.`UserID`
+        // ORDER BY `Block`.`BlockID`, `OnSale`.`SaleID` DESC, `PurchaseRequest`.`RequestID` DESC;
+        $query = "SELECT * FROM `Block`";
+        $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
+        $query .= " LEFT JOIN `OnSale` ON `Block`.`BlockID` = `OnSale`.`BlockID`";
+        $query .= " LEFT JOIN `PurchaseRequest` ON `OnSale`.`SaleID` = `PurchaseRequest`.`SaleID`";
+        $query .= " LEFT JOIN `Client` ON `PurchaseRequest`.`ClientID` = `Client`.`UserID`";
+        $query .= " LEFT JOIN `User` ON `Client`.`UserID` = `User`.`UserID`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $multiWhere = true;
+        }
+
+        if ($orchardID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($blockID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Block`.`BlockID` = $blockID";
+            }
+            else {
+                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $multiWhere = true;
+            }
+        }
+
+        // Block Latest Client.
+        $query .= " ORDER BY `Block`.`BlockID`, `OnSale`.`SaleID` DESC, `PurchaseRequest`.`RequestID` DESC;";
+        $allRow = array();
+        $lastCheckBlock = 0;
+
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                if ($resultRow["BlockID"] != $lastCheckBlock) {
+                    array_push($allRow, $resultRow);
+                    $lastCheckBlock = $resultRow["BlockID"];
+                }
+            }
+        }
+        return $allRow;
+    }
+
     // Return all rows of Orchard (based on CompanyID, OrchardID if provided).
     function getAllOrchard($conn, $companyID = 0, $orchardID = 0) {
         $query = "SELECT * FROM `Orchard`";

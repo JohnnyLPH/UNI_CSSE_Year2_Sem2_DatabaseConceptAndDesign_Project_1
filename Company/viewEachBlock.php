@@ -31,6 +31,19 @@
     $blockID = $queryString["BlockID"];
     $result = $allBlock[0];
 
+    $allBlockClient = getBlockLatestClient($conn, $_SESSION["UserID"], 0, $queryString["BlockID"]);
+    $clientID = $clientName = "None";
+    // Valid Owner of the Block.
+    if (
+        count($allBlockClient) > 0 &&
+        $allBlockClient[0]["BlockID"] == $result["BlockID"] &&
+        $allBlockClient[0]["ClientID"] > 0 &&
+        $allBlockClient[0]["ApprovalStatus"] == 1
+    ) {
+        $clientID = $allBlockClient[0]["ClientID"];
+        $clientName = $allBlockClient[0]["RealName"];
+    }
+
     $allPurchaseRequest = getAllPurchaseRequest($conn, -1, $_SESSION["UserID"], 0, $queryString["BlockID"]);
     $allOnSale = getAllOnSale($conn, $_SESSION["UserID"], 0, $queryString["BlockID"]);
 ?>
@@ -119,6 +132,20 @@
                         </tr>
 
                         <tr>
+                            <td>Client ID (Owner)</td>
+                            <td><?php
+                                echo($clientID);
+                            ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Client Name (Owner)</td>
+                            <td><?php
+                                echo($clientName);
+                            ?></td>
+                        </tr>
+
+                        <tr>
                             <td>Client Purchase</td>
                             <td><?php
                                 echo(getPurchaseRequestCount(
@@ -133,6 +160,7 @@
                         <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
                             <tr>
                                 <th>Request ID</th>
+                                <th>Sale ID</th>
                                 <th>Request Date</th>
                                 <th>Request Price (RM)</th>
                                 <th>Approval Status</th>
@@ -142,6 +170,10 @@
                                 <tr>
                                     <td><?php
                                         echo($result["RequestID"]);
+                                    ?></td>
+
+                                    <td><?php
+                                        echo($result["SaleID"]);
                                     ?></td>
 
                                     <td><?php

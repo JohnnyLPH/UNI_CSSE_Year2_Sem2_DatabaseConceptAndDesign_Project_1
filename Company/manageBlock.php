@@ -41,6 +41,9 @@
 
     // Return all the block.
     $allBlock = getAllBlock($conn, $_SESSION["UserID"], $orchardID, $blockID);
+    
+    // Return all the block latest client.
+    $allBlockClient =  getBlockLatestClient($conn, $_SESSION["UserID"], $orchardID, $blockID);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +62,7 @@
         <header>
             <div class="maintheme w3-container">
                 <h1>Company: Manage Block Page</h1>
-            </div>           
+            </div>
         </header>
 
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
@@ -112,6 +115,7 @@
                                 <th>Block ID</th>
                                 <th>Orchard ID</th>
                                 <th>Total Tree</th>
+                                <th>Client ID (Owner)</th>
                                 <th>Client Purchase</th>
                                 <th>Action</th>
                             </tr>
@@ -129,6 +133,26 @@
                                         echo(getTreeCount(
                                             $conn, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
                                         ));
+                                    ?></td>
+
+                                    <td><?php
+                                        $foundClient = false;
+
+                                        foreach ($allBlockClient as $blockClient) {
+                                            // Valid Owner of the Block.
+                                            if (
+                                                $blockClient["BlockID"] == $result["BlockID"] &&
+                                                $blockClient["ClientID"] > 0 &&
+                                                $blockClient["ApprovalStatus"] == 1
+                                            ) {
+                                                echo($blockClient["ClientID"]);
+                                                $foundClient = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!$foundClient) {
+                                            echo("None");
+                                        }
                                     ?></td>
 
                                     <td><?php
