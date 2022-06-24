@@ -170,7 +170,6 @@
                     <div id="embedMap" style="width: 490px; height: 490px;" class="w3-container w3-half">
                         <!--Google map will be embedded here-->
                     </div>
-
                 </div>
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
@@ -202,12 +201,6 @@
                         <input type="submit" value="Back to View All Orchards">
                     </form>
                 </div>
-                <!--
-                <a class="w3-bar-item w3-button btnAnim w3-padding-16" href="/Company/manageBlock.php">View Related Blocks</a>
-                <a class="w3-bar-item w3-button btnAnim w3-padding-16" href="/Company/manageTree.php">View Related Trees</a>
-                <a class="w3-bar-item w3-button btnAnim w3-padding-16" href="/Company/managePurchase.php">View Related Purchases</a>
-                <a class="w3-bar-item w3-button btnAnim w3-padding-16" href="/Company/manageOrchard.php">Back to View All Orchards</a>
-                -->
             </div>
         </main>
 

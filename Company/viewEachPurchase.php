@@ -56,24 +56,38 @@
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
 
         <main>
-            <div class="w3-container w3-theme-d4 w3-animate-opacity">
-                <br>
-                <h2 class="w3-center">Purchase Request ID <?php
-                    echo($requestID);
-                ?>:</h2>
-                <div class="w3-container w3-center" style="align-content:center;">
-                    <table class=" w3-center w3-table-all w3-hoverable" style="width:100%">
+            <div class="w3-row">
+                <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
+                    <br>
+                    <form method="get" action="/Company/viewEachOrchard.php">
+                        <input type="hidden" name="OrchardID" value="<?php
+                            echo($result["OrchardID"]);
+                        ?>">
+                        <input type="submit" value="View Related Orchard">
+                    </form>
+
+                    <form method="get" action="/Company/viewEachBlock.php">
+                        <input type="hidden" name="BlockID" value="<?php
+                            echo($result["BlockID"]);
+                        ?>">
+                        <input type="submit" value="View Related Block">
+                    </form>
+
+                    <form method="get" action="/Company/managePurchase.php">
+                        <input type="submit" value="Back to View All Purchases">
+                    </form>
+                </div>
+
+                <div class="w3-container w3-threequarter w3-theme-d4 w3-animate-left" style="margin-left:25%; padding-bottom:2%;">
+                    <h2>Purchase Request ID <?php
+                        echo($requestID);
+                    ?>:</h2>
+
+                    <table class=" w3-center w3-table-all" style="width:100%">
                         <tr>
                             <td>Request ID</td>
                             <td><?php
                                 echo($result["RequestID"]);
-                            ?></td>
-                        </tr>
-
-                        <tr>
-                            <td>Sale ID</td>
-                            <td><?php
-                                echo($result["SaleID"]);
                             ?></td>
                         </tr>
 
@@ -85,6 +99,13 @@
                         </tr>
 
                         <tr>
+                            <td>Client Name</td>
+                            <td><?php
+                                echo($result["RealName"]);
+                            ?></td>
+                        </tr>
+
+                        <tr>
                             <td>Request Date</td>
                             <td><?php
                                 echo($result["RequestDate"]);
@@ -92,7 +113,7 @@
                         </tr>
 
                         <tr>
-                            <td>Request Price</td>
+                            <td>Request Price (RM)</td>
                             <td><?php
                                 echo($result["RequestPrice"]);
                             ?></td>
@@ -101,7 +122,7 @@
                         <tr>
                             <td>Admin ID</td>
                             <td><?php
-                                echo($result["AdminID"]);
+                                echo((empty($result["AdminID"])) ? "None": $result["AdminID"]);
                             ?></td>
                         </tr>
 
@@ -112,19 +133,45 @@
                             ?></td>
                         </tr>
                     </table>
-                </div>
 
-                <div class="wrapper w3-theme-d4 ">
-                    <form method="get" action="/Company/viewEachBlock.php">
-                        <input type="hidden" name="BlockID" value="<?php
-                            echo($result["BlockID"]);
-                        ?>">
-                        <input type="submit" value="View Related Block">
-                    </form>
+                    <h3>Target Sale:</h3>
 
-                    <form method="get" action="/Company/managePurchase.php">
-                        <input type="submit" value="Back to View All Purchases">
-                    </form>
+                    <table class=" w3-center w3-table-all" style="width:100%">
+                        <tr>
+                            <td>Sale ID</td>
+                            <td><?php
+                                echo($result["SaleID"]);
+                            ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Sale Date</td>
+                            <td><?php
+                                echo($result["SaleDate"]);
+                            ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Sale Price (RM)</td>
+                            <td><?php
+                                echo($result["SalePrice"]);
+                            ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Block ID</td>
+                            <td><?php
+                                echo($result["BlockID"]);
+                            ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Orchard ID</td>
+                            <td><?php
+                                echo($result["OrchardID"]);
+                            ?></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </main>

@@ -171,7 +171,7 @@
                             else {
                                 echo("Tree ID $treeID");
                             }
-                        ?> is not associated with any trees of <?php
+                        ?> is not associated with any tree of <?php
                             echo($_SESSION["Username"]);
                         ?>! *</span>
                     <?php endif; ?>

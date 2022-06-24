@@ -157,7 +157,7 @@
                             else {
                                 echo("Block ID $blockID");
                             }
-                        ?> is not associated with any blocks of <?php
+                        ?> is not associated with any block of <?php
                             echo($_SESSION["Username"]);
                         ?>! *</span>
                     <?php endif; ?>
