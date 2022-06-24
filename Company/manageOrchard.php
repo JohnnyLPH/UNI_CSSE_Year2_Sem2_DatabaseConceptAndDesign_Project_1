@@ -105,6 +105,7 @@
                                 </tr>
                             <?php endforeach; ?>
                         </table>
+                        <br>
                     <?php else: ?>
                         <span>* Orchard ID <?php
                             echo($orchardID);
@@ -112,7 +113,6 @@
                             echo($_SESSION["Username"]);
                         ?>! *</span>
                     <?php endif; ?>
-                    <br>
                 </div>
             </div>
         </main>

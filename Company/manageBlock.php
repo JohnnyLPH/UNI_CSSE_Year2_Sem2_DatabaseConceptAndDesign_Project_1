@@ -103,62 +103,62 @@
                     ?>>
                 </form>
 
-                <?php if (count($allBlock) > 0): ?>
-                    <div class="w3-container w3-center" style="align-content:center;">
-                    <table class=" w3-center w3-table-all w3-hoverable" style="width:100%">
-                        <tr>
-                            <th>Block ID</th>
-                            <th>Orchard ID</th>
-                            <th>Total Tree</th>
-                            <th>Client Purchase</th>
-                            <th>Action</th>
-                        </tr>
-                        <?php foreach ($allBlock as $result): ?>
+                <div class="w3-container w3-center" style="align-content:center;">
+                    <?php if (count($allBlock) > 0): ?>
+                        <table class=" w3-center w3-table-all w3-hoverable" style="width:100%">
                             <tr>
-                                <td><?php
-                                    echo($result["BlockID"]);
-                                ?></td>
-
-                                <td><?php
-                                    echo($result["OrchardID"]);
-                                ?></td>
-
-                                <td><?php
-                                    echo(getTreeCount(
-                                        $conn, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
-                                    ));
-                                ?></td>
-
-                                <td><?php
-                                    echo(getPurchaseRequestCount(
-                                        $conn, 1, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
-                                    ));
-                                ?></td>
-                                
-                                <td>
-                                    <form method="get" action="/Company/viewEachBlock.php">
-                                        <input type="hidden" name="BlockID" value="<?php
-                                            echo($result["BlockID"]);
-                                        ?>">
-                                        <input type="submit" value="View">
-                                    </form>
-                                </td>
+                                <th>Block ID</th>
+                                <th>Orchard ID</th>
+                                <th>Total Tree</th>
+                                <th>Client Purchase</th>
+                                <th>Action</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </table>
-                    <br>
-                <?php else: ?>
-                    <span>* <?php
-                        if ($searchOption == 1) {
-                            echo("Orchard ID $orchardID");
-                        }
-                        else {
-                            echo("Block ID $blockID");
-                        }
-                    ?> is not associated with any blocks of <?php
-                        echo($_SESSION["Username"]);
-                    ?>! *</span>
-                <?php endif; ?>
+                            <?php foreach ($allBlock as $result): ?>
+                                <tr>
+                                    <td><?php
+                                        echo($result["BlockID"]);
+                                    ?></td>
+
+                                    <td><?php
+                                        echo($result["OrchardID"]);
+                                    ?></td>
+
+                                    <td><?php
+                                        echo(getTreeCount(
+                                            $conn, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
+                                        ));
+                                    ?></td>
+
+                                    <td><?php
+                                        echo(getPurchaseRequestCount(
+                                            $conn, 1, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
+                                        ));
+                                    ?></td>
+                                    
+                                    <td>
+                                        <form method="get" action="/Company/viewEachBlock.php">
+                                            <input type="hidden" name="BlockID" value="<?php
+                                                echo($result["BlockID"]);
+                                            ?>">
+                                            <input type="submit" value="View">
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                        <br>
+                    <?php else: ?>
+                        <span>* <?php
+                            if ($searchOption == 1) {
+                                echo("Orchard ID $orchardID");
+                            }
+                            else {
+                                echo("Block ID $blockID");
+                            }
+                        ?> is not associated with any blocks of <?php
+                            echo($_SESSION["Username"]);
+                        ?>! *</span>
+                    <?php endif; ?>
                 </div>
             </div>
         </main>
