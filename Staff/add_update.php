@@ -87,6 +87,7 @@
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/formFont.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-vivid.css">
     <!--<link rel="shortcut icon" href="/favicon.ico">-->
     <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
 </head>
@@ -129,19 +130,28 @@
                     <input type="number" id="treediameter" name="treediameter" placeholder="Diameter" step="0.01"><br>
 
                     <label for="treestatus"><h3>Status: </h3></label>
-                    <div class="">
-                        <input type="radio" id="green_status" name="treestatus" value="G">
-                        <label for="green_status">
-                            Green
-                        </label>
-                        <input type="radio" id="yellow_status" name="treestatus" value="Y">
-                        <label for="yellow_status">
-                            Yellow
-                        </label>
-                        <input type="radio" id="red_status" name="treestatus" value="R">
-                        <label for="red_status">
-                            Red
-                        </label>
+                    <div class="wrapper">
+                        <div class="card w3-vivid-yellow-green">
+                            <img src="https://cdn-addjh.nitrocdn.com/BzukxzxIDWSkBjOuXIuFVkjjEriFmqlw/assets/static/optimized/rev-f2a9b3c/wp-content/uploads/2020/02/Leaves-768x510.jpg" id="iconHalf" alt="tree" /><br> 
+                            <label for="green_status">
+                                Green
+                            </label><br>
+                            <input class="w3-radio" type="radio" id="green_status" name="treestatus" value="G">
+                        </div>
+                        <div class="card w3-vivid-orange-yellow">
+                            <img src="https://previews.123rf.com/images/sotnichenko/sotnichenko1910/sotnichenko191000002/131476609-veins-in-the-yellow-autumn-leaf-close-up-nature-texture-abstract-background.jpg" id="iconHalf" alt="tree" /><br>
+                            <label for="yellow_status">
+                                Yellow
+                            </label><br>
+                            <input class="w3-radio" type="radio" id="yellow_status" name="treestatus" value="Y">
+                        </div>
+                        <div class="card w3-vivid-reddish-orange">
+                            <img src="https://thumbs.dreamstime.com/b/close-up-red-leaf-texture-159803699.jpg" id="iconHalf" alt="tree" /><br>           
+                            <label for="red_status">
+                                Red
+                            </label><br>
+                            <input class="w3-radio" type="radio" id="red_status" name="treestatus" value="R">
+                        </div>
                     </div>
 
                     <label for="treeimage"><h3>Image: </h3></label>
