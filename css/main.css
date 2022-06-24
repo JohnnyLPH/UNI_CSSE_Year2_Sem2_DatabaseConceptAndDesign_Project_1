@@ -58,7 +58,7 @@ body {
 }
 */
 
-a, h1, h2, h3 {
+a, h1, h2, h3, h4 {
   font-family: "Poppins", sans-serif !important;
 }
 
@@ -91,14 +91,62 @@ td {
 
 .wrapper {
   display: flex;
-  /*background: rgb(69, 169, 173);*/
-  background-color: #51a98d;
+  /*background: rgb(69, 169, 173);
+  background-color: #51a98d;*/
   align-items: center;
   flex-wrap: wrap;
   /*flex-direction: column;*/
   justify-content: center;
   width: auto;
   padding: 20px;
+}
+
+#formContent {
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+  background: #fff;
+  padding: 30px;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  padding: 0px;
+  -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+#formContentW2 {
+    -webkit-border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 10px 10px;
+    background: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 750px;
+    position: relative;
+    padding: 0px;
+    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    text-align: center;
+  }
+
+#formHeader {
+    background-color: #f6f6f6;
+    border-top: 1px solid #dce8f1;
+    padding: 5px;
+    text-align: center;
+    -webkit-border-radius: 10px 10px 0 0;
+    border-radius: 10px 10px 0 0;
+    width: 90%;
+    max-width: 750px;
+}
+
+#formFooter {
+    background-color: #f6f6f6;
+    border-top: 1px solid #dce8f1;
+    padding: 5px;
+    text-align: center;
+    -webkit-border-radius: 0 0 10px 10px;
+    border-radius: 0 0 10px 10px;
 }
 
 .bgImgTree{
@@ -136,7 +184,7 @@ td {
   max-width: 100%;
 }
 
-input[type=button], input[type=reset], input[type=submit] {
+input[type=button], input[type=reset], input[type=submit], input[type=file], input[type=radio] {
   background-color: #51a98d;
   border: none;
   color: white;
@@ -158,11 +206,11 @@ input[type=button], input[type=reset], input[type=submit] {
   transition: all 0.3s ease-in-out;
 }
 
-input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=file]:hover {
   background-color: #86C7B2;
 }
 
-input[type=button]:active, input[type=submit]:active, input[type=reset]:active {
+input[type=button]:active, input[type=submit]:active, input[type=reset]:active, input[type=file]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -210,7 +258,7 @@ input[type=text], input[type=password], input[type=email], input[type=date], inp
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus, input[type=number]:focus {
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=date]:focus, input[type=number]:focus{
   background-color: #fff;
   border-bottom: 2px solid #86C7B2;
 }
@@ -394,6 +442,12 @@ button:active  {
   width: 200px;
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
+}
+
+.oriImg {
+  object-fit: fill !important;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 * {

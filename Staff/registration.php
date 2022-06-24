@@ -154,12 +154,16 @@
                 <div id="formContentW2">
                     <img class="fadeIn first" src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="Comp Icon" />
                     
-                    <span><?php
-                    echo($registrationMsg);
-                    ?></span>
-                    
                     <form method="post" action="/Staff/registration.php">
                         <table>
+                            <tr>
+                                <td colspan="2">
+                                    <span><?php
+                                        echo($registrationMsg);
+                                    ?></span>
+                                </td>
+                            </tr>
+                            
                             <tr class="fadeIn second">
                                 <!-- Username -->
                                 <td>
