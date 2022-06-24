@@ -210,6 +210,7 @@
                         <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
                             <tr>
                                 <th>Sale ID</th>
+                                <th>Client ID (Seller)</th>
                                 <th>Sale Date</th>
                                 <th>Sale Price (RM)</th>
                             </tr>
@@ -217,6 +218,10 @@
                                 <tr>
                                     <td><?php
                                         echo($result["SaleID"]);
+                                    ?></td>
+
+                                    <td><?php
+                                        echo(empty($result["SellerID"]) ? "None": $result["SellerID"]);
                                     ?></td>
 
                                     <td><?php

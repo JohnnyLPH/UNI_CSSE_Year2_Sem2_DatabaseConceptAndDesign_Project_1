@@ -145,6 +145,13 @@
                         </tr>
 
                         <tr>
+                            <td>Client ID (Seller)</td>
+                            <td><?php
+                                echo(empty($result["SellerID"]) ? "None": $result["SellerID"]);
+                            ?></td>
+                        </tr>
+
+                        <tr>
                             <td>Sale Date</td>
                             <td><?php
                                 echo($result["SaleDate"]);
