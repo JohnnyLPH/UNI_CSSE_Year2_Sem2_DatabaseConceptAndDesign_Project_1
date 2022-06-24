@@ -452,6 +452,14 @@ button:active  {
   border-radius: 10px 10px 10px 10px;
 }
 
+#iconHalf {
+  object-fit: cover;
+  height: 120px;
+  width: 120px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+}
+
 .oriImg {
   object-fit: fill !important;
   height: 100% !important;
