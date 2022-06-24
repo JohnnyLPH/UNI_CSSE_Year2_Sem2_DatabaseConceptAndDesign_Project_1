@@ -16,6 +16,10 @@
         header("Location: /Client/index.php");
         exit;
     }
+    else if ($tempLoginCheck == 4) {
+        header("Location: /Admin/index.php");
+        exit;
+    }
 
     $conn->close();
 ?>
@@ -33,11 +37,11 @@
 
     <body>
         <header class="title">
-            <h1>Group 1: DB Project</h1>
+            <h1 style="color:white">Group 1: DB Project</h1>
         </header>
 
         <main>
-            <div class="wrapper fadeIn" style="padding: 10px;">
+            <div class="wrapper fadeIn w3-theme-d5" style="padding: 10px;">
                 <h3>Select User Type:</h3>
             </div>
             <div class="wrapper bgImgTree fadeIn ">

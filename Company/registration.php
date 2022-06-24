@@ -128,7 +128,8 @@
         <meta charset="utf-8">
         
         <!--<link rel="stylesheet" href="/css/main.css">-->
-        <link rel="stylesheet" href="/css/login.css">
+        <link rel="stylesheet" href="/css/form.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
     </head>
@@ -146,13 +147,18 @@
                 <div id="formContentW2">
                     <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="Comp Icon" />
 
-                    <span class="<?php
-                        echo(($passRegistration) ? "success": "error");
-                    ?>-message"><?php
-                        echo($registrationMsg);
-                    ?></span>
                     <form method="post" action="/Company/registration.php">
                         <table>
+                            <tr>
+                                <td colspan="2">
+                                    <span class="<?php
+                                        echo(($passRegistration) ? "success": "error");
+                                    ?>-message"><?php
+                                        echo($registrationMsg);
+                                    ?></span>
+                                </td>
+                            </tr>
+
                             <tr class="fadeIn second">
                                 <!-- Username -->
                                 <td>
@@ -233,7 +239,7 @@
                                 <td colspan="2">
                                     <div>
                                         <br>
-                                        <input type="submit" value="Sign Up"></input>
+                                        <input type="submit" value="Sign Up">
                                     </div>
                                 </td>
                             </tr>
@@ -241,7 +247,7 @@
                     </form>
                     <br>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/login.php?UserType=CO">Back to Login</a><br></h2>
+                        <h2><a class="underlineHover" href="/login.php?UserType=CO">Back to Login</a><h2><br>
                     </div>
                     
                 </div>

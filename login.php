@@ -17,6 +17,10 @@
         header("Location: /Client/index.php");
         exit;
     }
+    else if ($tempLoginCheck == 4) {
+        header("Location: /Admin/index.php");
+        exit;
+    }
 
     $queryString = array();
 
@@ -30,7 +34,8 @@
         (
             $queryString["UserType"] != "CO" &&
             $queryString["UserType"] != "ST" &&
-            $queryString["UserType"] != "CL"
+            $queryString["UserType"] != "CL" &&
+            $queryString["UserType"] != "AD"
         )
     ) {
         header("Location: /index.php");
@@ -82,6 +87,9 @@
                         else if ($queryString["UserType"] == "CL") {
                             header("Location: /Client/index.php");
                         }
+                        else if ($queryString["UserType"] == "AD") {
+                            header("Location: /Admin/index.php");
+                        }
                         exit;
                     }
                 }
@@ -108,37 +116,22 @@
                 else if ($queryString["UserType"] == "CL") {
                     echo("Client: ");
                 }
+                else if ($queryString["UserType"] == "AD") {
+                    echo("Admin: ");
+                }
             }
         ?>Login Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
-        <link rel="stylesheet" href="/css/login.css">
+        <link rel="stylesheet" href="/css/form.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
     </head>
 
     <body>
         <header>
-            <div>
-            <!--
-                <h1><?php
-                    /*
-                    if (isset($queryString["UserType"])) {
-                        if ($queryString["UserType"] == "CO") {
-                            echo("Company: ");
-                        }
-                        else if ($queryString["UserType"] == "ST") {
-                            echo("Staff: ");
-                        }
-                        else if ($queryString["UserType"] == "CL") {
-                            echo("Client: ");
-                        }
-                    }*/
-                ?>Login Page</h1>
-            -->
-            </div>
-            
+
         </header>
 
         <main>
@@ -159,6 +152,9 @@
                             }
                             else if ($queryString["UserType"] == "CL") {
                                 echo("Client ");
+                            }
+                            else if ($queryString["UserType"] == "AD") {
+                                echo("Admin ");
                             }
                         }
                     ?>Login</h1>
@@ -205,6 +201,9 @@
                             }
                             else if ($queryString["UserType"] == "CL") {
                                 echo("Client");
+                            }
+                            else if ($queryString["UserType"] == "AD") {
+                                echo("Admin");
                             }
                         }
                     ?>/registration.php">Sign Up</a></h2>
