@@ -11,8 +11,7 @@
         exit;
     }
 
-    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempSalary = $tempEDate = "";
-    $tempCompany = 14;
+    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempSalary = $tempEDate = $tempCompany = "";
     $registrationMsg = "";
     $passRegistration = false;
 
@@ -38,7 +37,7 @@
             $tempRPass = cleanInput($_POST["ReconfirmPassword"]);
             $tempEDate = cleanInput($_POST["EmploymentDate"]);
             $tempSalary = cleanInput($_POST["tempSalary"]);
-            // $tempCompany = cleanInput($_POST["tempCompany"]);
+            $tempCompany = cleanInput($_POST["tempCompany"]);
 
             $tempID = $tempHash = "";
 
@@ -125,7 +124,16 @@
         }
     }
 
-    $conn->close();
+    function getCompanies($conn) {
+        $sql = "SELECT User.UserID, User.RealName FROM User INNER JOIN Company USING(UserID);";
+        $result = $conn->query($sql);
+
+        if($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                echo ("<option value=\" " . $row["UserID"] . "\"> " . $row["RealName"] . "</option>");
+            }
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -202,21 +210,22 @@
                                         ?>" placeholder="abc@email.com" required>
                                     </div>
                                 </td>
-                            </tr>
 
-                            <!-- <tr>
+                                <!-- Company -->
                                 <td>
                                     <div>
                                         <label for="tempCompany">
-                                            Company?
+                                            Company:
                                         </label><br>
-                                        <input id="tempCompany_true" type="radio" name="tempCompany" required>
-                                        <label for="tempCompany_true">A</label>
-                                        <input id="tempCompany_false" type="radio" name="tempCompany" required>
-                                        <label for="tempCompany_false">B</label>
+                                        <select id="tempCompany" name="tempCompany">
+                                            <?php 
+                                                getCompanies($conn);    
+                                                $conn->close(); 
+                                            ?>
+                                        </select>
                                     </div>
                                 </td>
-                            </tr> -->
+                            </tr>
 
                             <tr class="fadeIn fourth">
                                 <!-- Salary -->
@@ -230,9 +239,7 @@
                                         ?>" placeholder="Salary" required>
                                     </div>
                                 </td>
-                            </tr>
 
-                            <tr class="fadeIn fifth">
                                 <!-- EmploymentDate -->
                                 <td>
                                     <div>
@@ -246,7 +253,7 @@
                                 </td>
                             </tr>
                             
-                            <tr class="fadeIn sixth">
+                            <tr class="fadeIn fifth">
                                 <!-- Password -->
                                 <td>
                                     <div>
