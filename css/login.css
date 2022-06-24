@@ -28,7 +28,7 @@
 /* BASIC */
 
 html {
-    font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif !important;
     /*background-color: #86C7B2;*/
 
     background-image: url("https://wallpaperaccess.com/full/3350072.jpg");
@@ -41,11 +41,12 @@ html {
 }
 
 body {
-    font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif !important;
     height: 100vh;
 }
 
 a {
+  font-family: "Poppins", sans-serif !important;
   /*color: #92badd;*/
   color: #51a98d;
   display:inline-block;
@@ -54,6 +55,7 @@ a {
 }
 
 h2 {
+  font-family: "Poppins", sans-serif !important;
   text-align: center;
   font-size: 16px;
   font-weight: 600;
@@ -64,6 +66,7 @@ h2 {
 }
 
 h1 {
+    font-family: "Poppins", sans-serif !important;
     text-align: center;
     font-size: 28px;
     font-weight: 600;

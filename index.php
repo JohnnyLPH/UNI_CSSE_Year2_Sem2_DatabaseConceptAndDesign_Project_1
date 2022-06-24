@@ -37,7 +37,7 @@
 
     <body>
         <header class="title">
-            <h1>Group 1: DB Project</h1>
+            <h1 style="color:white">Group 1: DB Project</h1>
         </header>
 
         <main>

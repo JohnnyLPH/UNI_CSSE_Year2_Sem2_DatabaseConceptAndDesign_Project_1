@@ -46,18 +46,22 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
+
+        <script src=".../css/stickynav.js"></script>
     </head>
 
     <body>
         <header>
-            <h1>Company: Manage Block Page</h1>
+            <div class="maintheme w3-container">
+                <h1>Company: Manage Block Page</h1>
+            </div>
         </header>
 
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
 
         <main>
             <div class="w3-row">
-            <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
+                <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
                     <form method="get" action="/Company/viewEachOrchard.php">
                         <input type="hidden" name="OrchardID" value="<?php
@@ -86,7 +90,6 @@
                         <input type="submit" value="Back to View All Blocks">
                     </form>
                 </div>
-
                 <div class="w3-container w3-threequarter w3-theme-d4 w3-animate-left" style="margin-left:25%; padding-bottom:2%;">
 
                     <h2>Block ID <?php

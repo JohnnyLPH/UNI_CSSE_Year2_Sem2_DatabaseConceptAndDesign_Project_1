@@ -57,7 +57,9 @@
 
     <body>
         <header>
-            <h1>Company: Manage Block Page</h1>
+            <div class="maintheme w3-container">
+                <h1>Company: Manage Block Page</h1>
+            </div>           
         </header>
 
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
