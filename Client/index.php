@@ -29,6 +29,8 @@
             <h1>Client: Home Page</h1>
         </header>
 
+        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Client/navigationBar.php"); ?>
+
         <main>
             <a href="/logout.php">Log Out</a><br>
         </main>
