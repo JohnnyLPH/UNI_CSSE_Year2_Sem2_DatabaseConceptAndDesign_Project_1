@@ -56,8 +56,8 @@
                 // Process image path
                 $tempTreeImage = $_FILES["treeimage"]['name'];
                 $tempname = $_FILES['treeimage']['tmp_name'];
-                $target_file = "..\\img\\" . $tempTreeImage;
-                $filepath = "/img/" . basename($_FILES['treeimage']['name']);
+                $target_file = "..\\img\\tree\\" . $tempTreeImage;
+                $filepath = "/img/tree/" . basename($_FILES['treeimage']['name']);
 
                 // Insert to User table with UserType CO.
                 $query = "INSERT INTO `TreeUpdate`(`TreeID`, `StaffID`, `TreeImage`, `TreeHeight`, `Diameter`, `Status`, `UpdateDate`)";

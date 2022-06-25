@@ -54,12 +54,6 @@
                 // Set to true at first.
                 $passRegistration = true;
 
-                // Process image path
-                //$temptempPFP = $_FILES["ClientPfp"]['name'];
-                //$tempfname = $_FILES['ClientPfp']['tmp_name'];
-                //$target_file = "..\\img\\" . $tempPFP;
-                //$filepath = "/img/" . basename($_FILES['ClientPfp']['name']);
-
                 // Check Username.
                 if (checkExistUsername($conn, $tempName)) {
                     $registrationMsg = "* Username is used by another user! *";
@@ -80,6 +74,7 @@
 
                 // Insert to DB.
                 if ($passRegistration) {
+                    
                     // Insert to User table with UserType CO.
                     $query = "INSERT INTO `User`(`Username`, `Email`, `PasswordHash`, `RealName`, `UserType`)";
                     $query .= " VALUES ('$tempName','$tempEmail','$tempHash','$tempRName','CL')";
@@ -90,7 +85,7 @@
                         $passRegistration = false;
                     }
 
-                    // Insert to Company table.
+                    // Insert to Client table.
                     if ($passRegistration) {
                         $passRegistration = false;
 
@@ -101,15 +96,23 @@
                             if ($user = mysqli_fetch_assoc($rs)) {
                                 $tempID = $user["UserID"];
                                 
+                                // Process image path
+                                $tempPFP = $_FILES["ClientPfp"]['name'];
+                                $tempfname = $_FILES['ClientPfp']['tmp_name'];
+                                $target_file = "..\\img\\client\\" . $tempPFP;
+                                $filepath = "/img/client/" . basename($_FILES['ClientPfp']['name']);
+                                
                                 // Insert with the obtained UserID.
+                                
                                 $query = "INSERT INTO `Client`(`UserID`, `Country`,`Address`,`Photo`)";
-                                $query .= " VALUES ('$tempID','$tempCountry','$tempAddress','$tempPFP')";
+                                $query .= " VALUES ('$tempID','$tempCountry','$tempAddress','$filepath')";
                                 $rs = $conn->query($query);
 
                                 if (!$rs) {
                                     $registrationMsg = "* Fail to insert to Company table! *";
                                 }
                                 else {
+                                    move_uploaded_file($tempfname, $target_file);
                                     $passRegistration = true;
                                 }
                             }
