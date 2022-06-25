@@ -20,7 +20,6 @@
         <meta charset="utf-8">
         
         <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/css/login.css">
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
 
