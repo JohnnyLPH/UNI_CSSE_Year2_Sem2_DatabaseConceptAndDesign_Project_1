@@ -54,10 +54,9 @@
             }
             else {
                 // Process image path
-                $tempTreeImage = $_FILES["treeimage"]['name'];
-                $tempname = $_FILES['treeimage']['tmp_name'];
-                $target_file = "..\\img\\tree\\" . $tempTreeImage;
-                $filepath = "/img/tree/" . basename($_FILES['treeimage']['name']);
+                $tempTreeImage = explode(".", $_FILES["treeimage"]["name"]);
+                $newfilename = $treeid . "_" . $updatedate . "_" . round(microtime(true)) . "." . end($tempTreeImage);
+                $filepath = "../img/tree/" . $newfilename;
 
                 // Insert to User table with UserType CO.
                 $query = "INSERT INTO `TreeUpdate`(`TreeID`, `StaffID`, `TreeImage`, `TreeHeight`, `Diameter`, `Status`, `UpdateDate`)";
@@ -68,7 +67,7 @@
                     $updateMessage = "* Something Wrong! *";
                 } else {
                     // Reset to empty.
-                    move_uploaded_file($tempname, $target_file);
+                    move_uploaded_file($_FILES["treeimage"]["tmp_name"], $filepath);
                     $tempTreeID = $tempStaffID = $tempTreeHeight = $tempTreeDiameter = $tempTreeImage = $tempStatus = $tempUpdateDate = "";
                     $updateMessage = "* Successfully Updated! *";
                 }

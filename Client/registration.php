@@ -97,22 +97,22 @@
                                 $tempID = $user["UserID"];
                                 
                                 // Process image path
-                                $tempPFP = $_FILES["ClientPfp"]['name'];
-                                $tempfname = $_FILES['ClientPfp']['tmp_name'];
-                                $target_file = "..\\img\\client\\" . $tempPFP;
-                                $filepath = "/img/client/" . basename($_FILES['ClientPfp']['name']);
+                                date_default_timezone_set('Asia/Kuala_Lumpur');
+
+                                $tempPFP = explode(".", $_FILES["ClientPfp"]["name"]);
+                                $newfilename = $tempID . "_" . date('Y-m-d') . "_" . round(microtime(true)) . "." . end($tempPFP);
+                                $filepath = "../img/client/" . $newfilename;
                                 
                                 // Insert with the obtained UserID.
-                                
                                 $query = "INSERT INTO `Client`(`UserID`, `Country`,`Address`,`Photo`)";
                                 $query .= " VALUES ('$tempID','$tempCountry','$tempAddress','$filepath')";
                                 $rs = $conn->query($query);
 
                                 if (!$rs) {
-                                    $registrationMsg = "* Fail to insert to Company table! *";
+                                    $registrationMsg = "* Fail to insert to Client table! *";
                                 }
                                 else {
-                                    move_uploaded_file($tempfname, $target_file);
+                                    move_uploaded_file($_FILES["ClientPfp"]["tmp_name"], $filepath);
                                     $passRegistration = true;
                                 }
                             }
@@ -166,7 +166,7 @@
                     <br>
                     <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20190721/ourlarge/pngtree-business-meeting-with-client-illustration-concept-modern-flat-design-concept-png-image_1567633.jpg" id="icon" alt="Comp Icon" />
                     <br>
-                    <form method="post" action="/Client/registration.php">
+                    <form method="post" action="/Client/registration.php" enctype="multipart/form-data">
                         <table>
                             <tr>
                                 <td colspan="2">
@@ -231,28 +231,6 @@
                             </tr>
 
                             <tr class="fadeIn fifth">
-                                <!-- Password -->
-                                <td>
-                                    <div>
-                                        <label for="Password">
-                                            Password:
-                                        </label><br>
-                                        <input id="Password" type="password" name="Password" placeholder="Password" required>
-                                    </div>
-                                </td>
-
-                                <!-- ReconfirmPassword -->
-                                <td>
-                                    <div>
-                                        <label for="ReconfirmPassword">
-                                            Reconfirm Password:
-                                        </label><br>
-                                        <input id="ReconfirmPassword" type="password" name="ReconfirmPassword" placeholder="Reconfirm Password" required>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr class="fadeIn fifth">
                                 <!-- Address -->
                                 <td colspan="2">
                                     <div>
@@ -269,7 +247,7 @@
                                 <td colspan="2">
                                     <div>
                                         <label for="Country">
-                                            Countree:
+                                            Country:
                                         </label><br>
                                         <select id="Country" type="select" name="Country" placeholder="Country" required>
                                             <option value="">Select your country</option>
@@ -471,6 +449,28 @@
                                             <option value="Zimbabwe">Zimbabwe</option>  
                                         </select>
                                         
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="fadeIn fifth">
+                                <!-- Password -->
+                                <td>
+                                    <div>
+                                        <label for="Password">
+                                            Password:
+                                        </label><br>
+                                        <input id="Password" type="password" name="Password" placeholder="Password" required>
+                                    </div>
+                                </td>
+
+                                <!-- ReconfirmPassword -->
+                                <td>
+                                    <div>
+                                        <label for="ReconfirmPassword">
+                                            Reconfirm Password:
+                                        </label><br>
+                                        <input id="ReconfirmPassword" type="password" name="ReconfirmPassword" placeholder="Reconfirm Password" required>
                                     </div>
                                 </td>
                             </tr>
