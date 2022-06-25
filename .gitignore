@@ -1,2 +1,4 @@
 *.pdf
 settings.json
+.vscode/
+.code-workspace
