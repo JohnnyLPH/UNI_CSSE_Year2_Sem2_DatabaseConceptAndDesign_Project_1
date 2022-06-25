@@ -20,7 +20,6 @@
         <meta charset="utf-8">
         
         <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/css/login.css">
         <link rel="shortcut icon" href="/favicon.ico">
     </head>
 
@@ -28,6 +27,8 @@
         <header>
             <h1>Admin: Home Page</h1>
         </header>
+
+        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
 
         <main>
             <a href="/logout.php">Log Out</a><br>
