@@ -129,6 +129,13 @@
                                 echo($result["BlockID"]);
                             ?></td>
                         </tr>
+
+                        <tr>
+                            <td>Orchard ID</td>
+                            <td><?php
+                                echo($result["OrchardID"]);
+                            ?></td>
+                        </tr>
                     </table>
 
                     <h3>Tree Update History:</h3>

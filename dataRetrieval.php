@@ -175,7 +175,7 @@
             }
         }
 
-        $query .= ";";
+        $query .= " ORDER BY `Orchard`.`OrchardID`;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
@@ -219,7 +219,7 @@
             }
         }
 
-        $query .= ";";
+        $query .= " ORDER BY `Block`.`BlockID`;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
@@ -347,7 +347,7 @@
             }
         }
 
-        $query .= ";";
+        $query .= " ORDER BY `Tree`.`TreeID`;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
@@ -418,7 +418,7 @@
     }
 
     // Return all rows of Purchase Request (based on ApprovalStatus, CompanyID, OrchardID, BlockID, RequestID, SaleID, ClientID if provided).
-    function getAllPurchaseRequest($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $requestID = 0, $saleID = 0, $clientID = 0) {
+    function getAllPurchaseRequest($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $requestID = 0, $saleID = 0, $clientID = 0, $orderByStatus = false) {
         $query = "SELECT `PurchaseRequest`.`RequestID`, `Orchard`.`CompanyID`, `Orchard`.`OrchardID`";
         $query .= ", `Block`.`BlockID`, `User`.`RealName`, `OnSale`.`SaleDate`, `OnSale`.`SalePrice`";
         $query .= ", `OnSale`.`SellerID`, `PurchaseRequest`.`SaleID`, `PurchaseRequest`.`RequestDate`";
@@ -500,7 +500,13 @@
         }
 
         // Latest PurchaseRequest.
-        $query .= " ORDER BY `PurchaseRequest`.`RequestDate` DESC, `PurchaseRequest`.`RequestID` DESC;";
+        $query .= " ORDER BY";
+
+        if ($orderByStatus) {
+            $query .= " `PurchaseRequest`.`ApprovalStatus`,";
+        }
+
+        $query .= " `PurchaseRequest`.`RequestDate` DESC, `PurchaseRequest`.`RequestID` DESC;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
@@ -570,7 +576,7 @@
     // Return PurchaseRequest ApprovalStatus string.
     function getApprovalStatusStr($approvalStatus) {
         if ($approvalStatus < 1) {
-            return "Not Processed";
+            return "<i>Not Processed</i>";
         }
         elseif ($approvalStatus == 1) {
             return "Approved";

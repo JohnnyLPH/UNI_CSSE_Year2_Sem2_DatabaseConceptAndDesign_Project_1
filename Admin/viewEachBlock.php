@@ -1,12 +1,12 @@
 <?php
-    // Company Manage Orchard Page.
+    // Admin Manage Orchard Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dataRetrieval.php");
 
     $tempLoginCheck = checkLogin($conn);
-    // Not logged in as Company.
-    if ($tempLoginCheck != 1) {
+    // Not logged in as Admin.
+    if ($tempLoginCheck != 4) {
         header("Location: /index.php");
         exit;
     }
@@ -23,9 +23,9 @@
         !isset($queryString["BlockID"]) ||
         !is_numeric($queryString["BlockID"]) ||
         $queryString["BlockID"] < 1 ||
-        count($allBlock = getBlockLatestClient($conn, $_SESSION["UserID"], 0, $queryString["BlockID"])) < 1
+        count($allBlock = getBlockLatestClient($conn, 0, 0, $queryString["BlockID"])) < 1
     ) {
-        header("Location: /Company/manageBlock.php");
+        header("Location: /Admin/manageBlock.php");
         exit;
     }
 
@@ -42,13 +42,13 @@
         $clientName = $result["RealName"];
     }
 
-    $allPurchaseRequest = getAllPurchaseRequest($conn, -1, $_SESSION["UserID"], 0, $queryString["BlockID"]);
-    $allOnSale = getAllOnSale($conn, $_SESSION["UserID"], 0, $queryString["BlockID"]);
+    $allPurchaseRequest = getAllPurchaseRequest($conn, -1, 0, 0, $queryString["BlockID"]);
+    $allOnSale = getAllOnSale($conn, 0, 0, $queryString["BlockID"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Company: Manage Block Page</title>
+        <title>Admin: Manage Block Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
@@ -63,40 +63,40 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Company: Manage Block Page</h1>
+                <h1>Admin: Manage Block Page</h1>
             </div>
         </header>
 
-        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
 
         <main>
             <div class="w3-row">
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
-                    <form method="get" action="/Company/viewEachOrchard.php">
+                    <form method="get" action="/Admin/viewEachOrchard.php">
                         <input type="hidden" name="OrchardID" value="<?php
                             echo($result["OrchardID"]);
                         ?>">
                         <input type="submit" value="View Related Orchard">
                     </form>
 
-                    <form method="get" action="/Company/manageTree.php">
+                    <form method="get" action="/Admin/manageTree.php">
                         <input type="hidden" name="SearchKey" value="<?php
                             echo($blockID);
                         ?>">
-                        <input type="hidden" name="SearchOption" value="2">
+                        <input type="hidden" name="SearchOption" value="3">
                         <input type="submit" value="View Related Trees">
                     </form>
                     
-                    <form method="get" action="/Company/managePurchase.php">
+                    <form method="get" action="/Admin/managePurchase.php">
                         <input type="hidden" name="SearchKey" value="<?php
                             echo($blockID);
                         ?>">
-                        <input type="hidden" name="SearchOption" value="2">
+                        <input type="hidden" name="SearchOption" value="3">
                         <input type="submit" value="View Related Purchases">
                     </form>
                     
-                    <form method="get" action="/Company/manageBlock.php">
+                    <form method="get" action="/Admin/manageBlock.php">
                         <input type="submit" value="Back to View All Blocks">
                     </form>
                 </div>
@@ -121,10 +121,17 @@
                         </tr>
 
                         <tr>
+                            <td>Company ID</td>
+                            <td><?php
+                                echo($result["CompanyID"]);
+                            ?></td>
+                        </tr>
+
+                        <tr>
                             <td>Total Tree</td>
                             <td><?php
                                 echo(getTreeCount(
-                                    $conn, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
+                                    $conn, $result["CompanyID"], $result["OrchardID"], $result["BlockID"]
                                 ));
                             ?></td>
                         </tr>
@@ -147,7 +154,7 @@
                             <td>Client Purchase</td>
                             <td><?php
                                 echo(getPurchaseRequestCount(
-                                    $conn, 1, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
+                                    $conn, 1, $result["CompanyID"], $result["OrchardID"], $result["BlockID"]
                                 ));
                             ?></td>
                         </tr>
@@ -192,7 +199,7 @@
                                     ?></td>
 
                                     <td>
-                                        <form method="get" action="/Company/viewEachPurchase.php">
+                                        <form method="get" action="/Admin/viewEachPurchase.php">
                                             <input type="hidden" name="RequestID" value="<?php
                                                 echo($result["RequestID"]);
                                             ?>">

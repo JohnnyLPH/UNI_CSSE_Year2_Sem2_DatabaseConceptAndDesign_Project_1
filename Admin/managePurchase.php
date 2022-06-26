@@ -1,12 +1,12 @@
 <?php
-    // Company Manage Purchase Page.
+    // Admin Manage Purchase Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dataRetrieval.php");
 
     $tempLoginCheck = checkLogin($conn);
-    // Not logged in as Company.
-    if ($tempLoginCheck != 1) {
+    // Not logged in as Admin.
+    if ($tempLoginCheck != 4) {
         header("Location: /index.php");
         exit;
     }
@@ -17,8 +17,8 @@
         parse_str($_SERVER['QUERY_STRING'], $queryString);
     }
 
-    // Check if valid OrchardID, BlockID, RequestID, SaleID or ClientID is provided for search, set to 0 if not.
-    $orchardID = $blockID = $requestID = $saleID = $clientID = (
+    // Check if valid CompanyID, OrchardID, BlockID, RequestID, SaleID, ClientID is provided, set to 0 if not.
+    $companyID = $orchardID = $blockID = $requestID = $saleID = $clientID = (
         !isset($queryString["SearchKey"]) ||
         !is_numeric($queryString["SearchKey"]) ||
         $queryString["SearchKey"] < 1
@@ -29,39 +29,43 @@
         !isset($queryString["SearchOption"]) ||
         !is_numeric($queryString["SearchOption"]) ||
         $queryString["SearchOption"] < 1 ||
-        $queryString["SearchOption"] > 5
+        $queryString["SearchOption"] > 6
     ) ? 1: $queryString["SearchOption"];
 
-    // Search by OrchardID.
+    // Search by CompanyID.
     if ($searchOption == 1) {
-        $blockID = $requestID = $saleID = $clientID = 0;
+        $orchardID = $blockID = $requestID = $saleID = $clientID = 0;
+    }
+    // Search by OrchardID.
+    elseif ($searchOption == 2) {
+        $companyID = $blockID = $requestID = $saleID = $clientID = 0;
     }
     // Search by BlockID.
-    elseif ($searchOption == 2) {
-        $orchardID = $requestID = $saleID = $clientID = 0;
+    elseif ($searchOption == 3) {
+        $companyID = $orchardID = $requestID = $saleID = $clientID = 0;
     }
     // Search by RequestID.
-    elseif ($searchOption == 3) {
-        $orchardID = $blockID = $saleID = $clientID = 0;
+    elseif ($searchOption == 4) {
+        $companyID = $orchardID = $blockID = $saleID = $clientID = 0;
     }
     // Search by SaleID.
-    elseif ($searchOption == 4) {
-        $orchardID = $blockID = $requestID = $clientID = 0;
+    elseif ($searchOption == 5) {
+        $companyID = $orchardID = $blockID = $requestID = $clientID = 0;
     }
     // Search by ClientID.
     else {
-        $orchardID = $blockID = $requestID = $saleID = 0;
+        $companyID = $orchardID = $blockID = $requestID = $saleID = 0;
     }
 
     // Return all the purchase request.
     $allPurchaseRequest = getAllPurchaseRequest(
-        $conn, -1, $_SESSION["UserID"], $orchardID, $blockID, $requestID, $saleID, $clientID
+        $conn, -1, $companyID, $orchardID, $blockID, $requestID, $saleID, $clientID, true
     );
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Company: Manage Purchase Page</title>
+        <title>Admin: Manage Purchase Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
@@ -74,22 +78,25 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Company: Manage Purchase Page</h1>
+                <h1>Admin: Manage Purchase Page</h1>
             </div>
         </header>
 
-        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
 
         <main>
             <div class="w3-container w3-theme-d4 w3-animate-opacity">
                 <h2 class="w3-center">All Purchase Requests:</h2>
 
-                <form id="reset-search" method="get" action="/Company/managePurchase.php"></form>
+                <form id="reset-search" method="get" action="/Admin/managePurchase.php"></form>
 
-                <form class="w3-center" method="get" action="/Company/managePurchase.php">
+                <form class="w3-center" method="get" action="/Admin/managePurchase.php">
                     <input style="width:98%" id="SearchKey" type="number" name="SearchKey" value="<?php
                         // Valid SearchKey.
-                        if ($orchardID > 0) {
+                        if ($companyID > 0) {
+                            echo($companyID);
+                        }
+                        elseif ($orchardID > 0) {
                             echo($orchardID);
                         }
                         elseif ($blockID > 0) {
@@ -104,7 +111,7 @@
                         elseif ($clientID > 0) {
                             echo($clientID);
                         }
-                    ?>" placeholder="Enter Orchard/Block/Request/Sale/Client ID" min="1" required>
+                    ?>" placeholder="Enter Company/Orchard/Block/Request/Sale/Client ID" min="1" required>
 
                     <!-- <label for="SearchOption">Search By:</label> -->
                     <select id="SearchOption" name="SearchOption">
@@ -112,24 +119,29 @@
                             if ($searchOption == 1) {
                                 echo(" selected");
                             }
-                        ?>>OrchardID</option>
+                        ?>>CompanyID</option>
                         <option value="2"<?php
                             if ($searchOption == 2) {
                                 echo(" selected");
                             }
-                        ?>>BlockID</option>
+                        ?>>OrchardID</option>
                         <option value="3"<?php
                             if ($searchOption == 3) {
                                 echo(" selected");
                             }
-                        ?>>RequestID</option>
+                        ?>>BlockID</option>
                         <option value="4"<?php
                             if ($searchOption == 4) {
                                 echo(" selected");
                             }
-                        ?>>SaleID</option>
+                        ?>>RequestID</option>
                         <option value="5"<?php
                             if ($searchOption == 5) {
+                                echo(" selected");
+                            }
+                        ?>>SaleID</option>
+                        <option value="6"<?php
+                            if ($searchOption == 6) {
                                 echo(" selected");
                             }
                         ?>>ClientID</option>
@@ -139,7 +151,7 @@
 
                     <input form="reset-search" type="submit" value="Reset"<?php
                         // Disable if not searching.
-                        if ($orchardID + $blockID + $requestID + $saleID + $clientID < 1) {
+                        if ($companyID + $orchardID + $blockID + $requestID + $saleID + $clientID < 1) {
                             echo(" disabled");
                         }
                     ?>>
@@ -152,6 +164,7 @@
                                 <th>Request ID</th>
                                 <th>Block ID</th>
                                 <th>Orchard ID</th>
+                                <th>Company ID</th>
                                 <th>Sale ID</th>
                                 <th>Client ID</th>
                                 <th>Request Date</th>
@@ -171,6 +184,10 @@
 
                                     <td><?php
                                         echo($result["OrchardID"]);
+                                    ?></td>
+
+                                    <td><?php
+                                        echo($result["CompanyID"]);
                                     ?></td>
 
                                     <td><?php
@@ -194,7 +211,7 @@
                                     ?></td>
 
                                     <td>
-                                        <form method="get" action="/Company/viewEachPurchase.php">
+                                        <form method="get" action="/Admin/viewEachPurchase.php">
                                             <input type="hidden" name="RequestID" value="<?php
                                                 echo($result["RequestID"]);
                                             ?>">
@@ -207,22 +224,26 @@
                         <br>
                     <?php else: ?>
                         <span>* <?php
-                            if ($orchardID + $blockID + $requestID + $saleID + $clientID < 1) {
+                            if ($companyID + $orchardID + $blockID + $requestID + $saleID + $clientID < 1) {
                                 echo("No purchase request is found!");
                             }
                             elseif ($searchOption == 1) {
                                 echo(
-                                    "Orchard ID $orchardID is not associated with any purchase request!");
+                                    "Company ID $companyID is not associated with any purchase request!");
                             }
                             elseif ($searchOption == 2) {
                                 echo(
-                                    "Block ID $blockID is not associated with any purchase request!");
+                                    "Orchard ID $orchardID is not associated with any purchase request!");
                             }
                             elseif ($searchOption == 3) {
                                 echo(
-                                    "Request ID $requestID is not associated with any purchase request!");
+                                    "Block ID $blockID is not associated with any purchase request!");
                             }
                             elseif ($searchOption == 4) {
+                                echo(
+                                    "Request ID $requestID is not associated with any purchase request!");
+                            }
+                            elseif ($searchOption == 5) {
                                 echo(
                                     "Sale ID $saleID is not associated with any purchase request!");
                             }

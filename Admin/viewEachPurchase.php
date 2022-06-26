@@ -1,12 +1,12 @@
 <?php
-    // Company Manage Orchard Page.
+    // Admin Manage Orchard Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dataRetrieval.php");
 
     $tempLoginCheck = checkLogin($conn);
-    // Not logged in as Company.
-    if ($tempLoginCheck != 1) {
+    // Not logged in as Admin.
+    if ($tempLoginCheck != 4) {
         header("Location: /index.php");
         exit;
     }
@@ -24,10 +24,10 @@
         !is_numeric($queryString["RequestID"]) ||
         $queryString["RequestID"] < 1 ||
         count($allPurchaseRequest = getAllPurchaseRequest(
-            $conn, -1, $_SESSION["UserID"], 0, 0, $queryString["RequestID"]
+            $conn, -1, 0, 0, 0, $queryString["RequestID"]
         )) < 1
     ) {
-        header("Location: /Company/managePurchase.php");
+        header("Location: /Admin/managePurchase.php");
         exit;
     }
 
@@ -37,7 +37,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Company: Manage Purchase Page</title>
+        <title>Admin: Manage Purchase Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
@@ -50,31 +50,31 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Company: Manage Purchase Page</h1>
+                <h1>Admin: Manage Purchase Page</h1>
             </div>
         </header>
 
-        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
 
         <main>
             <div class="w3-row">
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
-                    <form method="get" action="/Company/viewEachOrchard.php">
+                    <form method="get" action="/Admin/viewEachOrchard.php">
                         <input type="hidden" name="OrchardID" value="<?php
                             echo($result["OrchardID"]);
                         ?>">
                         <input type="submit" value="View Related Orchard">
                     </form>
 
-                    <form method="get" action="/Company/viewEachBlock.php">
+                    <form method="get" action="/Admin/viewEachBlock.php">
                         <input type="hidden" name="BlockID" value="<?php
                             echo($result["BlockID"]);
                         ?>">
                         <input type="submit" value="View Related Block">
                     </form>
 
-                    <form method="get" action="/Company/managePurchase.php">
+                    <form method="get" action="/Admin/managePurchase.php">
                         <input type="submit" value="Back to View All Purchases">
                     </form>
                 </div>
@@ -177,6 +177,13 @@
                             <td>Orchard ID</td>
                             <td><?php
                                 echo($result["OrchardID"]);
+                            ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Company ID</td>
+                            <td><?php
+                                echo($result["CompanyID"]);
                             ?></td>
                         </tr>
                     </table>
