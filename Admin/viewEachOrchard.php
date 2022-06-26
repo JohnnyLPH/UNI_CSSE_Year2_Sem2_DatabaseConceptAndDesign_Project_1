@@ -1,12 +1,12 @@
 <?php
-    // Company Manage Orchard Page.
+    // Admin Manage Orchard Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dataRetrieval.php");
 
     $tempLoginCheck = checkLogin($conn);
-    // Not logged in as Company.
-    if ($tempLoginCheck != 1) {
+    // Not logged in as Admin.
+    if ($tempLoginCheck != 4) {
         header("Location: /index.php");
         exit;
     }
@@ -22,9 +22,9 @@
     if (
         !isset($queryString["OrchardID"]) ||
         $queryString["OrchardID"] < 1 ||
-        count($allOrchard = getAllOrchard($conn, $_SESSION["UserID"], $queryString["OrchardID"])) < 1
+        count($allOrchard = getAllOrchard($conn, 0, $queryString["OrchardID"])) < 1
     ) {
-        header("Location: /Company/manageOrchard.php");
+        header("Location: /Admin/manageOrchard.php");
         exit;
     }
 
@@ -34,7 +34,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Company: Manage Orchard Page</title>
+        <title>Admin: Manage Orchard Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
 
@@ -92,11 +92,11 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Company: Manage Orchard Page</h1>
+                <h1>Admin: Manage Orchard Page</h1>
             </div>
         </header>
 
-        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Company/navigationBar.php"); ?>
+        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
 
         <main>
             <div class="w3-row">
@@ -146,21 +146,21 @@
                             <tr>
                                 <td>Total Block</td>
                                 <td><?php
-                                    echo(getBlockCount($conn, $_SESSION["UserID"], $result["OrchardID"]));
+                                    echo(getBlockCount($conn, $result["CompanyID"], $result["OrchardID"]));
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Total Tree</td>
                                 <td><?php
-                                    echo(getTreeCount($conn, $_SESSION["UserID"], $result["OrchardID"]));
+                                    echo(getTreeCount($conn, $result["CompanyID"], $result["OrchardID"]));
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Client Purchase</td>
                                 <td><?php
-                                    echo(getPurchaseRequestCount($conn, 1, $_SESSION["UserID"], $result["OrchardID"]));
+                                    echo(getPurchaseRequestCount($conn, 1, $result["CompanyID"], $result["OrchardID"]));
                                 ?></td>
                             </tr>
                         </table>
@@ -172,31 +172,31 @@
                 </div>
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
-                    <form method="get" action="/Company/manageBlock.php">
+                    <form method="get" action="/Admin/manageBlock.php">
                         <input type="hidden" name="SearchKey" value="<?php
                             echo($orchardID);
                         ?>">
-                        <input type="hidden" name="SearchOption" value="1">
+                        <input type="hidden" name="SearchOption" value="2">
                         <input type="submit" value="View Related Blocks" style="max-width:100%;">
                     </form>
 
-                    <form method="get" action="/Company/manageTree.php">
+                    <form method="get" action="/Admin/manageTree.php">
                         <input type="hidden" name="SearchKey" value="<?php
                             echo($orchardID);
                         ?>">
-                        <input type="hidden" name="SearchOption" value="1">
+                        <input type="hidden" name="SearchOption" value="2">
                         <input type="submit" value="View Related Trees">
                     </form>
                     
-                    <form method="get" action="/Company/managePurchase.php">
+                    <form method="get" action="/Admin/managePurchase.php">
                         <input type="hidden" name="SearchKey" value="<?php
                             echo($orchardID);
                         ?>">
-                        <input type="hidden" name="SearchOption" value="1">
+                        <input type="hidden" name="SearchOption" value="2">
                         <input type="submit" value="View Related Purchases">
                     </form>
                     
-                    <form method="get" action="/Company/manageOrchard.php">
+                    <form method="get" action="/Admin/manageOrchard.php">
                         <input type="submit" value="Back to View All Orchards">
                     </form>
                 </div>

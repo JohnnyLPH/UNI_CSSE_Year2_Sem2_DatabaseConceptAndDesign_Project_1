@@ -109,11 +109,17 @@
                         </table>
                         <br>
                     <?php else: ?>
-                        <span>* Orchard ID <?php
-                            echo($orchardID);
-                        ?> is not associated with any orchard of <?php
-                            echo($_SESSION["Username"]);
-                        ?>! *</span>
+                        <span>* <?php
+                            if ($orchardID < 1) {
+                                echo("No orchard is found!");
+                            }
+                            else {
+                                echo(
+                                    "Orchard ID $orchardID is not associated with any orchard of " .
+                                    $_SESSION["Username"] . "!"
+                                );
+                            }
+                        ?> *</span>
                     <?php endif; ?>
                 </div>
             </div>

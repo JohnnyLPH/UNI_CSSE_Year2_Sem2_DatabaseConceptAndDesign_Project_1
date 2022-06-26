@@ -1,5 +1,5 @@
 <?php
-    // Count orchard (based on CompanyID).
+    // Count orchard (based on CompanyID if provided).
     function getOrchardCount($conn, $companyID = 0) {
         $query = "SELECT COUNT(`Orchard`.`OrchardID`) FROM `Orchard`";
 
@@ -153,68 +153,6 @@
         return 0;
     }
 
-    // Get Block Latest Client (can be used to find Current Owner of the Block).
-    function getBlockLatestClient($conn, $companyID = 0, $orchardID = 0, $blockID = 0) {
-        // SQL:
-        // SELECT * FROM `Block`
-        // INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`
-        // LEFT JOIN `OnSale` ON `Block`.`BlockID` = `OnSale`.`BlockID`
-        // LEFT JOIN `PurchaseRequest` ON `OnSale`.`SaleID` = `PurchaseRequest`.`SaleID`
-        // LEFT JOIN `Client` ON `PurchaseRequest`.`ClientID` = `Client`.`UserID`
-        // LEFT JOIN `User` ON `Client`.`UserID` = `User`.`UserID`
-        // ORDER BY `Block`.`BlockID`, `OnSale`.`SaleID` DESC, `PurchaseRequest`.`RequestID` DESC;
-        $query = "SELECT * FROM `Block`";
-        $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
-        $query .= " LEFT JOIN `OnSale` ON `Block`.`BlockID` = `OnSale`.`BlockID`";
-        $query .= " LEFT JOIN `PurchaseRequest` ON `OnSale`.`SaleID` = `PurchaseRequest`.`SaleID`";
-        $query .= " LEFT JOIN `Client` ON `PurchaseRequest`.`ClientID` = `Client`.`UserID`";
-        $query .= " LEFT JOIN `User` ON `Client`.`UserID` = `User`.`UserID`";
-
-        // Add WHERE Clause.
-        $multiWhere = false;
-
-        if ($companyID > 0) {
-            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
-            $multiWhere = true;
-        }
-
-        if ($orchardID > 0) {
-            if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
-            }
-            else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
-                $multiWhere = true;
-            }
-        }
-
-        if ($blockID > 0) {
-            if ($multiWhere) {
-                $query .= " AND `Block`.`BlockID` = $blockID";
-            }
-            else {
-                $query .= " WHERE `Block`.`BlockID` = $blockID";
-                $multiWhere = true;
-            }
-        }
-
-        // Block Latest Client.
-        $query .= " ORDER BY `Block`.`BlockID`, `OnSale`.`SaleID` DESC, `PurchaseRequest`.`RequestID` DESC;";
-        $allRow = array();
-        $lastCheckBlock = 0;
-
-        $rs = $conn->query($query);
-        if ($rs) {
-            while ($resultRow = mysqli_fetch_assoc($rs)) {
-                if ($resultRow["BlockID"] != $lastCheckBlock) {
-                    array_push($allRow, $resultRow);
-                    $lastCheckBlock = $resultRow["BlockID"];
-                }
-            }
-        }
-        return $allRow;
-    }
-
     // Return all rows of Orchard (based on CompanyID, OrchardID if provided).
     function getAllOrchard($conn, $companyID = 0, $orchardID = 0) {
         $query = "SELECT * FROM `Orchard`";
@@ -292,6 +230,72 @@
         return $allRow;
     }
 
+    // Get Block Latest Client (can be used to find Current Owner of the Block).
+    function getBlockLatestClient($conn, $companyID = 0, $orchardID = 0, $blockID = 0) {
+        // SQL:
+        // SELECT `Block`.`BlockID`, `Orchard`.`OrchardID`, `Orchard`.`CompanyID`
+        // , `PurchaseRequest`.`ClientID`, `PurchaseRequest`.`ApprovalStatus`, `User`.`RealName`
+        // FROM `Block`
+        // INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`
+        // LEFT JOIN `OnSale` ON `Block`.`BlockID` = `OnSale`.`BlockID`
+        // LEFT JOIN `PurchaseRequest` ON `OnSale`.`SaleID` = `PurchaseRequest`.`SaleID`
+        // LEFT JOIN `Client` ON `PurchaseRequest`.`ClientID` = `Client`.`UserID`
+        // LEFT JOIN `User` ON `Client`.`UserID` = `User`.`UserID`
+        // ORDER BY `Block`.`BlockID`, `OnSale`.`SaleID` DESC, `PurchaseRequest`.`RequestID` DESC;
+        $query = "SELECT `Block`.`BlockID`, `Orchard`.`OrchardID`, `Orchard`.`CompanyID`";
+        $query .= ", `PurchaseRequest`.`ClientID`, `PurchaseRequest`.`ApprovalStatus`, `User`.`RealName`";
+        $query .= " FROM `Block`";
+        $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
+        $query .= " LEFT JOIN `OnSale` ON `Block`.`BlockID` = `OnSale`.`BlockID`";
+        $query .= " LEFT JOIN `PurchaseRequest` ON `OnSale`.`SaleID` = `PurchaseRequest`.`SaleID`";
+        $query .= " LEFT JOIN `Client` ON `PurchaseRequest`.`ClientID` = `Client`.`UserID`";
+        $query .= " LEFT JOIN `User` ON `Client`.`UserID` = `User`.`UserID`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $multiWhere = true;
+        }
+
+        if ($orchardID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $multiWhere = true;
+            }
+        }
+
+        if ($blockID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Block`.`BlockID` = $blockID";
+            }
+            else {
+                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $multiWhere = true;
+            }
+        }
+
+        // Block Latest Client.
+        $query .= " ORDER BY `Block`.`BlockID`, `OnSale`.`SaleID` DESC, `PurchaseRequest`.`RequestID` DESC;";
+        $allRow = array();
+        $lastCheckBlock = 0;
+
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                if ($resultRow["BlockID"] != $lastCheckBlock) {
+                    array_push($allRow, $resultRow);
+                    $lastCheckBlock = $resultRow["BlockID"];
+                }
+            }
+        }
+        return $allRow;
+    }
+
     // Return all rows of Orchard (based on CompanyID, OrchardID, BlockID, TreeID if provided).
     function getAllTree($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $treeID = 0) {
         $query = "SELECT * FROM `Tree`";
@@ -349,7 +353,9 @@
 
     // Return all rows of Orchard (based on CompanyID, OrchardID, BlockID, TreeID if provided).
     function getAllTreeUpdate($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $treeID = 0) {
-        $query = "SELECT * FROM `TreeUpdate`";
+        $query = "SELECT `TreeUpdate`.`UpdateID`, `TreeUpdate`.`UpdateDate`, `TreeUpdate`.`TreeImage`";
+        $query .= ", `TreeUpdate`.`TreeHeight`, `TreeUpdate`.`Diameter`, `TreeUpdate`.`Status`";
+        $query .= " FROM `TreeUpdate`";
         $query .= " INNER JOIN `Tree` ON `TreeUpdate`.`TreeID` = `Tree`.`TreeID`";
         $query .= " INNER JOIN `Block` ON `Tree`.`BlockID` = `Block`.`BlockID`";
         $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
@@ -406,7 +412,12 @@
 
     // Return all rows of Purchase Request (based on ApprovalStatus, CompanyID, OrchardID, BlockID, RequestID, SaleID, ClientID if provided).
     function getAllPurchaseRequest($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $requestID = 0, $saleID = 0, $clientID = 0) {
-        $query = "SELECT * FROM `PurchaseRequest`";
+        $query = "SELECT `PurchaseRequest`.`RequestID`, `Orchard`.`CompanyID`, `Orchard`.`OrchardID`";
+        $query .= ", `Block`.`BlockID`, `User`.`RealName`, `OnSale`.`SaleDate`, `OnSale`.`SalePrice`";
+        $query .= ", `OnSale`.`SellerID`, `PurchaseRequest`.`SaleID`, `PurchaseRequest`.`RequestDate`";
+        $query .= ", `PurchaseRequest`.`AdminID`, `PurchaseRequest`.`ClientID`";
+        $query .= ", `PurchaseRequest`.`RequestPrice`, `PurchaseRequest`.`ApprovalStatus`";
+        $query .= " FROM `PurchaseRequest`";
         $query .= " INNER JOIN `Client` ON `PurchaseRequest`.`ClientID` = `Client`.`UserID`";
         $query .= " INNER JOIN `User` ON `Client`.`UserID` = `User`.`UserID`";
         $query .= " INNER JOIN `OnSale` ON `PurchaseRequest`.`SaleID` = `OnSale`.`SaleID`";
