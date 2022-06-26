@@ -153,6 +153,120 @@
         return 0;
     }
 
+    // Return all rows of Admin (based on AdminID if provided).
+    function getAllAdmin($conn, $adminID = 0) {
+        $query = "SELECT `Admin`.`UserID`";
+        $query .= ", `User`.`Username`, `User`.`Email`, `User`.`RealName`, `User`.`UserType`";
+        $query .= " FROM `Company`";
+        $query .= " INNER JOIN `User` ON `Company`.`UserID` = `User`.`UserID`";
+        
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($adminID > 0) {
+            $query .= " WHERE `Admin`.`UserID` = $adminID";
+            $multiWhere = true;
+        }
+
+        $query .= ";";
+        $allRow = array();
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                array_push($allRow, $resultRow);
+            }
+        }
+        return $allRow;
+    }
+
+    // Return all rows of Company (based on CompanyID if provided).
+    function getAllCompany($conn, $companyID = 0) {
+        $query = "SELECT `Company`.`UserID`, `Company`.`EstablishDate`";
+        $query .= ", `User`.`Username`, `User`.`Email`, `User`.`RealName`, `User`.`UserType`";
+        $query .= " FROM `Company`";
+        $query .= " INNER JOIN `User` ON `Company`.`UserID` = `User`.`UserID`";
+        
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Company`.`UserID` = $companyID";
+            $multiWhere = true;
+        }
+
+        $query .= ";";
+        $allRow = array();
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                array_push($allRow, $resultRow);
+            }
+        }
+        return $allRow;
+    }
+
+    // Return all rows of Staff (based on CompanyID, StaffID if provided).
+    function getAllStaff($conn, $companyID = 0, $staffID = 0) {
+        $query = "SELECT `Staff`.`UserID`, `Staff`.`EmployDate`, `Staff`.`Salary`, `Staff`.`CompanyID`";
+        $query .= ", `User`.`Username`, `User`.`Email`, `User`.`RealName`, `User`.`UserType`";
+        $query .= " FROM `Staff`";
+        $query .= " INNER JOIN `User` ON `Staff`.`UserID` = `User`.`UserID`";
+        
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Staff`.`CompanyID` = $companyID";
+            $multiWhere = true;
+        }
+
+        if ($staffID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Staff`.`UserID` = $staffID";
+            }
+            else {
+                $query .= " WHERE `Staff`.`UserID` = $staffID";
+                $multiWhere = true;
+            }
+        }
+
+        $query .= ";";
+        $allRow = array();
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                array_push($allRow, $resultRow);
+            }
+        }
+        return $allRow;
+    }
+
+    // Return all rows of Client (based on ClientID if provided).
+    function getAllClient($conn, $clientID = 0) {
+        $query = "SELECT `Client`.`UserID`, `Client`.`Address`, `Client`.`Country`, `Client`.`Photo`";
+        $query .= ", `User`.`Username`, `User`.`Email`, `User`.`RealName`, `User`.`UserType`";
+        $query .= " FROM `Client`";
+        $query .= " INNER JOIN `User` ON `Client`.`UserID` = `User`.`UserID`";
+        
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($clientID > 0) {
+            $query .= " WHERE `Client`.`UserID` = $clientID";
+            $multiWhere = true;
+        }
+
+        $query .= ";";
+        $allRow = array();
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                array_push($allRow, $resultRow);
+            }
+        }
+        return $allRow;
+    }
+
     // Return all rows of Orchard (based on CompanyID, OrchardID if provided).
     function getAllOrchard($conn, $companyID = 0, $orchardID = 0) {
         $query = "SELECT * FROM `Orchard`";

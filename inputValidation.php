@@ -42,4 +42,20 @@
         }
         return "";
     }
+
+    // Return true if valid Latitude.
+    function checkValidLatitude($data) {
+        if (!is_numeric($data) || $data < -90 || $data > 90) {
+            return false;
+        }
+        return true;
+    }
+
+    // Return true if valid Longitude.
+    function checkValidLongitude($data) {
+        if (!is_numeric($data) || $data < -180 || $data > 180) {
+            return false;
+        }
+        return true;
+    }
 ?>

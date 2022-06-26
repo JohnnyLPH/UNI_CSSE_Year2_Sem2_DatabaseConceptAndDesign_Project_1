@@ -70,6 +70,7 @@
             <div class="w3-container w3-theme-d4 w3-animate-opacity">
                 <h2 class="w3-center">All Orchards:</h2>
                 <form id="reset-search" method="get" action="/Admin/manageOrchard.php"></form>
+                <form id="add-orchard" method="get" action="/Admin/addOrchard.php"></form>
 
                 <form class="w3-center" method="get" action="/Admin/manageOrchard.php">
                     <input style="width:98%" id="SearchKey" type="number" name="SearchKey" value="<?php
@@ -105,6 +106,8 @@
                             echo(" disabled");
                         }
                     ?>>
+
+                    <input form="add-orchard" type="submit" value="Add Orchard">
                 </form>
 
                 <div class="w3-container w3-center" style="align-content:center;">
