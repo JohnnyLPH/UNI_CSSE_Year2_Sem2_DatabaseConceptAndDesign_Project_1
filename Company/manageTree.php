@@ -20,12 +20,14 @@
     // Check if valid OrchardID, BlockID or TreeID is provided for search, set to 0 if not.
     $orchardID = $blockID = $treeID = (
         !isset($queryString["SearchKey"]) ||
+        !is_numeric($queryString["SearchKey"]) ||
         $queryString["SearchKey"] < 1
     ) ? 0: $queryString["SearchKey"];
 
     // Check if valid SearchOption is provided.
     $searchOption = (
         !isset($queryString["SearchOption"]) ||
+        !is_numeric($queryString["SearchOption"]) ||
         $queryString["SearchOption"] < 1 ||
         $queryString["SearchOption"] > 3
     ) ? 1: $queryString["SearchOption"];

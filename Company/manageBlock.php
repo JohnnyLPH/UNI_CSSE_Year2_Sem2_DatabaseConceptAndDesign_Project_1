@@ -17,33 +17,36 @@
         parse_str($_SERVER['QUERY_STRING'], $queryString);
     }
 
-    // Check if valid OrchardID or BlockID is provided for search, set to 0 if not.
-    $orchardID = $blockID = (
+    // Check if valid OrchardID, BlockID or ClientID is provided for search, set to 0 if not.
+    $orchardID = $blockID = $clientID = (
         !isset($queryString["SearchKey"]) ||
+        !is_numeric($queryString["SearchKey"]) ||
         $queryString["SearchKey"] < 1
     ) ? 0: $queryString["SearchKey"];
 
     // Check if valid SearchOption is provided.
     $searchOption = (
         !isset($queryString["SearchOption"]) ||
+        !is_numeric($queryString["SearchOption"]) ||
         $queryString["SearchOption"] < 1 ||
-        $queryString["SearchOption"] > 2
+        $queryString["SearchOption"] > 3
     ) ? 1: $queryString["SearchOption"];
 
     // Search by OrchardID.
     if ($searchOption == 1) {
-        $blockID = 0;
+        $blockID = $clientID = 0;
     }
     // Search by BlockID.
+    elseif ($searchOption == 2) {
+        $orchardID = $clientID = 0;
+    }
+    // Search by ClientID.
     else {
-        $orchardID = 0;
+        $orchardID = $blockID = 0;
     }
 
-    // Return all the block.
-    // $allBlock = getAllBlock($conn, $_SESSION["UserID"], $orchardID, $blockID);
-    
-    // Return all the block latest client.
-    $allBlock = getBlockLatestClient($conn, $_SESSION["UserID"], $orchardID, $blockID);
+    // Return all the block & latest client.
+    $allBlock = getBlockLatestClient($conn, $_SESSION["UserID"], $orchardID, $blockID, $clientID);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +85,10 @@
                         elseif ($blockID > 0) {
                             echo($blockID);
                         }
-                    ?>" placeholder="Enter Orchard/Block ID" min="1" required>
+                        elseif ($clientID > 0) {
+                            echo($clientID);
+                        }
+                    ?>" placeholder="Enter Orchard/Block/Client ID" min="1" required>
 
                     <!-- <label for="SearchOption">Search By:</label> -->
                     <select id="SearchOption" name="SearchOption">
@@ -96,13 +102,18 @@
                                 echo(" selected");
                             }
                         ?>>BlockID</option>
+                        <option value="3"<?php
+                            if ($searchOption == 3) {
+                                echo(" selected");
+                            }
+                        ?>>ClientID</option>
                     </select>
                     
                     <input type="submit" value="Search">
 
                     <input form="reset-search" type="submit" value="Reset"<?php
                         // Disable if not searching.
-                        if ($orchardID + $blockID < 1) {
+                        if ($orchardID + $blockID + $clientID < 1) {
                             echo(" disabled");
                         }
                     ?>>
@@ -170,18 +181,24 @@
                         <br>
                     <?php else: ?>
                         <span>* <?php
-                            if ($orchardID + $blockID < 1) {
+                            if ($orchardID + $blockID + $clientID < 1) {
                                 echo("No block is found!");
                             }
                             elseif ($searchOption == 1) {
                                 echo(
-                                    "Orchard ID $orchardID is not associated with any orchard of " .
+                                    "Orchard ID $orchardID is not associated with any block of " .
+                                    $_SESSION["Username"] . "!"
+                                );
+                            }
+                            elseif ($searchOption == 2) {
+                                echo(
+                                    "Block ID $blockID is not associated with any block of " .
                                     $_SESSION["Username"] . "!"
                                 );
                             }
                             else {
                                 echo(
-                                    "Block ID $blockID is not associated with any orchard of " .
+                                    "Client ID $clientID is not associated with any block of " .
                                     $_SESSION["Username"] . "!"
                                 );
                             }

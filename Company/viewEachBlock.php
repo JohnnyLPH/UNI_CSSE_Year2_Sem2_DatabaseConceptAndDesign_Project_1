@@ -21,6 +21,7 @@
     // Block is not available for viewing.
     if (
         !isset($queryString["BlockID"]) ||
+        !is_numeric($queryString["BlockID"]) ||
         $queryString["BlockID"] < 1 ||
         count($allBlock = getBlockLatestClient($conn, $_SESSION["UserID"], 0, $queryString["BlockID"])) < 1
     ) {

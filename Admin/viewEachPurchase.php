@@ -21,6 +21,7 @@
     // PurchaseRequest is not available for viewing.
     if (
         !isset($queryString["RequestID"]) ||
+        !is_numeric($queryString["RequestID"]) ||
         $queryString["RequestID"] < 1 ||
         count($allPurchaseRequest = getAllPurchaseRequest(
             $conn, -1, $_SESSION["UserID"], 0, 0, $queryString["RequestID"]

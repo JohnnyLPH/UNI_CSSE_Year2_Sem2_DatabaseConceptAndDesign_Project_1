@@ -21,6 +21,7 @@
     // Orchard is not available for viewing.
     if (
         !isset($queryString["OrchardID"]) ||
+        !is_numeric($queryString["OrchardID"]) ||
         $queryString["OrchardID"] < 1 ||
         count($allOrchard = getAllOrchard($conn, $_SESSION["UserID"], $queryString["OrchardID"])) < 1
     ) {

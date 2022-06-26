@@ -18,7 +18,11 @@
     }
 
     // Check if valid OrchardID is provided for search, set to 0 if not.
-    $orchardID = (!isset($queryString["SearchKey"]) || $queryString["SearchKey"] < 1) ? 0: $queryString["SearchKey"];
+    $orchardID = (
+        !isset($queryString["SearchKey"]) ||
+        !is_numeric($queryString["SearchKey"]) ||
+        $queryString["SearchKey"] < 1
+    ) ? 0: $queryString["SearchKey"];
 
     // Return all the orchard.
     $allOrchard = getAllOrchard($conn, $_SESSION["UserID"], $orchardID);

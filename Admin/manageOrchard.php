@@ -20,12 +20,14 @@
     // Check if valid CompanyID or OrchardID is provided for search, set to 0 if not.
     $companyID = $orchardID = (
         !isset($queryString["SearchKey"]) ||
+        !is_numeric($queryString["SearchKey"]) ||
         $queryString["SearchKey"] < 1
     ) ? 0: $queryString["SearchKey"];
 
     // Check if valid SearchOption is provided.
     $searchOption = (
         !isset($queryString["SearchOption"]) ||
+        !is_numeric($queryString["SearchOption"]) ||
         $queryString["SearchOption"] < 1 ||
         $queryString["SearchOption"] > 2
     ) ? 1: $queryString["SearchOption"];

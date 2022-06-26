@@ -22,6 +22,7 @@
     // Tree is not available for viewing.
     if (
         !isset($queryString["TreeID"]) ||
+        !is_numeric($queryString["TreeID"]) ||
         $queryString["TreeID"] < 1 ||
         count($allTree = getAllTree(
             $conn, $_SESSION["UserID"], 0, 0, $queryString["TreeID"]

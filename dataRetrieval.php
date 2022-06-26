@@ -231,7 +231,7 @@
     }
 
     // Get Block Latest Client (can be used to find Current Owner of the Block).
-    function getBlockLatestClient($conn, $companyID = 0, $orchardID = 0, $blockID = 0) {
+    function getBlockLatestClient($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $clientID = 0) {
         // SQL:
         // SELECT `Block`.`BlockID`, `Orchard`.`OrchardID`, `Orchard`.`CompanyID`
         // , `PurchaseRequest`.`ClientID`, `PurchaseRequest`.`ApprovalStatus`, `User`.`RealName`
@@ -288,8 +288,15 @@
         if ($rs) {
             while ($resultRow = mysqli_fetch_assoc($rs)) {
                 if ($resultRow["BlockID"] != $lastCheckBlock) {
-                    array_push($allRow, $resultRow);
                     $lastCheckBlock = $resultRow["BlockID"];
+                    // Filter by ClientID, only store block owned by the client.
+                    if (
+                        $clientID > 0 &&
+                        ($resultRow["ClientID"] != $clientID || $resultRow["ApprovalStatus"] != 1)
+                    ) {
+                        continue;
+                    }
+                    array_push($allRow, $resultRow);
                 }
             }
         }
