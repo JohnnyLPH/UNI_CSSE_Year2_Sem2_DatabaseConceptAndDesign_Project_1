@@ -3,7 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/inputValidation.php");
-    require_once($_SERVER['DOCUMENT_ROOT'] . "/dataRetrieval.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/dataManagement.php");
 
     $tempLoginCheck = checkLogin($conn);
     // Not logged in as Company.
