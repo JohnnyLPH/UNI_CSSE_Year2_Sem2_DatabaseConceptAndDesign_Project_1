@@ -54,6 +54,7 @@
             }
             else {
                 // Process image path
+
                 $tempTreeImage = explode(".", $_FILES["treeimage"]["name"]);
                 $newfilename = $tempTreeID . "_" . $tempUpdateDate . "_" . round(microtime(true)) . "." . end($tempTreeImage);
                 $filepath = "../img/tree/" . $newfilename;

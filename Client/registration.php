@@ -97,11 +97,15 @@
                                 $tempID = $user["UserID"];
                                 
                                 // Process image path
-                                date_default_timezone_set('Asia/Kuala_Lumpur');
+                                if($_FILES["ClientPfp"]["error"] == 0) {
+                                    date_default_timezone_set('Asia/Kuala_Lumpur');
 
-                                $tempPFP = explode(".", $_FILES["ClientPfp"]["name"]);
-                                $newfilename = $tempID . "_" . date('Y-m-d') . "_" . round(microtime(true)) . "." . end($tempPFP);
-                                $filepath = "../img/client/" . $newfilename;
+                                    $tempPFP = explode(".", $_FILES["ClientPfp"]["name"]);
+                                    $newfilename = $tempID . "_" . date('Y-m-d') . "_" . round(microtime(true)) . "." . end($tempPFP);
+                                    $filepath = "../img/client/" . $newfilename;
+                                } else {
+                                    $filepath = "../img/client/default_client.jpg";
+                                }
                                 
                                 // Insert with the obtained UserID.
                                 $query = "INSERT INTO `Client`(`UserID`, `Country`,`Address`,`Photo`)";
@@ -112,7 +116,10 @@
                                     $registrationMsg = "* Fail to insert to Client table! *";
                                 }
                                 else {
-                                    move_uploaded_file($_FILES["ClientPfp"]["tmp_name"], $filepath);
+                                    if($_FILES["ClientPfp"]["error"] == 0) {
+                                        move_uploaded_file($_FILES["ClientPfp"]["tmp_name"], $filepath);
+                                    }
+
                                     $passRegistration = true;
                                 }
                             }
