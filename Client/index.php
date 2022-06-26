@@ -2,6 +2,7 @@
     // Client Home Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/dataRetrieval.php");
 
     $tempLoginCheck = checkLogin($conn);
     // Not logged in as Client.
@@ -9,6 +10,12 @@
         header("Location: /index.php");
         exit;
     }
+
+    // Fetch image from database
+    $ID = $_SESSION["UserID"];
+    $img = mysqli_query($conn, "SELECT * FROM Client WHERE UserID = $ID");
+    $result = mysqli_fetch_array($img);
+    $imgPath = $result["Photo"];
 
     $conn->close();
 ?>
@@ -40,6 +47,10 @@
                         <h2 class="w3-bar-item" >Welcome, <?php
                             echo($_SESSION["Username"]);
                         ?></h2>
+                        
+                        <img src="<?php echo($imgPath); ?>"  id="icon" 
+                        alt="* UserID <?php echo($_SESSION["UserID"]); ?> img *">
+
                     </div>
 
                     <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;">

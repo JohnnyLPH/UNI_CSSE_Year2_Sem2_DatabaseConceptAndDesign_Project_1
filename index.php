@@ -63,6 +63,12 @@
                     <br>
                     <button onclick="document.location='/login.php?UserType=CL'">Client</button>
                 </div>
+
+                <div class="card fadeIn fourth">
+                    <img src="https://img.freepik.com/free-vector/isometric-illustration-representing-man-pointing-screen-website-personal-profile-front-gadgets_30590-283.jpg" id="icon" alt="User Icon" />
+                    <br>
+                    <button onclick="document.location='/login.php?UserType=AD'">Admin</button>
+                </div>
             </div>
         </main>
 

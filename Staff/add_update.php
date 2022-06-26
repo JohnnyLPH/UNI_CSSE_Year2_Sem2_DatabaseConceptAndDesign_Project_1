@@ -55,7 +55,7 @@
             else {
                 // Process image path
                 $tempTreeImage = explode(".", $_FILES["treeimage"]["name"]);
-                $newfilename = $treeid . "_" . $updatedate . "_" . round(microtime(true)) . "." . end($tempTreeImage);
+                $newfilename = $tempTreeID . "_" . $tempUpdateDate . "_" . round(microtime(true)) . "." . end($tempTreeImage);
                 $filepath = "../img/tree/" . $newfilename;
 
                 // Insert to User table with UserType CO.

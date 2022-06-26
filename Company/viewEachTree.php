@@ -151,7 +151,7 @@
                                         echo($result["UpdateDate"]);
                                     ?></td>
 
-                                    <td><img src="<?php
+                                    <td><img id="icon" src="<?php
                                         echo(cleanInput($result["TreeImage"]));
                                     ?>" alt="* UpdateID <?php
                                         echo($result["UpdateID"]);
