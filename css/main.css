@@ -78,6 +78,10 @@ a, h1, h2, h3, h4 {
   font-family: "Poppins", sans-serif !important;
 }
 
+a{
+  text-decoration: none !important;
+}
+
 .sticky {
 	position: -webkit-sticky;
 	position: sticky;

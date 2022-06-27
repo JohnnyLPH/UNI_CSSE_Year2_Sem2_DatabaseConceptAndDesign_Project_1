@@ -102,7 +102,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Manage Orchard Page</h1>
+            <h4 style="font-size: 36px">Admin: Manage Orchard Page</h4>
             </div>
         </header>
 
