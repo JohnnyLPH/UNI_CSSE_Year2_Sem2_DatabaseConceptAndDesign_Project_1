@@ -291,7 +291,7 @@ h2.active {
 
 
 /* FORM TYPOGRAPHY*/
-option {
+.textLeft {
   text-align: left;
 }
 
