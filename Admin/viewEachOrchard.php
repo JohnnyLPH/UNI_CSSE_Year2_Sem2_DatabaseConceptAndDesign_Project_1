@@ -173,6 +173,15 @@
                 </div>
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
+                    <form method="get" action="/Admin/editOrchard.php">
+                        <input type="hidden" name="OrchardID" value="<?php
+                            echo($orchardID);
+                        ?>">
+                        <input class="fullW" type="submit" value="Edit Orchard ID <?php
+                            echo($orchardID);
+                        ?>" style="max-width:100%;">
+                    </form>
+
                     <form method="get" action="/Admin/manageBlock.php">
                         <input type="hidden" name="SearchKey" value="<?php
                             echo($orchardID);

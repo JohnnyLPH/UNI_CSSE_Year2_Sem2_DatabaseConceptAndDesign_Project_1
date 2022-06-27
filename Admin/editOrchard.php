@@ -12,20 +12,41 @@
         exit;
     }
 
+    $queryString = array();
+
+    if (isset($_SERVER['QUERY_STRING'])) {
+        parse_str($_SERVER['QUERY_STRING'], $queryString);
+    }
+
+    $allOrchard = NULL;
+    // Orchard is not available for editing.
+    if (
+        !isset($queryString["OrchardID"]) ||
+        !is_numeric($queryString["OrchardID"]) ||
+        $queryString["OrchardID"] < 1 ||
+        count($allOrchard = getAllOrchard($conn, 0, $queryString["OrchardID"])) < 1
+    ) {
+        header("Location: /Admin/manageOrchard.php");
+        exit;
+    }
+
+    $orchardID = $queryString["OrchardID"];
+    $result = $allOrchard[0];
+
     $tempAddress = $tempLatitude = $tempLongitude = $tempCompID = "";
-    $addMsg = "";
-    $passAdding = true;
+    $editMsg = "";
+    $passEditing = true;
 
     $allCompany = getAllCompany($conn);
 
-    // Disable adding if no existing company.
+    // Disable editing if no existing company.
     if (count($allCompany) < 1) {
-        $addMsg = "* Adding is not allowed as there is no existing company! *";
-        $passAdding = false;
+        $editMsg = "* Editing is not allowed as there is no existing company! *";
+        $passEditing = false;
     }
 
-    // Add attempt.
-    if ($passAdding && $_SERVER["REQUEST_METHOD"] == "POST") {
+    // Edit attempt.
+    if ($passEditing && $_SERVER["REQUEST_METHOD"] == "POST") {
         $tempAddress = (isset($_POST["Address"])) ? cleanInput($_POST["Address"]): "";
         $tempLatitude = (isset($_POST["Latitude"])) ? cleanInput($_POST["Latitude"]): "";
         $tempLongitude = (isset($_POST["Longitude"])) ? cleanInput($_POST["Longitude"]): "";
@@ -37,51 +58,69 @@
             empty($tempLongitude) ||
             empty($tempCompID)
         ) {
-            $addMsg = "* Fill in ALL Fields! *";
+            $editMsg = "* Fill in ALL Fields! *";
         }
         else {
             // Set to true at first.
-            $passAdding = true;
+            $passEditing = true;
 
             // Check Latitude.
             if (!checkValidLatitude($tempLatitude)) {
-                $addMsg = "* Valid latitude (-90 <= x <= 90)! *";
-                $passAdding = false;
+                $editMsg = "* Valid latitude (-90 <= x <= 90)! *";
+                $passEditing = false;
             }
 
             // Check Longitude.
-            if ($passAdding && !checkValidLongitude($tempLongitude)) {
-                $addMsg = "* Valid longitude (-180 <= x <= 180)! *";
-                $passAdding = false;
+            if ($passEditing && !checkValidLongitude($tempLongitude)) {
+                $editMsg = "* Valid longitude (-180 <= x <= 180)! *";
+                $passEditing = false;
             }
 
             // Check valid CompanyID.
-            if ($passAdding && count(getAllCompany($conn, $tempCompID)) < 1) {
-                $addMsg = "* Choose an existing Company! *";
-                $passAdding = false;
+            if ($passEditing && count(getAllCompany($conn, $tempCompID)) < 1) {
+                $editMsg = "* Choose an existing Company! *";
+                $passEditing = false;
             }
 
-            // Insert to DB.
-            if ($passAdding) {
-                // Insert to Orchard table.
-                $query = "INSERT INTO `Orchard`(`Address`, `Latitude`, `Longitude`, `CompanyID`)";
-                $query .= " VALUES ('$tempAddress','$tempLatitude','$tempLongitude','$tempCompID')";
+            // Update in DB.
+            if ($passEditing) {
+                // Update in Orchard table.
+                $query = "UPDATE `Orchard`";
+                $query .= " SET `Address`='$tempAddress'";
+                $query .= ", `Latitude`='$tempLatitude'";
+                $query .= ", `Longitude`='$tempLongitude'";
+                $query .= ", `CompanyID`='$tempCompID'";
+                $query .= " WHERE `Orchard`.`OrchardID`='$orchardID'";
 
                 $rs = $conn->query($query);
                 if (!$rs) {
-                    $addMsg = "* Fail to insert to Orchard table! *";
-                    $passAdding = false;
+                    $editMsg = "* Fail to update in Orchard table! *";
+                    $passEditing = false;
                 }
 
-                // Check if the data is successfully inserted.
-                if ($passAdding) {
-                    // Reset to empty.
-                    $tempAddress = $tempLatitude = $tempLongitude = $tempCompID = "";
-                    $addMsg = "* Orchard is successfully added! *";
+                // Check if the data is successfully updated.
+                if ($passEditing) {
+                    $editMsg = "* Orchard is successfully updated! *";
                 }
             }
         }
     }
+    if (empty($tempAddress)) {
+        $tempAddress = $result["Address"];
+    }
+
+    if (empty($tempLatitude)) {
+        $tempLatitude = $result["Latitude"];
+    }
+
+    if (empty($tempLongitude)) {
+        $tempLongitude = $result["Longitude"];
+    }
+
+    if (empty($tempCompID)) {
+        $tempCompID = $result["CompanyID"];
+    }
+
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -111,19 +150,23 @@
         <main>
             <div class="wrapper fadeInDown">
                 <div id="formHeader">
-                    <h1>Add New Orchard:</h1>
+                    <h1>Edit Orchard ID <?php
+                        echo($orchardID);
+                    ?>:</h1>
                 </div>
                 <div id="formContentW2">
                     <img class="fadeIn first" src="https://us.123rf.com/450wm/goodstudio/goodstudio1910/goodstudio191000131/131189697-family-working-in-fruit-garden-together-flat-vector-illustration-people-gathering-apples-berries-and.jpg" id="icon" alt="Orchard Icon" />
 
-                    <form method="post" action="/Admin/addOrchard.php">
+                    <form method="post" action="/Admin/editOrchard.php?OrchardID=<?php
+                        echo($orchardID);
+                    ?>">
                         <table>
                             <tr>
                                 <td colspan="2">
                                     <span class="<?php
-                                        echo(($passAdding) ? "success": "error");
+                                        echo(($passEditing) ? "success": "error");
                                     ?>-message"><?php
-                                        echo($addMsg);
+                                        echo($editMsg);
                                     ?></span>
                                 </td>
                             </tr>
@@ -196,7 +239,7 @@
                                 <td colspan="2">
                                     <div>
                                         <br>
-                                        <input type="submit" value="Add Orchard Now"<?php
+                                        <input type="submit" value="Save Editing"<?php
                                             if (count($allCompany) < 1) {
                                                 echo(" disabled");
                                             }
@@ -208,7 +251,9 @@
                     </form>
                     <br>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/Admin/manageOrchard.php">Back to Manage Orchard</a><h2><br>
+                        <h2><a class="underlineHover" href="/Admin/viewEachOrchard.php?OrchardID=<?php
+                            echo($orchardID);
+                        ?>">Back to View Orchard</a><h2><br>
                     </div>
                 </div>
             </div>

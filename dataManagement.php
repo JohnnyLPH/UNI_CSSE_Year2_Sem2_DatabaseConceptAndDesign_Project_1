@@ -7,7 +7,7 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
             $multiWhere = true;
         }
 
@@ -30,16 +30,16 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
             $multiWhere = true;
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
                 $multiWhere = true;
             }
         }
@@ -64,26 +64,26 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `CompanyID` = $companyID";
+            $query .= " WHERE `CompanyID` = '$companyID'";
             $multiWhere = true;
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
                 $multiWhere = true;
             }
         }
 
         if ($blockID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Block`.`BlockID` = $blockID";
+                $query .= " AND `Block`.`BlockID` = '$blockID'";
             }
             else {
-                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $query .= " WHERE `Block`.`BlockID` = '$blockID'";
                 $multiWhere = true;
             }
         }
@@ -115,30 +115,30 @@
 
         if ($companyID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`CompanyID` = $companyID";
+                $query .= " AND `Orchard`.`CompanyID` = '$companyID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+                $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
                 $multiWhere = true;
             }
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
                 $multiWhere = true;
             }
         }
 
         if ($blockID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Block`.`BlockID` = $blockID";
+                $query .= " AND `Block`.`BlockID` = '$blockID'";
             }
             else {
-                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $query .= " WHERE `Block`.`BlockID` = '$blockID'";
                 $multiWhere = true;
             }
         }
@@ -164,7 +164,7 @@
         $multiWhere = false;
 
         if ($adminID > 0) {
-            $query .= " WHERE `Admin`.`UserID` = $adminID";
+            $query .= " WHERE `Admin`.`UserID` = '$adminID'";
             $multiWhere = true;
         }
 
@@ -190,7 +190,7 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `Company`.`UserID` = $companyID";
+            $query .= " WHERE `Company`.`UserID` = '$companyID'";
             $multiWhere = true;
         }
 
@@ -216,16 +216,16 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `Staff`.`CompanyID` = $companyID";
+            $query .= " WHERE `Staff`.`CompanyID` = '$companyID'";
             $multiWhere = true;
         }
 
         if ($staffID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Staff`.`UserID` = $staffID";
+                $query .= " AND `Staff`.`UserID` = '$staffID'";
             }
             else {
-                $query .= " WHERE `Staff`.`UserID` = $staffID";
+                $query .= " WHERE `Staff`.`UserID` = '$staffID'";
                 $multiWhere = true;
             }
         }
@@ -252,7 +252,7 @@
         $multiWhere = false;
 
         if ($clientID > 0) {
-            $query .= " WHERE `Client`.`UserID` = $clientID";
+            $query .= " WHERE `Client`.`UserID` = '$clientID'";
             $multiWhere = true;
         }
 
@@ -275,16 +275,16 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
             $multiWhere = true;
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
                 $multiWhere = true;
             }
         }
@@ -309,26 +309,26 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
             $multiWhere = true;
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
                 $multiWhere = true;
             }
         }
 
         if ($blockID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Block`.`BlockID` = $blockID";
+                $query .= " AND `Block`.`BlockID` = '$blockID'";
             }
             else {
-                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $query .= " WHERE `Block`.`BlockID` = '$blockID'";
                 $multiWhere = true;
             }
         }
@@ -369,26 +369,26 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
             $multiWhere = true;
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
                 $multiWhere = true;
             }
         }
 
         if ($blockID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Block`.`BlockID` = $blockID";
+                $query .= " AND `Block`.`BlockID` = '$blockID'";
             }
             else {
-                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $query .= " WHERE `Block`.`BlockID` = '$blockID'";
                 $multiWhere = true;
             }
         }
@@ -427,36 +427,36 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
             $multiWhere = true;
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
                 $multiWhere = true;
             }
         }
 
         if ($blockID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Block`.`BlockID` = $blockID";
+                $query .= " AND `Block`.`BlockID` = '$blockID'";
             }
             else {
-                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $query .= " WHERE `Block`.`BlockID` = '$blockID'";
                 $multiWhere = true;
             }
         }
 
         if ($treeID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Tree`.`TreeID` = $treeID";
+                $query .= " AND `Tree`.`TreeID` = '$treeID'";
             }
             else {
-                $query .= " WHERE `Tree`.`TreeID` = $treeID";
+                $query .= " WHERE `Tree`.`TreeID` = '$treeID'";
                 $multiWhere = true;
             }
         }
@@ -485,36 +485,36 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
             $multiWhere = true;
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
                 $multiWhere = true;
             }
         }
 
         if ($blockID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Block`.`BlockID` = $blockID";
+                $query .= " AND `Block`.`BlockID` = '$blockID'";
             }
             else {
-                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $query .= " WHERE `Block`.`BlockID` = '$blockID'";
                 $multiWhere = true;
             }
         }
 
         if ($treeID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Tree`.`TreeID` = $treeID";
+                $query .= " AND `Tree`.`TreeID` = '$treeID'";
             }
             else {
-                $query .= " WHERE `Tree`.`TreeID` = $treeID";
+                $query .= " WHERE `Tree`.`TreeID` = '$treeID'";
                 $multiWhere = true;
             }
         }
@@ -549,66 +549,66 @@
         $multiWhere = false;
 
         if ($approvalStatus > -1 && $approvalStatus < 3) {
-            $query .= " WHERE `PurchaseRequest`.`ApprovalStatus` = $approvalStatus";
+            $query .= " WHERE `PurchaseRequest`.`ApprovalStatus` = '$approvalStatus'";
             $multiWhere = true;
         }
 
         if ($companyID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`CompanyID` = $companyID";
+                $query .= " AND `Orchard`.`CompanyID` = '$companyID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+                $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
                 $multiWhere = true;
             }
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
                 $multiWhere = true;
             }
         }
 
         if ($blockID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Block`.`BlockID` = $blockID";
+                $query .= " AND `Block`.`BlockID` = '$blockID'";
             }
             else {
-                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $query .= " WHERE `Block`.`BlockID` = '$blockID'";
                 $multiWhere = true;
             }
         }
 
         if ($requestID > 0) {
             if ($multiWhere) {
-                $query .= " AND `PurchaseRequest`.`RequestID` = $requestID";
+                $query .= " AND `PurchaseRequest`.`RequestID` = '$requestID'";
             }
             else {
-                $query .= " WHERE `PurchaseRequest`.`RequestID` = $requestID";
+                $query .= " WHERE `PurchaseRequest`.`RequestID` = '$requestID'";
                 $multiWhere = true;
             }
         }
 
         if ($saleID > 0) {
             if ($multiWhere) {
-                $query .= " AND `PurchaseRequest`.`SaleID` = $saleID";
+                $query .= " AND `PurchaseRequest`.`SaleID` = '$saleID'";
             }
             else {
-                $query .= " WHERE `PurchaseRequest`.`SaleID` = $saleID";
+                $query .= " WHERE `PurchaseRequest`.`SaleID` = '$saleID'";
                 $multiWhere = true;
             }
         }
 
         if ($clientID > 0) {
             if ($multiWhere) {
-                $query .= " AND `PurchaseRequest`.`ClientID` = $clientID";
+                $query .= " AND `PurchaseRequest`.`ClientID` = '$clientID'";
             }
             else {
-                $query .= " WHERE `PurchaseRequest`.`ClientID` = $clientID";
+                $query .= " WHERE `PurchaseRequest`.`ClientID` = '$clientID'";
                 $multiWhere = true;
             }
         }
@@ -641,36 +641,36 @@
         $multiWhere = false;
 
         if ($companyID > 0) {
-            $query .= " WHERE `Orchard`.`CompanyID` = $companyID";
+            $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
             $multiWhere = true;
         }
 
         if ($orchardID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Orchard`.`OrchardID` = $orchardID";
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
             }
             else {
-                $query .= " WHERE `Orchard`.`OrchardID` = $orchardID";
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
                 $multiWhere = true;
             }
         }
 
         if ($blockID > 0) {
             if ($multiWhere) {
-                $query .= " AND `Block`.`BlockID` = $blockID";
+                $query .= " AND `Block`.`BlockID` = '$blockID'";
             }
             else {
-                $query .= " WHERE `Block`.`BlockID` = $blockID";
+                $query .= " WHERE `Block`.`BlockID` = '$blockID'";
                 $multiWhere = true;
             }
         }
 
         if ($saleID > 0) {
             if ($multiWhere) {
-                $query .= " AND `OnSale`.`SaleID` = $saleID";
+                $query .= " AND `OnSale`.`SaleID` = '$saleID'";
             }
             else {
-                $query .= " WHERE `OnSale`.`SaleID` = $saleID";
+                $query .= " WHERE `OnSale`.`SaleID` = '$saleID'";
                 $multiWhere = true;
             }
         }
