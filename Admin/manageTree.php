@@ -79,6 +79,7 @@
                 <h2 class="w3-center">All Trees:</h2>
 
                 <form id="reset-search" method="get" action="/Admin/manageTree.php"></form>
+                <form id="add-tree" method="get" action="/Admin/addTree.php"></form>
 
                 <form class="w3-center" method="get" action="/Admin/manageTree.php">
                     <input style="width:98%" id="SearchKey" type="number" name="SearchKey" value="<?php
@@ -129,6 +130,8 @@
                             echo(" disabled");
                         }
                     ?>>
+
+                    <input form="add-tree" type="submit" value="Add Tree">
                 </form>
                 
                 <div class="w3-container w3-center" style="align-content:center;">

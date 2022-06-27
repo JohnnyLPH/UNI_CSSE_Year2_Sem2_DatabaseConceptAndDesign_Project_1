@@ -79,6 +79,7 @@
                 <h2 class="w3-center">All Blocks:</h2>
 
                 <form id="reset-search" method="get" action="/Admin/manageBlock.php"></form>
+                <form id="add-block" method="get" action="/Admin/addBlock.php"></form>
 
                 <form class="w3-center" method="get" action="/Admin/manageBlock.php">
                     <input style="width:98%" id="SearchKey" type="number" name="SearchKey" value="<?php
@@ -129,6 +130,8 @@
                             echo(" disabled");
                         }
                     ?>>
+
+                    <input form="add-block" type="submit" value="Add Block">
                 </form>
 
                 <div class="w3-container w3-center" style="align-content:center;">
