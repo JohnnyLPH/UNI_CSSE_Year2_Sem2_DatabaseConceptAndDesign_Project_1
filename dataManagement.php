@@ -744,7 +744,7 @@
     }
 
     // Delete PurchaseRequest.
-    function deletePurchaseRequest($conn, $requestID = 0, $saleID = 0, $clientID = 0, $confirmDel = false) {
+    function deletePurchaseRequest($conn, $requestID = 0, $saleID = 0, $clientID = 0, $adminID = 0, $confirmDel = false) {
         $query = "DELETE FROM `PurchaseRequest`";
 
         // Add WHERE Clause.
@@ -775,10 +775,20 @@
             }
         }
 
+        if ($adminID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `PurchaseRequest`.`AdminID` = '$adminID'";
+            }
+            else {
+                $query .= " WHERE `PurchaseRequest`.`AdminID` = '$adminID'";
+                $multiWhere = true;
+            }
+        }
+
         $query .= ";";
 
         // Reconfirm to delete all if no condition is provided.
-        if ($requestID + $saleID + $clientID < 1 && !$confirmDel) {
+        if ($requestID + $saleID + $clientID + $adminID < 1 && !$confirmDel) {
             return false;
         }
 
@@ -872,6 +882,129 @@
         // Reconfirm to delete all if no condition is provided.
         if ($updateID + $treeID + $staffID < 1 && !$confirmDel) {
             return false;
+        }
+
+        return $conn->query($query);
+    }
+
+    // Delete Tree.
+    function deleteTree($conn, $treeID = 0, $blockID = 0, $confirmDel = false) {
+        $query = "DELETE FROM `Tree`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($treeID > 0) {
+            $query .= " WHERE `Tree`.`TreeID` = '$treeID'";
+            $multiWhere = true;
+        }
+
+        if ($blockID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Tree`.`BlockID` = '$blockID'";
+            }
+            else {
+                $query .= " WHERE `Tree`.`BlockID` = '$blockID'";
+                $multiWhere = true;
+            }
+        }
+
+        $query .= ";";
+
+        // Reconfirm to delete all if no condition is provided.
+        if ($treeID + $blockID < 1 && !$confirmDel) {
+            return false;
+        }
+
+        $allRow = getAllTree($conn, 0, 0, $blockID, $treeID);
+        foreach ($allRow as $result) {
+            // Delete related TreeUpdate.
+            if (!deleteTreeUpdate($conn, 0, $result["TreeID"])) {
+                return false;
+            }
+        }
+
+        return $conn->query($query);
+    }
+
+    // Delete Block.
+    function deleteBlock($conn, $blockID = 0, $orchardID = 0, $confirmDel = false) {
+        $query = "DELETE FROM `Block`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($blockID > 0) {
+            $query .= " WHERE `Block`.`BlockID` = '$blockID'";
+            $multiWhere = true;
+        }
+
+        if ($orchardID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Block`.`OrchardID` = '$orchardID'";
+            }
+            else {
+                $query .= " WHERE `Block`.`OrchardID` = '$orchardID'";
+                $multiWhere = true;
+            }
+        }
+
+        $query .= ";";
+
+        // Reconfirm to delete all if no condition is provided.
+        if ($blockID + $orchardID < 1 && !$confirmDel) {
+            return false;
+        }
+
+        $allRow = getAllBlock($conn, 0, $orchardID, $blockID);
+        foreach ($allRow as $result) {
+            // Delete related Tree and OnSale.
+            if (
+                !deleteTree($conn, 0, $result["BlockID"]) ||
+                !deleteOnSale($conn, 0, $result["BlockID"])
+            ) {
+                return false;
+            }
+        }
+
+        return $conn->query($query);
+    }
+
+    // Delete Orchard.
+    function deleteOrchard($conn, $orchardID = 0, $companyID = 0, $confirmDel = false) {
+        $query = "DELETE FROM `Orchard`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($orchardID > 0) {
+            $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
+            $multiWhere = true;
+        }
+
+        if ($companyID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`CompanyID` = '$companyID'";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
+                $multiWhere = true;
+            }
+        }
+
+        $query .= ";";
+
+        // Reconfirm to delete all if no condition is provided.
+        if ($orchardID + $companyID < 1 && !$confirmDel) {
+            return false;
+        }
+
+        $allRow = getAllOrchard($conn, $companyID, $orchardID);
+        foreach ($allRow as $result) {
+            // Delete related Block.
+            if (!deleteBlock($conn, 0, $result["OrchardID"])) {
+                return false;
+            }
         }
 
         return $conn->query($query);
