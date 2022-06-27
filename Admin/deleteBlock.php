@@ -1,5 +1,5 @@
 <?php
-    // Admin Manage Orchard Page.
+    // Admin Manage Block Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/inputValidation.php");
@@ -18,20 +18,20 @@
         parse_str($_SERVER['QUERY_STRING'], $queryString);
     }
 
-    $allOrchard = NULL;
-    // Orchard is not available for deleting.
+    $allBlock = NULL;
+    // Block is not available for deleting.
     if (
-        !isset($queryString["OrchardID"]) ||
-        !is_numeric($queryString["OrchardID"]) ||
-        $queryString["OrchardID"] < 1 ||
-        count($allOrchard = getAllOrchard($conn, 0, $queryString["OrchardID"])) < 1
+        !isset($queryString["BlockID"]) ||
+        !is_numeric($queryString["BlockID"]) ||
+        $queryString["BlockID"] < 1 ||
+        count($allBlock = getAllBlock($conn, 0, 0, $queryString["BlockID"])) < 1
     ) {
-        header("Location: /Admin/manageOrchard.php");
+        header("Location: /Admin/manageBlock.php");
         exit;
     }
 
-    $orchardID = $queryString["OrchardID"];
-    $result = $allOrchard[0];
+    $BlockID = $queryString["BlockID"];
+    $result = $allBlock[0];
 
     $tempPass = "";
     $deleteMsg = "";
@@ -57,12 +57,12 @@
 
             // Delete from DB.
             if ($passDeleting) {
-                if (!deleteOrchard($conn, $orchardID)) {
-                    $deleteMsg = "* Fail to delete Orchard from database! *";
+                if (!deleteBlock($conn, $BlockID)) {
+                    $deleteMsg = "* Fail to delete Block from database! *";
                     $passDeleting = false;
                 }
                 else {
-                    $deleteMsg = "* Orchard is successfully deleted! *";
+                    $deleteMsg = "* Block is successfully deleted! *";
                 }
             }
         }
@@ -73,7 +73,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin: Manage Orchard Page</title>
+        <title>Admin: Manage Block Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
 
@@ -88,7 +88,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h4 style="font-size: 36px">Admin: Manage Orchard Page</h4>
+                <h4 style="font-size: 36px">Admin: Manage Block Page</h4>
             </div>
         </header>
 
@@ -97,15 +97,15 @@
         <main>
             <div class="wrapper fadeInDown">
                 <div id="formHeader">
-                    <h1>Delete Orchard ID <?php
-                        echo($orchardID);
+                    <h1>Delete Block ID <?php
+                        echo($BlockID);
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://us.123rf.com/450wm/goodstudio/goodstudio1910/goodstudio191000131/131189697-family-working-in-fruit-garden-together-flat-vector-illustration-people-gathering-apples-berries-and.jpg" id="icon" alt="Orchard Icon" />
+                    <img class="fadeIn first" src="https://i.pinimg.com/originals/07/20/ad/0720add75420ae4ad05075760c5c0723.jpg" id="icon" alt="Block Icon" />
 
-                    <form method="post" action="/Admin/deleteOrchard.php?OrchardID=<?php
-                        echo($orchardID);
+                    <form method="post" action="/Admin/deleteBlock.php?BlockID=<?php
+                        echo($BlockID);
                     ?>">
                         <table>
                             <tr>
@@ -153,11 +153,11 @@
                     <br>
                     <div id="formFooter">
                         <?php if(!$passDeleting): ?>
-                            <h2><a class="underlineHover" href="/Admin/viewEachOrchard.php?OrchardID=<?php
-                                echo($orchardID);
-                            ?>">Back to View Orchard</a><h2><br>
+                            <h2><a class="underlineHover" href="/Admin/viewEachBlock.php?BlockID=<?php
+                                echo($BlockID);
+                            ?>">Back to View Block</a><h2><br>
                         <?php else: ?>
-                            <h2><a class="underlineHover" href="/Admin/manageOrchard.php">Back to Manage Orchard</a><h2><br>
+                            <h2><a class="underlineHover" href="/Admin/manageBlock.php">Back to Manage Block</a><h2><br>
                         <?php endif; ?>
                     </div>
                 </div>

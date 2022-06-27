@@ -1,5 +1,5 @@
 <?php
-    // Admin Manage Orchard Page.
+    // Admin Manage Tree Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/inputValidation.php");
@@ -12,122 +12,83 @@
         exit;
     }
 
-    $queryString = array();
+    $tempSpeciesName = $tempLatitude = $tempLongitude = $tempBlockID = "";
+    $addMsg = "";
+    $passAdding = true;
 
-    if (isset($_SERVER['QUERY_STRING'])) {
-        parse_str($_SERVER['QUERY_STRING'], $queryString);
+    $allBlock = getAllBlock($conn);
+
+    // Disable adding if no existing block.
+    if (count($allBlock) < 1) {
+        $addMsg = "* Adding is not allowed as there is no existing block! *";
+        $passAdding = false;
     }
 
-    $allOrchard = NULL;
-    // Orchard is not available for editing.
-    if (
-        !isset($queryString["OrchardID"]) ||
-        !is_numeric($queryString["OrchardID"]) ||
-        $queryString["OrchardID"] < 1 ||
-        count($allOrchard = getAllOrchard($conn, 0, $queryString["OrchardID"])) < 1
-    ) {
-        header("Location: /Admin/manageOrchard.php");
-        exit;
-    }
-
-    $orchardID = $queryString["OrchardID"];
-    $result = $allOrchard[0];
-
-    $tempAddress = $tempLatitude = $tempLongitude = $tempCompID = "";
-    $editMsg = "";
-    $passEditing = true;
-
-    $allCompany = getAllCompany($conn);
-
-    // Disable editing if no existing company.
-    if (count($allCompany) < 1) {
-        $editMsg = "* Editing is not allowed as there is no existing company! *";
-        $passEditing = false;
-    }
-
-    // Edit attempt.
-    if ($passEditing && $_SERVER["REQUEST_METHOD"] == "POST") {
-        $tempAddress = (isset($_POST["Address"])) ? cleanInput($_POST["Address"]): "";
+    // Add attempt.
+    if ($passAdding && $_SERVER["REQUEST_METHOD"] == "POST") {
+        $tempSpeciesName = (isset($_POST["SpeciesName"])) ? cleanInput($_POST["SpeciesName"]): "";
         $tempLatitude = (isset($_POST["Latitude"])) ? cleanInput($_POST["Latitude"]): "";
         $tempLongitude = (isset($_POST["Longitude"])) ? cleanInput($_POST["Longitude"]): "";
-        $tempCompID = (isset($_POST["CompanyID"])) ? cleanInput($_POST["CompanyID"]): "";
+        $tempBlockID = (isset($_POST["BlockID"])) ? cleanInput($_POST["BlockID"]): "";
 
         if (
-            empty($tempAddress) ||
+            empty($tempSpeciesName) ||
             empty($tempLatitude) ||
             empty($tempLongitude) ||
-            empty($tempCompID)
+            empty($tempBlockID)
         ) {
-            $editMsg = "* Fill in ALL Fields! *";
-            $passEditing = false;
+            $addMsg = "* Fill in ALL Fields! *";
+            $passAdding = false;
         }
         else {
             // Set to true at first.
-            $passEditing = true;
+            $passAdding = true;
 
             // Check Latitude.
             if (!checkValidLatitude($tempLatitude)) {
-                $editMsg = "* Valid latitude (-90 <= x <= 90)! *";
-                $passEditing = false;
+                $addMsg = "* Valid latitude (-90 <= x <= 90)! *";
+                $passAdding = false;
             }
 
             // Check Longitude.
-            if ($passEditing && !checkValidLongitude($tempLongitude)) {
-                $editMsg = "* Valid longitude (-180 <= x <= 180)! *";
-                $passEditing = false;
+            if ($passAdding && !checkValidLongitude($tempLongitude)) {
+                $addMsg = "* Valid longitude (-180 <= x <= 180)! *";
+                $passAdding = false;
             }
 
-            // Check valid CompanyID.
-            if ($passEditing && count(getAllCompany($conn, $tempCompID)) < 1) {
-                $editMsg = "* Choose an existing Company! *";
-                $passEditing = false;
+            // Check valid Block.
+            if ($passAdding && count(getAllBlock($conn, 0, 0, $tempBlockID)) < 1) {
+                $addMsg = "* Choose an existing Block! *";
+                $passAdding = false;
             }
 
-            // Update in DB.
-            if ($passEditing) {
-                // Update in Orchard table.
-                $query = "UPDATE `Orchard`";
-                $query .= " SET `Address`='$tempAddress'";
-                $query .= ", `Latitude`='$tempLatitude'";
-                $query .= ", `Longitude`='$tempLongitude'";
-                $query .= ", `CompanyID`='$tempCompID'";
-                $query .= " WHERE `Orchard`.`OrchardID`='$orchardID';";
+            // Insert to DB.
+            if ($passAdding) {
+                // Insert to Tree table.
+                $query = "INSERT INTO `Tree`(`SpeciesName`, `Latitude`, `Longitude`, `BlockID`)";
+                $query .= " VALUES ('$tempSpeciesName','$tempLatitude','$tempLongitude','$tempBlockID');";
 
                 $rs = $conn->query($query);
                 if (!$rs) {
-                    $editMsg = "* Fail to update in Orchard table! *";
-                    $passEditing = false;
+                    $addMsg = "* Fail to insert to Tree table! *";
+                    $passAdding = false;
                 }
 
-                // Check if the data is successfully updated.
-                if ($passEditing) {
-                    $editMsg = "* Orchard is successfully updated! *";
+                // Check if the data is successfully inserted.
+                if ($passAdding) {
+                    // Reset to empty.
+                    $tempSpeciesName = $tempLatitude = $tempLongitude = $tempBlockID = "";
+                    $addMsg = "* Tree is successfully added! *";
                 }
             }
         }
     }
-    if (empty($tempAddress)) {
-        $tempAddress = $result["Address"];
-    }
-
-    if (empty($tempLatitude)) {
-        $tempLatitude = $result["Latitude"];
-    }
-
-    if (empty($tempLongitude)) {
-        $tempLongitude = $result["Longitude"];
-    }
-
-    if (empty($tempCompID)) {
-        $tempCompID = $result["CompanyID"];
-    }
-
     $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin: Manage Orchard Page</title>
+        <title>Admin: Manage Tree Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
 
@@ -142,7 +103,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h4 style="font-size: 36px">Admin: Manage Orchard Page</h4>
+                <h4 style="font-size: 36px">Admin: Manage Tree Page</h4>
             </div>
         </header>
 
@@ -151,37 +112,33 @@
         <main>
             <div class="wrapper fadeInDown">
                 <div id="formHeader">
-                    <h1>Edit Orchard ID <?php
-                        echo($orchardID);
-                    ?>:</h1>
+                    <h1>Add New Tree:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://us.123rf.com/450wm/goodstudio/goodstudio1910/goodstudio191000131/131189697-family-working-in-fruit-garden-together-flat-vector-illustration-people-gathering-apples-berries-and.jpg" id="icon" alt="Orchard Icon" />
+                    <img class="fadeIn first" src="https://static.vecteezy.com/system/resources/previews/002/140/928/non_2x/gardening-concept-illustration-with-man-and-women-planting-a-tree-free-vector.jpg" id="icon" alt="Tree Icon" />
 
-                    <form method="post" action="/Admin/editOrchard.php?OrchardID=<?php
-                        echo($orchardID);
-                    ?>">
+                    <form method="post" action="/Admin/addTree.php">
                         <table>
                             <tr>
                                 <td colspan="2">
                                     <span class="<?php
-                                        echo(($passEditing) ? "success": "error");
+                                        echo(($passAdding) ? "success": "error");
                                     ?>-message"><?php
-                                        echo($editMsg);
+                                        echo($addMsg);
                                     ?></span>
                                 </td>
                             </tr>
 
                             <tr class="fadeIn second">
-                                <!-- Address -->
+                                <!-- SpeciesName -->
                                 <td colspan="2">
                                     <div>
-                                        <label for="Address">
-                                            Orchard Address:
+                                        <label for="SpeciesName">
+                                            Species Name:
                                         </label><br>
-                                        <input id="Address" type="text" name="Address" value="<?php
-                                            echo($tempAddress);
-                                        ?>" placeholder="Orchard Address" required>
+                                        <input id="SpeciesName" type="text" name="SpeciesName" value="<?php
+                                            echo($tempSpeciesName);
+                                        ?>" placeholder="Tree Species" required>
                                     </div>
                                 </td>
                             </tr>
@@ -195,7 +152,7 @@
                                         </label><br>
                                         <input id="Latitude" type="number" step="0.0001" name="Latitude" value="<?php
                                             echo($tempLatitude);
-                                        ?>" placeholder="Orchard Latitude" min="-90" max="90" required>
+                                        ?>" placeholder="Tree Latitude" min="-90" max="90" required>
                                     </div>
                                 </td>
 
@@ -207,28 +164,28 @@
                                         </label><br>
                                         <input id="Longitude" type="number" step="0.0001" name="Longitude" value="<?php
                                             echo($tempLongitude);
-                                        ?>" placeholder="Orchard Longitude" min="-180" max="180" required>
+                                        ?>" placeholder="Tree Longitude" min="-180" max="180" required>
                                     </div>
                                 </td>
                             </tr>
 
                             <tr class="fadeIn fourth">
-                                <!-- CompanyID -->
+                                <!-- BlockID -->
                                 <td colspan="2">
                                     <div>
-                                        <label for="CompanyID">
-                                            Company (Owner):
+                                        <label for="BlockID">
+                                            Block:
                                         </label><br>
-                                        <select id="CompanyID" name="CompanyID">
-                                            <?php foreach ($allCompany as $result): ?>
+                                        <select id="BlockID" name="BlockID">
+                                            <?php foreach ($allBlock as $result): ?>
                                                 <option value="<?php
-                                                    echo($result["UserID"]);
+                                                    echo($result["BlockID"]);
                                                 ?>"<?php
-                                                    if ($tempCompID == $result["UserID"]) {
+                                                    if ($tempBlockID == $result["BlockID"]) {
                                                         echo(" selected");
                                                     }
                                                 ?>><?php
-                                                    echo($result["UserID"] . " - " . $result["RealName"]);
+                                                    echo($result["BlockID"]);
                                                 ?></option>
                                             <?php endforeach; ?>
                                         </select>
@@ -240,8 +197,8 @@
                                 <td colspan="2">
                                     <div>
                                         <br>
-                                        <input type="submit" value="Save Editing"<?php
-                                            if (count($allCompany) < 1) {
+                                        <input type="submit" value="Add Tree Now"<?php
+                                            if (count($allBlock) < 1) {
                                                 echo(" disabled");
                                             }
                                         ?>>
@@ -252,9 +209,7 @@
                     </form>
                     <br>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/Admin/viewEachOrchard.php?OrchardID=<?php
-                            echo($orchardID);
-                        ?>">Back to View Orchard</a><h2><br>
+                        <h2><a class="underlineHover" href="/Admin/manageTree.php">Back to Manage Tree</a><h2><br>
                     </div>
                 </div>
             </div>

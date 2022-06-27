@@ -38,6 +38,7 @@
             empty($tempCompID)
         ) {
             $addMsg = "* Fill in ALL Fields! *";
+            $passAdding = false;
         }
         else {
             // Set to true at first.
@@ -65,7 +66,7 @@
             if ($passAdding) {
                 // Insert to Orchard table.
                 $query = "INSERT INTO `Orchard`(`Address`, `Latitude`, `Longitude`, `CompanyID`)";
-                $query .= " VALUES ('$tempAddress','$tempLatitude','$tempLongitude','$tempCompID')";
+                $query .= " VALUES ('$tempAddress','$tempLatitude','$tempLongitude','$tempCompID');";
 
                 $rs = $conn->query($query);
                 if (!$rs) {
@@ -102,7 +103,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-            <h4 style="font-size: 36px">Admin: Manage Orchard Page</h4>
+                <h4 style="font-size: 36px">Admin: Manage Orchard Page</h4>
             </div>
         </header>
 
@@ -149,7 +150,7 @@
                                         <label for="Latitude">
                                             Latitude:
                                         </label><br>
-                                        <input id="Latitude" type="number" step="0.00001" name="Latitude" value="<?php
+                                        <input id="Latitude" type="number" step="0.0001" name="Latitude" value="<?php
                                             echo($tempLatitude);
                                         ?>" placeholder="Orchard Latitude" min="-90" max="90" required>
                                     </div>
@@ -161,7 +162,7 @@
                                         <label for="Longitude">
                                             Longitude:
                                         </label><br>
-                                        <input id="Longitude" type="number" step="0.00001" name="Longitude" value="<?php
+                                        <input id="Longitude" type="number" step="0.0001" name="Longitude" value="<?php
                                             echo($tempLongitude);
                                         ?>" placeholder="Orchard Longitude" min="-180" max="180" required>
                                     </div>
