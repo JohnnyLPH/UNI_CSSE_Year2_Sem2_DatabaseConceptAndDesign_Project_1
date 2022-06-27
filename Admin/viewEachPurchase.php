@@ -60,6 +60,13 @@
             <div class="w3-row">
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
+                    <form method="get" action="/Admin/viewEachCompany.php">
+                        <input type="hidden" name="CompanyID" value="<?php
+                            echo($result["CompanyID"]);
+                        ?>">
+                        <input class="fullW" type="submit" value="View Related Company">
+                    </form>
+
                     <form method="get" action="/Admin/viewEachOrchard.php">
                         <input type="hidden" name="OrchardID" value="<?php
                             echo($result["OrchardID"]);

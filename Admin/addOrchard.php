@@ -184,7 +184,7 @@
                                                         echo(" selected");
                                                     }
                                                 ?>><?php
-                                                    echo($result["RealName"]);
+                                                    echo($result["UserID"] . " - " . $result["RealName"]);
                                                 ?></option>
                                             <?php endforeach; ?>
                                         </select>

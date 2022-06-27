@@ -191,6 +191,13 @@
                         ?> ***" style="max-width:100%;">
                     </form>
 
+                    <form method="get" action="/Admin/viewEachCompany.php">
+                        <input type="hidden" name="CompanyID" value="<?php
+                            echo($result["CompanyID"]);
+                        ?>">
+                        <input class="fullW" type="submit" value="View Related Company">
+                    </form>
+
                     <form method="get" action="/Admin/manageBlock.php">
                         <input type="hidden" name="SearchKey" value="<?php
                             echo($orchardID);
