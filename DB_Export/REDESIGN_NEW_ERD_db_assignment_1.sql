@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 24, 2022 at 02:16 PM
+-- Generation Time: Jun 27, 2022 at 09:21 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -63,7 +63,8 @@ INSERT INTO `block` (`BlockID`, `OrchardID`) VALUES
 (4, 4),
 (7, 4),
 (5, 5),
-(10, 5);
+(10, 5),
+(11, 5);
 
 -- --------------------------------------------------------
 
@@ -87,7 +88,9 @@ INSERT INTO `client` (`UserID`, `Address`, `Country`, `Photo`) VALUES
 (2, 'G Wisma Ung Hwa Geok 2 Jln Kulas Utara 2 Kuching', 'Malaysia', '????\0?Exif\0\0II*\0\0\0\0\0\0\0\0\0\0\0\0\Z\0\0\0\0V\0\0\0\0\0\0\0^\0\0\0(\0\0\0\0\0\0\0\0\0\0\0\0\0\0i?\0\0\0\0f\0\0\0\0\0\0\0H\0\0\0\0\0\0H\0\0\0\0\0\0\0\0?\0\0\0\00210?\0\0\0\0\0\0?\0\0\0\00100?\0\0\0\0??\0\0?\0\0\0\0\0\0\0?\0\0\0\0\0\0\0\0\0\0\0??\0C\0	\n\n			\n\n		\r\r\n'),
 (3, 'Nan Yuan San Chuang B-213, Kunming - Chenggongcounty', 'China', '????\0?Exif\0\0II*\0\0\0\0\0\0\0\0\0\0\0\0\Z\0\0\0\0V\0\0\0\0\0\0\0^\0\0\0(\0\0\0\0\0\0\0\0\0\0\0\0\0\0i?\0\0\0\0f\0\0\0\0\0\0\0H\0\0\0\0\0\0H\0\0\0\0\0\0\0\0?\0\0\0\00210?\0\0\0\0\0\0?\0\0\0\00100?\0\0\0\0??\0\0?\0\0\0\0\0\0\0?\0\0\0\0\0\0\0\0\0\0\0??\0C\0	\n\n			\n\n		\r\r\n'),
 (4, '344 Pine Tree Lane, Memphis, Tennessee', 'United States', '????\0?Exif\0\0II*\0\0\0\0\0\0\0\0\0\0\0\0\Z\0\0\0\0V\0\0\0\0\0\0\0^\0\0\0(\0\0\0\0\0\0\0\0\0\0\0\0\0\0i?\0\0\0\0f\0\0\0\0\0\0\0H\0\0\0\0\0\0H\0\0\0\0\0\0\0\0?\0\0\0\00210?\0\0\0\0\0\0?\0\0\0\00100?\0\0\0\0??\0\0?\0\0\0\0\0\0\0?\0\0\0\0\0\0\0\0\0\0\0??\0C\0	\n\n			\n\n		\r\r\n'),
-(5, 'Alley 15, Lane 340, Chunghwa 2nd Rd., Yungkang City, Tainan Hsien', 'Taiwan', '????\0?Exif\0\0II*\0\0\0\0\0\0\0\0\0\0\0\0\Z\0\0\0\0V\0\0\0\0\0\0\0^\0\0\0(\0\0\0\0\0\0\0\0\0\0\0\0\0\0i?\0\0\0\0f\0\0\0\0\0\0\0H\0\0\0\0\0\0H\0\0\0\0\0\0\0\0?\0\0\0\00210?\0\0\0\0\0\0?\0\0\0\00100?\0\0\0\0??\0\0?\0\0\0\0\0\0\0?\0\0\0\0\0\0\0\0\0\0\0??\0C\0	\n\n			\n\n		\r\r\n');
+(5, 'Alley 15, Lane 340, Chunghwa 2nd Rd., Yungkang City, Tainan Hsien', 'Taiwan', '????\0?Exif\0\0II*\0\0\0\0\0\0\0\0\0\0\0\0\Z\0\0\0\0V\0\0\0\0\0\0\0^\0\0\0(\0\0\0\0\0\0\0\0\0\0\0\0\0\0i?\0\0\0\0f\0\0\0\0\0\0\0H\0\0\0\0\0\0H\0\0\0\0\0\0\0\0?\0\0\0\00210?\0\0\0\0\0\0?\0\0\0\00100?\0\0\0\0??\0\0?\0\0\0\0\0\0\0?\0\0\0\0\0\0\0\0\0\0\0??\0C\0	\n\n			\n\n		\r\r\n'),
+(24, 'No 123, Street ABC.', 'Madagascar', '../img/client/24_2022-06-26_1656213980.'),
+(25, 'Some Street.', 'Afghanistan', '../img/client/25_2022-06-26_1656214177.jpg');
 
 -- --------------------------------------------------------
 
@@ -143,7 +146,7 @@ INSERT INTO `onsale` (`SaleID`, `BlockID`, `SalePrice`, `SaleDate`, `SellerID`) 
 (8, 7, 10000, '2022-06-23 21:30:23', NULL),
 (9, 8, 10000, '2022-06-23 23:06:56', NULL),
 (10, 9, 10000, '2022-06-23 23:36:22', NULL),
-(11, 4, 15000, '2022-05-24 15:29:17', 4);
+(11, 4, 15000, '2022-06-26 15:29:17', 4);
 
 -- --------------------------------------------------------
 
@@ -164,11 +167,14 @@ CREATE TABLE `orchard` (
 --
 
 INSERT INTO `orchard` (`OrchardID`, `Address`, `Latitude`, `Longitude`, `CompanyID`) VALUES
-(1, 'Lorong 23C, Jalan Stampin, 93350 Kuching, Sarawak', 1.51493, 110.352, 14),
+(1, 'Lorong 23C, Jalan Stampin, 93350 Kuching, Sarawak', 1.51493, 120.352, 15),
 (2, '28620 Karak, Pahang', 3.36419, 102.071, 15),
 (3, 'Jalan UP 4/2, Ukay Perdana, 68000 Ampang, Selangor', 3.22003, 101.768, 16),
-(4, 'KM48 Persimpangan Bertingkat, Lebuhraya Karak, 28750 Bentong, Pahang', 3.37125, 101.856, 15),
-(5, 'Jalan Besar Kampung Baharu Teras 27600, 27600 Raub, Pahang', 3.76008, 101.793, 14);
+(4, 'KM48 Persimpangan Bertingkat, Lebuhraya Karak, 28750 Bentong, Pahang', 3.37125, 101.856, 14),
+(5, 'Jalan Besar Kampung Baharu Teras 27600, 27600 Raub, Pahang', 3.76008, 101.793, 14),
+(6, 'No 132, Street Test.', 89.9999, -180, 15),
+(7, 'Another Address for Orchard', 90, 129, 16),
+(8, 'No 93, Street XX, Selangor.', 82, 21, 15);
 
 -- --------------------------------------------------------
 
@@ -198,7 +204,8 @@ INSERT INTO `purchaserequest` (`RequestID`, `SaleID`, `ClientID`, `RequestDate`,
 (5, 6, 4, '2022-06-23 14:48:34', 15000, 23, 1),
 (6, 2, 1, '2022-06-23 15:46:28', 14000, 23, 1),
 (7, 3, 5, '2022-06-23 15:46:28', 17000, 23, 1),
-(8, 9, 5, '2022-06-24 13:54:38', 10000, NULL, 0);
+(8, 9, 5, '2022-06-24 13:54:38', 10000, NULL, 0),
+(9, 11, 3, '2022-06-26 15:17:20', 15000, 23, 1);
 
 -- --------------------------------------------------------
 
@@ -225,7 +232,8 @@ INSERT INTO `staff` (`UserID`, `EmployDate`, `Salary`, `CompanyID`) VALUES
 (10, '2022-04-23 22:14:41', 6210.2, 16),
 (11, '2022-04-24 16:01:15', 5900, 16),
 (12, '2022-04-24 16:01:15', 6400, 15),
-(13, '2022-04-24 16:02:07', 6304.5, 14);
+(13, '2022-04-24 16:02:07', 6304.5, 14),
+(26, '2022-06-26 21:02:27', 3000, 15);
 
 -- --------------------------------------------------------
 
@@ -364,7 +372,10 @@ INSERT INTO `user` (`UserID`, `Username`, `Email`, `PasswordHash`, `RealName`, `
 (20, 'companyF', 'companyF@gmail.com', '$2y$10$O3Y4UZQgLmnakhBWo0m5pu91V18y4ASyRhf3XEgiXp6lueQTFByaC', 'Company F', 'CO'),
 (21, 'companyG', 'companyG@gmail.com', '$2y$10$sZaERhUBBMgGsQhqF/kkhutB0hyU21kOxsp2zWY55QdMiO/ICMuxi', 'Company G', 'CO'),
 (22, 'companyH', 'companyH@gmail.com', '$2y$10$dq/lVrjhct6MnqGHltIfuO8xqw5XEH2iHptniKPs08Fk3Ay8xtOVG', 'Company H', 'CO'),
-(23, 'LPH', 'adminlph@gmail.com', '$2y$10$zC41MBIhehz.asdh6KPNhexeFgWEN7Tss2WqUOAFxevWV64Am74I.', 'Mr Lau, P.H.', 'AD');
+(23, 'LPH', 'adminlph@gmail.com', '$2y$10$zC41MBIhehz.asdh6KPNhexeFgWEN7Tss2WqUOAFxevWV64Am74I.', 'Mr Lau, P.H.', 'AD'),
+(24, 'BlackMan', 'mj@gmail.com', '$2y$10$eKZtwCUZ4kpsB6co7WDjwOqDudGqW.ckjOKfXtrK5eZXKR/TLnYxK', 'Michael Jordan', 'CL'),
+(25, 'Deez', 'dMJ@gmail.com', '$2y$10$1980r2SUfhKFrwEsETxh.OeeA5kO8IsTp6YRXJ9COwnSMN5U4pUlW', 'Michael Jackson', 'CL'),
+(26, 'staffA', 'staffA@gmail.com', '$2y$10$zC41MBIhehz.asdh6KPNhexeFgWEN7Tss2WqUOAFxevWV64Am74I.', 'Staff A', 'ST');
 
 --
 -- Indexes for dumped tables
@@ -455,7 +466,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `block`
 --
 ALTER TABLE `block`
-  MODIFY `BlockID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `BlockID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `onsale`
@@ -467,13 +478,13 @@ ALTER TABLE `onsale`
 -- AUTO_INCREMENT for table `orchard`
 --
 ALTER TABLE `orchard`
-  MODIFY `OrchardID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `OrchardID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `purchaserequest`
 --
 ALTER TABLE `purchaserequest`
-  MODIFY `RequestID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `RequestID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tree`
@@ -491,7 +502,7 @@ ALTER TABLE `treeupdate`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `UserID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Constraints for dumped tables

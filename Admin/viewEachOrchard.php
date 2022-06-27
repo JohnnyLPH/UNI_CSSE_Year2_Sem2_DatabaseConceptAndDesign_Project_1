@@ -182,6 +182,15 @@
                         ?>" style="max-width:100%;">
                     </form>
 
+                    <form method="get" action="/Admin/deleteOrchard.php">
+                        <input type="hidden" name="OrchardID" value="<?php
+                            echo($orchardID);
+                        ?>">
+                        <input class="fullW" type="submit" value="*** Delete Orchard ID <?php
+                            echo($orchardID);
+                        ?> ***" style="max-width:100%;">
+                    </form>
+
                     <form method="get" action="/Admin/manageBlock.php">
                         <input type="hidden" name="SearchKey" value="<?php
                             echo($orchardID);
