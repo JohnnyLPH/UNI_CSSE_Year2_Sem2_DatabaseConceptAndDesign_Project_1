@@ -77,7 +77,7 @@
                         <input type="hidden" name="OrchardID" value="<?php
                             echo($result["OrchardID"]);
                         ?>">
-                        <input type="submit" value="View Related Orchard">
+                        <input class="fullW" type="submit" value="View Related Orchard">
                     </form>
 
                     <form method="get" action="/Company/manageTree.php">
@@ -85,7 +85,7 @@
                             echo($blockID);
                         ?>">
                         <input type="hidden" name="SearchOption" value="2">
-                        <input type="submit" value="View Related Trees">
+                        <input class="fullW" type="submit" value="View Related Trees">
                     </form>
                     
                     <form method="get" action="/Company/managePurchase.php">
@@ -93,11 +93,11 @@
                             echo($blockID);
                         ?>">
                         <input type="hidden" name="SearchOption" value="2">
-                        <input type="submit" value="View Related Purchases">
+                        <input class="fullW" type="submit" value="View Related Purchases">
                     </form>
                     
                     <form method="get" action="/Company/manageBlock.php">
-                        <input type="submit" value="Back to View All Blocks">
+                        <input class="fullW" type="submit" value="Back to View All Blocks">
                     </form>
                 </div>
                 <div class="w3-container w3-threequarter w3-theme-d4 w3-animate-left" style="margin-left:25%; padding-bottom:2%;">

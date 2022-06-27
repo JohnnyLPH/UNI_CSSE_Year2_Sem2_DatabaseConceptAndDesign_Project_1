@@ -43,14 +43,13 @@
 
         <main>
             <div class="w3-row">
-                    <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%">
-                        <h2 class="w3-bar-item" >Welcome, <?php
-                            echo($_SESSION["Username"]);
-                        ?></h2>
+                    <div class="w3-container w3-center w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%">
+                            <h2 class="w3-bar-item" >Welcome, <?php
+                                echo($_SESSION["Username"]);
+                            ?></h2>
                         
-                        <img src="<?php echo($imgPath); ?>"  id="icon" 
-                        alt="* UserID <?php echo($_SESSION["UserID"]); ?> img *">
-
+                            <img  src="<?php echo($imgPath); ?>"  id="icon" 
+                            alt="* UserID <?php echo($_SESSION["UserID"]); ?> img *">
                     </div>
 
                     <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;">

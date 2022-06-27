@@ -67,18 +67,18 @@
                         <input type="hidden" name="OrchardID" value="<?php
                             echo($result["OrchardID"]);
                         ?>">
-                        <input type="submit" value="View Related Orchard">
+                        <input class="fullW" type="submit" value="View Related Orchard">
                     </form>
 
                     <form method="get" action="/Company/viewEachBlock.php">
                         <input type="hidden" name="BlockID" value="<?php
                             echo($result["BlockID"]);
                         ?>">
-                        <input type="submit" value="View Related Block">
+                        <input class="fullW" type="submit" value="View Related Block">
                     </form>
 
                     <form method="get" action="/Company/manageTree.php">
-                        <input type="submit" value="Back to View All Trees">
+                        <input class="fullW" type="submit" value="Back to View All Trees">
                     </form>
                 </div>
 

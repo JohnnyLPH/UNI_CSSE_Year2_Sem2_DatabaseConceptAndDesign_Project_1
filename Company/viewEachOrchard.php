@@ -178,7 +178,7 @@
                             echo($orchardID);
                         ?>">
                         <input type="hidden" name="SearchOption" value="1">
-                        <input type="submit" value="View Related Blocks" style="max-width:100%;">
+                        <input class="fullW" type="submit" value="View Related Blocks" style="max-width:100%;">
                     </form>
 
                     <form method="get" action="/Company/manageTree.php">
@@ -186,7 +186,7 @@
                             echo($orchardID);
                         ?>">
                         <input type="hidden" name="SearchOption" value="1">
-                        <input type="submit" value="View Related Trees">
+                        <input class="fullW" type="submit" value="View Related Trees">
                     </form>
                     
                     <form method="get" action="/Company/managePurchase.php">
@@ -194,11 +194,11 @@
                             echo($orchardID);
                         ?>">
                         <input type="hidden" name="SearchOption" value="1">
-                        <input type="submit" value="View Related Purchases">
+                        <input class="fullW" type="submit" value="View Related Purchases">
                     </form>
                     
                     <form method="get" action="/Company/manageOrchard.php">
-                        <input type="submit" value="Back to View All Orchards">
+                        <input class="fullW" type="submit" value="Back to View All Orchards">
                     </form>
                 </div>
             </div>

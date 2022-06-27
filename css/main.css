@@ -448,6 +448,11 @@ button:active  {
 
 
 /* OTHERS */
+
+.fullW{
+  width:100% !important;
+}
+
 *:focus {
   outline: none;
 } 
