@@ -98,6 +98,28 @@
         return 0;
     }
 
+    // Count company (based on CompanyID if provided).
+    function getCompanyCount($conn, $companyID = 0) {
+        $query = "SELECT COUNT(`Company`.`CompanyID`) FROM `Company`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Company`.`CompanyID` = '$companyID'";
+            $multiWhere = true;
+        }
+
+        $query .= ";";
+        $rs = $conn->query($query);
+        if ($rs) {
+            if ($resultRow = mysqli_fetch_assoc($rs)) {
+                return $resultRow["COUNT(`Company`.`CompanyID`)"];
+            }
+        }
+        return 0;
+    }
+
     // Count purchase request (based on ApprovalStatus, CompanyID, OrchardID, BlockID if provided).
     function getPurchaseRequestCount($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0) {
         $query = "SELECT COUNT(`PurchaseRequest`.`RequestID`) FROM `PurchaseRequest`";
