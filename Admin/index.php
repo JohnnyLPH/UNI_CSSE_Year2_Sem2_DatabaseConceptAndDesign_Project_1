@@ -11,6 +11,10 @@
         exit;
     }
 
+    $totalAdmin = getAdminCount($conn);
+    $totalCompany = getCompanyCount($conn);
+    $totalStaff = getStaffCount($conn);
+    $totalClient = getClientCount($conn);
     $totalOrchard = getOrchardCount($conn);
     $totalBlock = getBlockCount($conn);
     $totalTree = getTreeCount($conn);
@@ -52,7 +56,48 @@
                     <h2>Your Summary:</h2>
                 </div>
 
-                <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">                        
+                <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
+                    <div class='data-value card fadeIn first'>
+                        <div class='data-group'>
+                            <img src="https://img.freepik.com/free-vector/isometric-illustration-representing-man-pointing-screen-website-personal-profile-front-gadgets_30590-283.jpg" id="icon" alt="User Icon" />
+                            <br>
+                            <span class='overall-data'><?php
+                                echo($totalAdmin);
+                            ?></span>
+                            <span class='data-title'>Total Admin User</span>
+                        </div>
+                    </div>
+                    <div class='data-value card fadeIn second'>
+                        <div class='data-group'>
+                            <img src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="User Icon" />
+                            <br>
+                            <span class='overall-data'><?php
+                                echo($totalCompany);
+                            ?></span>
+                            <span class='data-title'>Total Company User</span>
+                        </div>
+                    </div>
+                    <div class='data-value card fadeIn third'>
+                        <div class='data-group'>
+                            <img src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="User Icon" />
+                            <br>
+                            <span class='overall-data'><?php
+                                echo($totalStaff);
+                            ?></span>
+                            <span class='data-title'>Total Staff User</span>
+                        </div>
+                    </div>
+                    <div class='data-value card fadeIn fourth'>
+                        <div class='data-group'>
+                            <img src="https://png.pngtree.com/png-vector/20190721/ourlarge/pngtree-business-meeting-with-client-illustration-concept-modern-flat-design-concept-png-image_1567633.jpg" id="icon" alt="User Icon" />
+                            <br>
+                            <span class='overall-data'><?php
+                                echo($totalClient);
+                            ?></span>
+                            <span class='data-title'>Total Client User</span>
+                        </div>
+                    </div>
+
                     <div class='data-value card fadeIn first'>
                         <div class='data-group'>
                             <img src="https://us.123rf.com/450wm/goodstudio/goodstudio1910/goodstudio191000131/131189697-family-working-in-fruit-garden-together-flat-vector-illustration-people-gathering-apples-berries-and.jpg" id="icon" alt="User Icon" />

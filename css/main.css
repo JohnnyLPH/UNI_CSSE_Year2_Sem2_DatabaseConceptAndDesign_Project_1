@@ -64,6 +64,16 @@ body {
   color: green;
 }
 
+.overall-data {
+  font-weight: bold;
+  font-size: larger;
+}
+
+.data-title {
+  font-style: italic;
+  font-weight: bold;
+}
+
 /*
 body {
     font-family: sans-serif;

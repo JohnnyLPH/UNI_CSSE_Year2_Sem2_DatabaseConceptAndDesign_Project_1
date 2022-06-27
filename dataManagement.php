@@ -1,4 +1,68 @@
 <?php
+    // Count admin.
+    function getAdminCount($conn) {
+        $query = "SELECT COUNT(`Admin`.`UserID`) FROM `Admin`";
+
+        $query .= ";";
+        $rs = $conn->query($query);
+        if ($rs) {
+            if ($resultRow = mysqli_fetch_assoc($rs)) {
+                return $resultRow["COUNT(`Admin`.`UserID`)"];
+            }
+        }
+        return 0;
+    }
+
+    // Count company.
+    function getCompanyCount($conn) {
+        $query = "SELECT COUNT(`Company`.`UserID`) FROM `Company`";
+
+        $query .= ";";
+        $rs = $conn->query($query);
+        if ($rs) {
+            if ($resultRow = mysqli_fetch_assoc($rs)) {
+                return $resultRow["COUNT(`Company`.`UserID`)"];
+            }
+        }
+        return 0;
+    }
+
+    // Count staff (based on CompanyID if provided).
+    function getStaffCount($conn, $companyID = 0) {
+        $query = "SELECT COUNT(`Staff`.`UserID`) FROM `Staff`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Staff`.`CompanyID` = '$companyID'";
+            $multiWhere = true;
+        }
+
+        $query .= ";";
+        $rs = $conn->query($query);
+        if ($rs) {
+            if ($resultRow = mysqli_fetch_assoc($rs)) {
+                return $resultRow["COUNT(`Staff`.`UserID`)"];
+            }
+        }
+        return 0;
+    }
+
+    // Count client.
+    function getClientCount($conn) {
+        $query = "SELECT COUNT(`Client`.`UserID`) FROM `Client`";
+
+        $query .= ";";
+        $rs = $conn->query($query);
+        if ($rs) {
+            if ($resultRow = mysqli_fetch_assoc($rs)) {
+                return $resultRow["COUNT(`Client`.`UserID`)"];
+            }
+        }
+        return 0;
+    }
+
     // Count orchard (based on CompanyID if provided).
     function getOrchardCount($conn, $companyID = 0) {
         $query = "SELECT COUNT(`Orchard`.`OrchardID`) FROM `Orchard`";
@@ -93,28 +157,6 @@
         if ($rs) {
             if ($resultRow = mysqli_fetch_assoc($rs)) {
                 return $resultRow["COUNT(`Tree`.`TreeID`)"];
-            }
-        }
-        return 0;
-    }
-
-    // Count company (based on CompanyID if provided).
-    function getCompanyCount($conn, $companyID = 0) {
-        $query = "SELECT COUNT(`Company`.`CompanyID`) FROM `Company`";
-
-        // Add WHERE Clause.
-        $multiWhere = false;
-
-        if ($companyID > 0) {
-            $query .= " WHERE `Company`.`CompanyID` = '$companyID'";
-            $multiWhere = true;
-        }
-
-        $query .= ";";
-        $rs = $conn->query($query);
-        if ($rs) {
-            if ($resultRow = mysqli_fetch_assoc($rs)) {
-                return $resultRow["COUNT(`Company`.`CompanyID`)"];
             }
         }
         return 0;
