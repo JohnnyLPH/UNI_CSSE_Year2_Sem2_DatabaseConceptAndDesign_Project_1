@@ -168,7 +168,7 @@
             $multiWhere = true;
         }
 
-        $query .= ";";
+        $query .= " ORDER BY `Admin`.`UserID` DESC;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
@@ -194,7 +194,7 @@
             $multiWhere = true;
         }
 
-        $query .= ";";
+        $query .= " ORDER BY `Company`.`UserID` DESC;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
@@ -230,7 +230,7 @@
             }
         }
 
-        $query .= ";";
+        $query .= " ORDER BY `Staff`.`UserID` DESC;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
@@ -256,7 +256,7 @@
             $multiWhere = true;
         }
 
-        $query .= ";";
+        $query .= " ORDER BY `Client`.`UserID` DESC;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
@@ -289,7 +289,7 @@
             }
         }
 
-        $query .= " ORDER BY `Orchard`.`OrchardID`;";
+        $query .= " ORDER BY `Orchard`.`OrchardID` DESC;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
@@ -333,7 +333,7 @@
             }
         }
 
-        $query .= " ORDER BY `Block`.`BlockID`;";
+        $query .= " ORDER BY `Block`.`BlockID` DESC;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
@@ -394,7 +394,7 @@
         }
 
         // Block Latest Client.
-        $query .= " ORDER BY `Block`.`BlockID`, `OnSale`.`SaleID` DESC, `PurchaseRequest`.`RequestID` DESC;";
+        $query .= " ORDER BY `Block`.`BlockID` DESC, `OnSale`.`SaleID` DESC, `PurchaseRequest`.`RequestID` DESC;";
         $allRow = array();
         $lastCheckBlock = 0;
 
@@ -461,7 +461,7 @@
             }
         }
 
-        $query .= " ORDER BY `Tree`.`TreeID`;";
+        $query .= " ORDER BY `Tree`.`TreeID` DESC;";
         $allRow = array();
         $rs = $conn->query($query);
         if ($rs) {
