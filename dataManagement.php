@@ -1075,4 +1075,180 @@
 
         return $conn->query($query);
     }
+
+    // Delete Client.
+    function deleteClient($conn, $clientID = 0, $confirmDel = false) {
+        $query = "DELETE FROM `Client`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($clientID > 0) {
+            $query .= " WHERE `Client`.`UserID` = '$clientID'";
+            $multiWhere = true;
+        }
+
+        $query .= ";";
+
+        // Reconfirm to delete all if no condition is provided.
+        if ($clientID < 1 && !$confirmDel) {
+            return false;
+        }
+
+        // Update OnSale SellerID to NULL.
+        $updateQuery = "UPDATE `OnSale`";
+        $updateQuery .= " SET `SellerID`=NULL";
+        $updateQuery .= " WHERE `OnSale`.`SellerID`='$clientID';";
+
+        $rs = $conn->query($updateQuery);
+        if (!$rs) {
+            return false;
+        }
+
+        // Delete all PurchaseRequest of ClientID.
+        if (!deletePurchaseRequest($conn, 0, 0, $clientID)) {
+            return false;
+        }
+
+        // Delete from User.
+        $deleteQuery = "DELETE FROM `User`";
+        $deleteQuery .= " WHERE `User`.`UserID` = '$clientID'";
+        $deleteQuery .= ";";
+
+        $rs = $conn->query($deleteQuery);
+        if (!$rs) {
+            return false;
+        }
+
+        return $conn->query($query);
+    }
+
+    // Delete Staff.
+    function deleteStaff($conn, $staffID = 0, $companyID = 0, $confirmDel = false) {
+        $query = "DELETE FROM `Staff`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($staffID > 0) {
+            $query .= " WHERE `Staff`.`UserID` = '$staffID'";
+            $multiWhere = true;
+        }
+
+        if ($companyID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Staff`.`CompanyID` = '$companyID'";
+            }
+            else {
+                $query .= " WHERE `Staff`.`CompanyID` = '$companyID'";
+                $multiWhere = true;
+            }
+        }
+
+        $query .= ";";
+
+        // Reconfirm to delete all if no condition is provided.
+        if ($staffID + $companyID < 1 && !$confirmDel) {
+            return false;
+        }
+
+        // Delete all TreeUpdate of StaffID.
+        if (!deleteTreeUpdate($conn, 0, 0, $staffID)) {
+            return false;
+        }
+
+        // Delete from User.
+        $deleteQuery = "DELETE FROM `User`";
+        $deleteQuery .= " WHERE `User`.`UserID` = '$staffID'";
+        $deleteQuery .= ";";
+
+        $rs = $conn->query($deleteQuery);
+        if (!$rs) {
+            return false;
+        }
+
+        return $conn->query($query);
+    }
+
+    // Delete Company.
+    function deleteCompany($conn, $companyID = 0, $confirmDel = false) {
+        $query = "DELETE FROM `Company`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Company`.`UserID` = '$companyID'";
+            $multiWhere = true;
+        }
+
+        $query .= ";";
+
+        // Reconfirm to delete all if no condition is provided.
+        if ($companyID < 1 && !$confirmDel) {
+            return false;
+        }
+
+        // Delete all Staff and all Orchard of CompanyID.
+        if (
+            !deleteStaff($conn, 0, $companyID) ||
+            !deleteOrchard($conn, 0, $companyID)
+        ) {
+            return false;
+        }
+
+        // Delete from User.
+        $deleteQuery = "DELETE FROM `User`";
+        $deleteQuery .= " WHERE `User`.`UserID` = '$companyID'";
+        $deleteQuery .= ";";
+
+        $rs = $conn->query($deleteQuery);
+        if (!$rs) {
+            return false;
+        }
+
+        return $conn->query($query);
+    }
+
+    // Delete Admin.
+    function deleteAdmin($conn, $adminID = 0, $confirmDel = false) {
+        $query = "DELETE FROM `Admin`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($adminID > 0) {
+            $query .= " WHERE `Admin`.`UserID` = '$adminID'";
+            $multiWhere = true;
+        }
+
+        $query .= ";";
+
+        // Reconfirm to delete all if no condition is provided.
+        if ($adminID < 1 && !$confirmDel) {
+            return false;
+        }
+
+        // Update PurchaseRequest AdminID to NULL.
+        $updateQuery = "UPDATE `PurchaseRequest`";
+        $updateQuery .= " SET `AdminID`=NULL";
+        $updateQuery .= " WHERE `PurchaseRequest`.`AdminID`='$adminID';";
+
+        $rs = $conn->query($updateQuery);
+        if (!$rs) {
+            return false;
+        }
+
+        // Delete from User.
+        $deleteQuery = "DELETE FROM `User`";
+        $deleteQuery .= " WHERE `User`.`UserID` = '$adminID'";
+        $deleteQuery .= ";";
+
+        $rs = $conn->query($deleteQuery);
+        if (!$rs) {
+            return false;
+        }
+
+        return $conn->query($query);
+    }
 ?>

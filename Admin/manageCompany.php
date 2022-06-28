@@ -82,10 +82,9 @@
                             <tr>
                                 <th>Company ID</th>
                                 <th>Username</th>
-                                <th>Total Orchard</th>
+                                <th>Total Staff</th>
                                 <th>Total Block</th>
                                 <th>Total Tree</th>
-                                <th>Establish Date</th>
                                 <th>Action</th>
                             </tr>
                             <?php foreach ($allCompany as $result): ?>
@@ -99,7 +98,7 @@
                                     ?></td>
 
                                     <td><?php
-                                        echo(getOrchardCount($conn, $result["UserID"]));
+                                        echo(getStaffCount($conn, $result["UserID"]));
                                     ?></td>
 
                                     <td><?php
@@ -108,10 +107,6 @@
 
                                     <td><?php
                                         echo(getTreeCount($conn, $result["UserID"]));
-                                    ?></td>
-
-                                    <td><?php
-                                        echo($result["EstablishDate"]);
                                     ?></td>
                             
                                     <td>
