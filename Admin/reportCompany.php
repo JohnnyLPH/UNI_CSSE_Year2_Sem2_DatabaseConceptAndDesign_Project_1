@@ -26,6 +26,7 @@
         $listCompanyID[] = $eachCompany["UserID"];
         $treeCount[] = getTreeCount($conn, $eachCompany["UserID"]);
         $blockCount[] = getBlockCount($conn, $eachCompany["UserID"]);
+        $orchardCount[] = getOrchardCount($conn, $eachCompany["UserID"]);
         $allCompanyStaff[] = getStaffCount($conn, $eachCompany["UserID"]);   
         $allCompanyClientPurchase[] = getPurchaseRequestCount($conn,1, $eachCompany["UserID"]);   
     }
@@ -105,6 +106,13 @@
                     <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;height:20px"></div>
 
                 <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
+                    <h3><b>Number of Orchards By Company</b></h3>
+                    <canvas id="chart5" style="height: 350px;width:100%;"></canvas>
+                </div>
+
+                    <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;height:20px"></div>
+
+                <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
                     <h3><b>Number of Staff By Company</b></h3>
                     <canvas id="chart2" style="height: 350px;width:100%;"></canvas>
                 </div>
@@ -116,7 +124,7 @@
                     <canvas id="chart3" style="height: 350px;width:100%;"></canvas>
                 </div>
 
-                <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;height:20px"></div>
+                    <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;height:20px"></div>
 
 
             </div>
@@ -287,6 +295,46 @@
             const chart3 = new Chart(
                 document.getElementById('chart3'),
                 config3
+            );
+
+            //graph for orchard by company
+            orchards = <?php echo json_encode($orchardCount); ?>
+
+            const data5 = {
+                labels: companyID,
+                datasets: [{
+                    label: 'Orchards',
+                    backgroundColor: 'rgb(0, 131, 115, 0.7)',
+                    borderColor: 'rgb(0, 82, 72)',
+                    data: orchards,
+                }]
+            };
+
+            const config5 = {
+                type: 'bar',
+                data: data5,
+                options: {
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Number of Orchards'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Company ID'
+                            },
+                        }
+                    }
+                }
+            };
+
+            const chart5 = new Chart(
+                document.getElementById('chart5'),
+                config5
             );
         </script>
     </body>
