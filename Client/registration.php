@@ -11,127 +11,109 @@
         exit;
     }
 
-    $tempPFP = $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempCountry = $tempAddress =  "";
+    $tempPFP = $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempCountry = $tempAddress = "";
     $registrationMsg = "";
     $passRegistration = false;
 
     // Registration attempt.
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $tempName = (isset($_POST["Username"])) ? cleanInput($_POST["Username"]): "";
+        $tempRName = (isset($_POST["RealName"])) ? cleanInput($_POST["RealName"]): "";
+        $tempEmail = (isset($_POST["Email"])) ? cleanInput($_POST["Email"]): "";
+        $tempPass = (isset($_POST["Password"])) ? cleanInput($_POST["Password"]): "";
+        $tempRPass = (isset($_POST["ReconfirmPassword"])) ? cleanInput($_POST["ReconfirmPassword"]): "";
+        $tempCountry = (isset($_POST["Country"])) ? cleanInput($_POST["Country"]): "";
+        $tempAddress = (isset($_POST["Address"])) ? cleanInput($_POST["Address"]): "";
+
+        $tempID = $tempHash = "";
+
         if (
-            !isset($_POST["Username"]) || empty($_POST["Username"]) ||
-            !isset($_POST["RealName"]) || empty($_POST["RealName"]) ||
-            !isset($_POST["Email"]) || empty($_POST["Email"]) ||
-            !isset($_POST["Password"]) || empty($_POST["Password"]) ||
-            !isset($_POST["Country"]) || empty($_POST["Country"]) ||
-            !isset($_POST["Address"]) || empty($_POST["Address"])  
+            empty($tempName) ||
+            empty($tempRName) ||
+            empty($tempEmail) ||
+            empty($tempPass) ||
+            empty($tempRPass) ||
+            empty($tempCountry) ||
+            empty($tempAddress) 
         ) {
             $registrationMsg = "* Fill in ALL Fields! *";
+            $passRegistration = false;
         }
         else {
-            $tempName = cleanInput($_POST["Username"]);
-            $tempRName = cleanInput($_POST["RealName"]);
-            $tempEmail = cleanInput($_POST["Email"]);
-            $tempPass = cleanInput($_POST["Password"]);
-            $tempRPass = cleanInput($_POST["ReconfirmPassword"]);
-            $tempCountry = cleanInput($_POST["Country"]);
-            $tempAddress = cleanInput($_POST["Address"]);
+            // Set to true at first.
+            $passRegistration = true;
 
-            $tempID = $tempHash = "";
-
-            if (
-                empty($tempName) ||
-                empty($tempRName) ||
-                empty($tempEmail) ||
-                empty($tempPass) ||
-                empty($tempRPass) ||
-                empty($tempCountry) ||
-                empty($tempAddress) 
-            ) {
-                $registrationMsg = "* Fill in ALL Fields! *";
+            // Check Username.
+            if (checkExistUsername($conn, $tempName)) {
+                $registrationMsg = "* Username is used by another user! *";
+                $passRegistration = false;
             }
-            
-            else {
-                // Set to true at first.
-                $passRegistration = true;
 
-                // Check Username.
-                if (checkExistUsername($conn, $tempName)) {
-                    $registrationMsg = "* Username is used by another user! *";
+            // Check Email.
+            if ($passRegistration && checkExistEmail($conn, $tempEmail)) {
+                $registrationMsg = "* Email is used by another user! *";
+                $passRegistration = false;
+            }
+
+            // Check Password.
+            if ($passRegistration && empty($tempHash = checkReconfirmPassword($tempPass, $tempRPass))) {
+                $registrationMsg = "* Reenter the EXACT SAME Password! *";
+                $passRegistration = false;
+            }
+
+            // Insert to DB.
+            if ($passRegistration) {
+                
+                // Insert to User table with UserType CO.
+                $query = "INSERT INTO `User`(`Username`, `Email`, `PasswordHash`, `RealName`, `UserType`)";
+                $query .= " VALUES ('$tempName','$tempEmail','$tempHash','$tempRName','CL')";
+
+                $rs = $conn->query($query);
+                if (!$rs) {
+                    $registrationMsg = "* Fail to insert to User table! *";
                     $passRegistration = false;
                 }
 
-                // Check Email.
-                if ($passRegistration && checkExistEmail($conn, $tempEmail)) {
-                    $registrationMsg = "* Email is used by another user! *";
-                    $passRegistration = false;
-                }
-
-                // Check Password.
-                if ($passRegistration && empty($tempHash = checkReconfirmPassword($tempPass, $tempRPass))) {
-                    $registrationMsg = "* Reenter the EXACT SAME Password! *";
-                    $passRegistration = false;
-                }
-
-                // Insert to DB.
+                // Insert to Client table.
                 if ($passRegistration) {
+                    $passRegistration = false;
+
+                    // Get UserID.
+                    $tempID = $conn->insert_id;
+
+                    // Process image path
+                    if($_FILES["ClientPfp"]["error"] == 0) {
+                        date_default_timezone_set('Asia/Kuala_Lumpur');
+
+                        $tempPFP = explode(".", $_FILES["ClientPfp"]["name"]);
+                        $newfilename = $tempID . "_" . date('Y-m-d') . "_" . round(microtime(true)) . "." . end($tempPFP);
+                        $filepath = "../img/client/" . $newfilename;
+                    } else {
+                        $filepath = "../img/client/default_client.jpg";
+                    }
                     
-                    // Insert to User table with UserType CO.
-                    $query = "INSERT INTO `User`(`Username`, `Email`, `PasswordHash`, `RealName`, `UserType`)";
-                    $query .= " VALUES ('$tempName','$tempEmail','$tempHash','$tempRName','CL')";
-
+                    // Insert with the obtained UserID.
+                    $query = "INSERT INTO `Client`(`UserID`, `Country`,`Address`,`Photo`)";
+                    $query .= " VALUES ('$tempID','$tempCountry','$tempAddress','$filepath')";
                     $rs = $conn->query($query);
+
                     if (!$rs) {
-                        $registrationMsg = "* Fail to insert to User table! *";
-                        $passRegistration = false;
+                        $registrationMsg = "* Fail to insert to Client table! *";
                     }
-
-                    // Insert to Client table.
-                    if ($passRegistration) {
-                        $passRegistration = false;
-
-                        // Get UserID from UserTable.
-                        $query = "SELECT `UserID` FROM `User` WHERE `Username` = '$tempName'";
-                        $rs = $conn->query($query);
-                        if ($rs) {
-                            if ($user = mysqli_fetch_assoc($rs)) {
-                                $tempID = $user["UserID"];
-                                
-                                // Process image path
-                                if($_FILES["ClientPfp"]["error"] == 0) {
-                                    date_default_timezone_set('Asia/Kuala_Lumpur');
-
-                                    $tempPFP = explode(".", $_FILES["ClientPfp"]["name"]);
-                                    $newfilename = $tempID . "_" . date('Y-m-d') . "_" . round(microtime(true)) . "." . end($tempPFP);
-                                    $filepath = "../img/client/" . $newfilename;
-                                } else {
-                                    $filepath = "../img/client/default_client.jpg";
-                                }
-                                
-                                // Insert with the obtained UserID.
-                                $query = "INSERT INTO `Client`(`UserID`, `Country`,`Address`,`Photo`)";
-                                $query .= " VALUES ('$tempID','$tempCountry','$tempAddress','$filepath')";
-                                $rs = $conn->query($query);
-
-                                if (!$rs) {
-                                    $registrationMsg = "* Fail to insert to Client table! *";
-                                }
-                                else {
-                                    if($_FILES["ClientPfp"]["error"] == 0) {
-                                        move_uploaded_file($_FILES["ClientPfp"]["tmp_name"], $filepath);
-                                    }
-
-                                    $passRegistration = true;
-                                }
-                            }
+                    else {
+                        if ($_FILES["ClientPfp"]["error"] == 0) {
+                            move_uploaded_file($_FILES["ClientPfp"]["tmp_name"], $filepath);
                         }
-                    }
 
-                    // Check if the data is successfully inserted.
-                    if ($passRegistration) {
-                        // Reset to empty.
-                        $tempPFP = $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempEDate = $tempCountry = $tempAddress = "";
-                        $registrationMsg = "* User is successfully registered! *";
+                        $passRegistration = true;
                     }
+                }
+
+                // Check if the data is successfully inserted.
+                if ($passRegistration) {
+                    // Reset to empty.
+                    $tempPFP = $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempEDate = $tempCountry = $tempAddress = "";
+                    $registrationMsg = "* User is successfully registered! *";
                 }
             }
         }
@@ -244,7 +226,9 @@
                                         <label for="Address">
                                             Address:
                                         </label><br>
-                                        <textarea id="Address" name="Address" placeholder="Address" required></textarea>
+                                        <textarea id="Address" name="Address" placeholder="Address" required><?php
+                                            echo($tempAddress);
+                                        ?></textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -455,7 +439,6 @@
                                             <option style="text-align:left;" value="Zambia">Zambia</option>
                                             <option style="text-align:left;" value="Zimbabwe">Zimbabwe</option>  
                                         </select>
-                                        
                                     </div>
                                 </td>
                             </tr>
