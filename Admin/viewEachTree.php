@@ -63,6 +63,24 @@
             <div class="w3-row">
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
+                    <form method="get" action="/Admin/editTree.php">
+                        <input type="hidden" name="TreeID" value="<?php
+                            echo($treeID);
+                        ?>">
+                        <input class="fullW" type="submit" value="Edit Tree ID <?php
+                            echo($treeID);
+                        ?>" style="max-width:100%;">
+                    </form>
+
+                    <form method="get" action="/Admin/deleteTree.php">
+                        <input type="hidden" name="TreeID" value="<?php
+                            echo($treeID);
+                        ?>">
+                        <input class="fullW" type="submit" value="*** Delete Tree ID <?php
+                            echo($treeID);
+                        ?> ***" style="max-width:100%;">
+                    </form>
+
                     <form method="get" action="/Admin/viewEachCompany.php">
                         <input type="hidden" name="CompanyID" value="<?php
                             echo($result["CompanyID"]);

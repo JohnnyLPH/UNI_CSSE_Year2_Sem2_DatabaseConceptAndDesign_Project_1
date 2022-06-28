@@ -408,7 +408,7 @@
         return $allRow;
     }
 
-    // Get Block Latest Client (can be used to find Current Owner of the Block).
+    // Get Block & its Latest Client (can be used to find Current Owner of the Block, i.e., ApprovalStatus = 1).
     function getBlockLatestClient($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $clientID = 0) {
         // SQL:
         // SELECT `Block`.`BlockID`, `Orchard`.`OrchardID`, `Orchard`.`CompanyID`
@@ -483,7 +483,9 @@
 
     // Return all rows of Orchard (based on CompanyID, OrchardID, BlockID, TreeID if provided).
     function getAllTree($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $treeID = 0) {
-        $query = "SELECT * FROM `Tree`";
+        $query = "SELECT `Tree`.`TreeID`, `Tree`.`SpeciesName`, `Tree`.`Latitude`, `Tree`.`Longitude`";
+        $query .= ", `Tree`.`PlantDate`, `Block`.`BlockID`, `Orchard`.`OrchardID`, `Orchard`.`CompanyID`";
+        $query .= " FROM `Tree`";
         $query .= " INNER JOIN `Block` ON `Tree`.`BlockID` = `Block`.`BlockID`";
         $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
         

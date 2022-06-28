@@ -1,5 +1,5 @@
 <?php
-    // Company Registration Page.
+    // Admin Registration Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/inputValidation.php");
@@ -11,108 +11,89 @@
         exit;
     }
     
-    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempEDate = "";
+    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = "";
     $registrationMsg = "";
     $passRegistration = false;
 
     // Registration attempt.
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $tempName = (isset($_POST["Username"])) ? cleanInput($_POST["Username"]): "";
+        $tempRName = (isset($_POST["RealName"])) ? cleanInput($_POST["RealName"]): "";
+        $tempEmail = (isset($_POST["Email"])) ? cleanInput($_POST["Email"]): "";
+        $tempPass = (isset($_POST["Password"])) ? cleanInput($_POST["Password"]): "";
+        $tempRPass = (isset($_POST["ReconfirmPassword"])) ? cleanInput($_POST["ReconfirmPassword"]): "";
+
+        $tempID = $tempHash = "";
+
         if (
-            !isset($_POST["Username"]) || empty($_POST["Username"]) ||
-            !isset($_POST["RealName"]) || empty($_POST["RealName"]) ||
-            !isset($_POST["Email"]) || empty($_POST["Email"]) ||
-            !isset($_POST["Password"]) || empty($_POST["Password"]) ||
-            !isset($_POST["ReconfirmPassword"]) || empty($_POST["ReconfirmPassword"]) ||
-            !isset($_POST["EstablishDate"]) || empty($_POST["EstablishDate"])
+            empty($tempName) ||
+            empty($tempRName) ||
+            empty($tempEmail) ||
+            empty($tempPass) ||
+            empty($tempRPass)
         ) {
             $registrationMsg = "* Fill in ALL Fields! *";
+            $passRegistration = false;
         }
         else {
-            $tempName = cleanInput($_POST["Username"]);
-            $tempRName = cleanInput($_POST["RealName"]);
-            $tempEmail = cleanInput($_POST["Email"]);
-            $tempPass = cleanInput($_POST["Password"]);
-            $tempRPass = cleanInput($_POST["ReconfirmPassword"]);
-            $tempEDate = cleanInput($_POST["EstablishDate"]);
+            // Set to true at first.
+            $passRegistration = true;
 
-            $tempID = $tempHash = "";
-
-            if (
-                empty($tempName) ||
-                empty($tempRName) ||
-                empty($tempEmail) ||
-                empty($tempPass) ||
-                empty($tempRPass) ||
-                empty($tempEDate)
-            ) {
-                $registrationMsg = "* Fill in ALL Fields! *";
+            // Check Username.
+            if (checkExistUsername($conn, $tempName)) {
+                $registrationMsg = "* Username is used by another user! *";
+                $passRegistration = false;
             }
-            else {
-                // Set to true at first.
-                $passRegistration = true;
 
-                // Check Username.
-                if (checkExistUsername($conn, $tempName)) {
-                    $registrationMsg = "* Username is used by another user! *";
+            // Check Email.
+            if ($passRegistration && checkExistEmail($conn, $tempEmail)) {
+                $registrationMsg = "* Email is used by another user! *";
+                $passRegistration = false;
+            }
+
+            // Check Password.
+            if ($passRegistration && empty($tempHash = checkReconfirmPassword($tempPass, $tempRPass))) {
+                $registrationMsg = "* Reenter the EXACT SAME Password! *";
+                $passRegistration = false;
+            }
+
+            // Insert to DB.
+            if ($passRegistration) {
+                // Insert to User table with UserType AD.
+                $query = "INSERT INTO `User`(`Username`, `Email`, `PasswordHash`, `RealName`, `UserType`)";
+                $query .= " VALUES ('$tempName','$tempEmail','$tempHash','$tempRName','AD')";
+
+                $rs = $conn->query($query);
+                if (!$rs) {
+                    $registrationMsg = "* Fail to insert to User table! *";
                     $passRegistration = false;
                 }
 
-                // Check Email.
-                if ($passRegistration && checkExistEmail($conn, $tempEmail)) {
-                    $registrationMsg = "* Email is used by another user! *";
-                    $passRegistration = false;
-                }
-
-                // Check Password.
-                if ($passRegistration && empty($tempHash = checkReconfirmPassword($tempPass, $tempRPass))) {
-                    $registrationMsg = "* Reenter the EXACT SAME Password! *";
-                    $passRegistration = false;
-                }
-
-                // Insert to DB.
+                // Insert to Admin table.
                 if ($passRegistration) {
-                    // Insert to User table with UserType CO.
-                    $query = "INSERT INTO `User`(`Username`, `Email`, `PasswordHash`, `RealName`, `UserType`)";
-                    $query .= " VALUES ('$tempName','$tempEmail','$tempHash','$tempRName','CO')";
+                    $passRegistration = false;
 
+                    // Get UserID.
+                    $tempID = $conn->insert_id;
+
+                    // Insert with the obtained UserID.
+                    $query = "INSERT INTO `Admin`(`UserID`)";
+                    $query .= " VALUES ('$tempID')";
                     $rs = $conn->query($query);
+
                     if (!$rs) {
-                        $registrationMsg = "* Fail to insert to User table! *";
-                        $passRegistration = false;
+                        $registrationMsg = "* Fail to insert to Admin table! *";
                     }
-
-                    // Insert to Company table.
-                    if ($passRegistration) {
-                        $passRegistration = false;
-
-                        // Get UserID from UserTable.
-                        $query = "SELECT `UserID` FROM `User` WHERE `Username` = '$tempName'";
-                        $rs = $conn->query($query);
-                        if ($rs) {
-                            if ($user = mysqli_fetch_assoc($rs)) {
-                                $tempID = $user["UserID"];
-                                
-                                // Insert with the obtained UserID.
-                                $query = "INSERT INTO `Company`(`UserID`, `EstablishDate`)";
-                                $query .= " VALUES ('$tempID','$tempEDate')";
-                                $rs = $conn->query($query);
-
-                                if (!$rs) {
-                                    $registrationMsg = "* Fail to insert to Company table! *";
-                                }
-                                else {
-                                    $passRegistration = true;
-                                }
-                            }
-                        }
+                    else {
+                        $passRegistration = true;
                     }
+                }
 
-                    // Check if the data is successfully inserted.
-                    if ($passRegistration) {
-                        // Reset to empty.
-                        $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempEDate = "";
-                        $registrationMsg = "* User is successfully registered! *";
-                    }
+                // Check if the data is successfully inserted.
+                if ($passRegistration) {
+                    // Reset to empty.
+                    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = "";
+                    $registrationMsg = "* User is successfully registered! *";
                 }
             }
         }
@@ -123,7 +104,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Company: Registration Page</title>
+        <title>Admin: Registration Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
@@ -136,18 +117,18 @@
 
     <body>
         <header>
-            <!--<h1>Company Sign Up</h1>-->
+            
         </header>
 
         <main>
             <div class="wrapper fadeInDown">
                 <div id="formHeader">
-                    <h1>Company Sign Up</h1>
+                    <h1>Admin Sign Up</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="Comp Icon" />
+                    <img class="fadeIn first" src="https://img.freepik.com/free-vector/isometric-illustration-representing-man-pointing-screen-website-personal-profile-front-gadgets_30590-283.jpg" id="icon" alt="Comp Icon" />
 
-                    <form method="post" action="/Company/registration.php">
+                    <form method="post" action="/Admin/registerAdmin.php">
                         <table>
                             <tr>
                                 <td colspan="2">
@@ -176,18 +157,18 @@
                                 <td>
                                     <div>
                                         <label for="RealName">
-                                            Company Name:
+                                            Admin Name:
                                         </label><br>
                                         <input id="RealName" type="text" name="RealName" value="<?php
                                             echo($tempRName);
-                                        ?>" placeholder="Company Name" required>
+                                        ?>" placeholder="Admin Name" required>
                                     </div>
                                 </td>
                             </tr>
 
                             <tr class="fadeIn third">
                                 <!-- Email -->
-                                <td>
+                                <td colspan="2">
                                     <div>
                                         <label for="Email">
                                             Email:
@@ -222,20 +203,6 @@
                             </tr>
 
                             <tr class="fadeIn fifth">
-                                <!-- EstablishDate -->
-                                <td>
-                                    <div>
-                                        <label for="EstablishDate">
-                                            Establish Date:
-                                        </label><br>
-                                        <input id="EstablishDate" type="date" name="EstablishDate" value="<?php
-                                            echo($tempEDate);
-                                        ?>" placeholder="Establish Date" required>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <tr class="fadeIn sixth">
                                 <td colspan="2">
                                     <div>
                                         <br>
@@ -247,7 +214,7 @@
                     </form>
                     <br>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/login.php?UserType=CO">Back to Login</a><h2><br>
+                        <h2><a class="underlineHover" href="/login.php?UserType=AD">Back to Login</a><h2><br>
                     </div>
                     
                 </div>

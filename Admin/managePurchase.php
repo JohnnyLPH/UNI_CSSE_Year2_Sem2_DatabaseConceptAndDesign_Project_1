@@ -1,5 +1,5 @@
 <?php
-    // Admin Manage Purchase Page.
+    // Admin Manage PurchaseRequest Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dataManagement.php");

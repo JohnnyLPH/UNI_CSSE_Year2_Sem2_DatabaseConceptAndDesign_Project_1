@@ -12,20 +12,43 @@
         exit;
     }
 
-    $tempSpeciesName = $tempLatitude = $tempLongitude = $tempBlockID = "";
-    $addMsg = "";
-    $passAdding = true;
+    $queryString = array();
 
-    $allBlock = getAllBlock($conn);
-
-    // Disable adding if no existing block.
-    if (count($allBlock) < 1) {
-        $addMsg = "* Adding is not allowed as there is no existing block! *";
-        $passAdding = false;
+    if (isset($_SERVER['QUERY_STRING'])) {
+        parse_str($_SERVER['QUERY_STRING'], $queryString);
     }
 
-    // Add attempt.
-    if ($passAdding && $_SERVER["REQUEST_METHOD"] == "POST") {
+    $allTree = NULL;
+    // Tree is not available for editing.
+    if (
+        !isset($queryString["TreeID"]) ||
+        !is_numeric($queryString["TreeID"]) ||
+        $queryString["TreeID"] < 1 ||
+        count($allTree = getAllTree($conn, 0, 0, 0, $queryString["TreeID"])) < 1
+    ) {
+        header("Location: /Admin/manageTree.php");
+        exit;
+    }
+
+    $treeID = $queryString["TreeID"];
+    $result = $allTree[0];
+
+    $tempSpeciesName = $tempLatitude = $tempLongitude = $tempBlockID = "";
+    $editMsg = "";
+    $passEditing = true;
+
+    // Allow assigning to different blocks within same orchard.
+    $orchardID = $result["OrchardID"];
+    $allBlock = getAllBlock($conn, 0, $orchardID);
+
+    // Disable editing if no existing block.
+    if (count($allBlock) < 1) {
+        $editMsg = "* Editing is not allowed as there is no existing block! *";
+        $passEditing = false;
+    }
+
+    // Edit attempt.
+    if ($passEditing && $_SERVER["REQUEST_METHOD"] == "POST") {
         $tempSpeciesName = (isset($_POST["SpeciesName"])) ? cleanInput($_POST["SpeciesName"]): "";
         $tempLatitude = (isset($_POST["Latitude"])) ? cleanInput($_POST["Latitude"]): "";
         $tempLongitude = (isset($_POST["Longitude"])) ? cleanInput($_POST["Longitude"]): "";
@@ -37,52 +60,70 @@
             empty($tempLongitude) ||
             empty($tempBlockID)
         ) {
-            $addMsg = "* Fill in ALL Fields! *";
-            $passAdding = false;
+            $editMsg = "* Fill in ALL Fields! *";
+            $passEditing = false;
         }
         else {
             // Set to true at first.
-            $passAdding = true;
+            $passEditing = true;
 
             // Check Latitude.
             if (!checkValidLatitude($tempLatitude)) {
-                $addMsg = "* Valid latitude (-90 <= x <= 90)! *";
-                $passAdding = false;
+                $editMsg = "* Valid latitude (-90 <= x <= 90)! *";
+                $passEditing = false;
             }
 
             // Check Longitude.
-            if ($passAdding && !checkValidLongitude($tempLongitude)) {
-                $addMsg = "* Valid longitude (-180 <= x <= 180)! *";
-                $passAdding = false;
+            if ($passEditing && !checkValidLongitude($tempLongitude)) {
+                $editMsg = "* Valid longitude (-180 <= x <= 180)! *";
+                $passEditing = false;
             }
 
             // Check valid Block.
-            if ($passAdding && count(getAllBlock($conn, 0, 0, $tempBlockID)) < 1) {
-                $addMsg = "* Choose an existing Block! *";
-                $passAdding = false;
+            if ($passEditing && count(getAllBlock($conn, 0, 0, $tempBlockID)) < 1) {
+                $editMsg = "* Choose an existing Block! *";
+                $passEditing = false;
             }
 
-            // Insert to DB.
-            if ($passAdding) {
-                // Insert to Tree table.
-                $query = "INSERT INTO `Tree`(`SpeciesName`, `Latitude`, `Longitude`, `BlockID`)";
-                $query .= " VALUES ('$tempSpeciesName','$tempLatitude','$tempLongitude','$tempBlockID');";
+            // Update in DB.
+            if ($passEditing) {
+                // Update in Tree table.
+                $query = "UPDATE `Tree`";
+                $query .= " SET `SpeciesName`='$tempSpeciesName'";
+                $query .= ", `Latitude`='$tempLatitude'";
+                $query .= ", `Longitude`='$tempLongitude'";
+                $query .= ", `BlockID`='$tempBlockID'";
+                $query .= " WHERE `Tree`.`TreeID`='$treeID';";
 
                 $rs = $conn->query($query);
                 if (!$rs) {
-                    $addMsg = "* Fail to insert to Tree table! *";
-                    $passAdding = false;
+                    $editMsg = "* Fail to update in Tree table! *";
+                    $passEditing = false;
                 }
 
-                // Check if the data is successfully inserted.
-                if ($passAdding) {
-                    // Reset to empty.
-                    $tempSpeciesName = $tempLatitude = $tempLongitude = $tempBlockID = "";
-                    $addMsg = "* Tree is successfully added! *";
+                // Check if the data is successfully updated.
+                if ($passEditing) {
+                    $editMsg = "* Tree is successfully updated! *";
                 }
             }
         }
     }
+    if (empty($tempSpeciesName)) {
+        $tempSpeciesName = $result["SpeciesName"];
+    }
+
+    if (empty($tempLatitude)) {
+        $tempLatitude = $result["Latitude"];
+    }
+
+    if (empty($tempLongitude)) {
+        $tempLongitude = $result["Longitude"];
+    }
+
+    if (empty($tempBlockID)) {
+        $tempBlockID = $result["BlockID"];
+    }
+
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -112,19 +153,23 @@
         <main>
             <div class="wrapper fadeInDown">
                 <div id="formHeader">
-                    <h1>Add New Tree:</h1>
+                    <h1>Edit Tree ID <?php
+                        echo($treeID);
+                    ?>:</h1>
                 </div>
                 <div id="formContentW2">
                     <img class="fadeIn first" src="https://static.vecteezy.com/system/resources/previews/002/140/928/non_2x/gardening-concept-illustration-with-man-and-women-planting-a-tree-free-vector.jpg" id="icon" alt="Tree Icon" />
 
-                    <form method="post" action="/Admin/addTree.php">
+                    <form method="post" action="/Admin/editTree.php?TreeID=<?php
+                        echo($treeID);
+                    ?>">
                         <table>
                             <tr>
                                 <td colspan="2">
                                     <span class="<?php
-                                        echo(($passAdding) ? "success": "error");
+                                        echo(($passEditing) ? "success": "error");
                                     ?>-message"><?php
-                                        echo($addMsg);
+                                        echo($editMsg);
                                     ?></span>
                                 </td>
                             </tr>
@@ -200,7 +245,7 @@
                                 <td colspan="2">
                                     <div>
                                         <br>
-                                        <input type="submit" value="Add Tree Now"<?php
+                                        <input type="submit" value="Save Editing"<?php
                                             if (count($allBlock) < 1) {
                                                 echo(" disabled");
                                             }
@@ -212,7 +257,9 @@
                     </form>
                     <br>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/Admin/manageTree.php">Back to Manage Tree</a><h2><br>
+                        <h2><a class="underlineHover" href="/Admin/viewEachTree.php?TreeID=<?php
+                            echo($treeID);
+                        ?>">Back to View Tree</a><h2><br>
                     </div>
                 </div>
             </div>

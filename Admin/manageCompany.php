@@ -25,7 +25,7 @@
     ) ? 0: $queryString["SearchKey"];
 
     // Return all the company.
-    $allCompany = getAllCompany($conn, $_SESSION["UserID"], $companyID);
+    $allCompany = getAllCompany($conn, $companyID);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,6 +54,7 @@
                 <h2 class="w3-center">All Companies:</h2>
 
                 <form id="reset-search" method="get" action="/Admin/manageCompany.php"></form>
+                <form id="register-company" method="get" action="/Admin/registerCompany.php"></form>
 
                 <form class="w3-center" method="get" action="/Admin/manageCompany.php">
                     <input style="width:98%" id="SearchKey" type="number" name="SearchKey" value="<?php
@@ -63,15 +64,6 @@
                         }
                     ?>" placeholder="Enter Company ID" min="1" required>
                     
-                    <!-- <label for="SearchOption">Search By:</label> -->
-                    <select id="SearchOption" name="SearchOption">
-                        <option value="1"<?php
-                            if ($searchOption == 1) {
-                                echo(" selected");
-                            }
-                        ?>>CompanyID</option>
-                    </select>
-
                     <input type="submit" value="Search">
 
                     <input form="reset-search" type="submit" value="Reset"<?php
@@ -80,40 +72,52 @@
                             echo(" disabled");
                         }
                     ?>>
+
+                    <input form="register-company" type="submit" value="Register New Company">
                 </form>
 
                 <div class="w3-container w3-center" style="align-content:center;">
-                <?php if (count($allCompany) > 0): ?>
+                    <?php if (count($allCompany) > 0): ?>
                         <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
                             <tr>
                                 <th>Company ID</th>
-                                <th>User ID</th>
                                 <th>Username</th>
-                                <th>Real Name</th>
+                                <th>Total Orchard</th>
+                                <th>Total Block</th>
+                                <th>Total Tree</th>
                                 <th>Establish Date</th>
+                                <th>Action</th>
                             </tr>
                             <?php foreach ($allCompany as $result): ?>
                                 <tr>
                                     <td><?php
-                                        echo($result["CompanyID"]);
+                                        echo($result["UserID"]);
                                     ?></td>
 
                                     <td><?php
-                                        echo(getCompanyCount($conn, $_SESSION["UserID"], $result["CompanyID"]));
+                                        echo($result["Username"]);
                                     ?></td>
 
                                     <td><?php
-                                        echo(getTreeCount($conn, $_SESSION["UserID"], $result["CompanyID"]));
+                                        echo(getOrchardCount($conn, $result["UserID"]));
                                     ?></td>
 
                                     <td><?php
-                                        echo(getPurchaseRequestCount($conn, 1, $_SESSION["UserID"], $result["CompanyID"]));
+                                        echo(getBlockCount($conn, $result["UserID"]));
+                                    ?></td>
+
+                                    <td><?php
+                                        echo(getTreeCount($conn, $result["UserID"]));
+                                    ?></td>
+
+                                    <td><?php
+                                        echo($result["EstablishDate"]);
                                     ?></td>
                             
                                     <td>
-                                        <form method="get" action="/Company/registration.php">
+                                        <form method="get" action="/Admin/viewEachCompany.php">
                                             <input type="hidden" name="CompanyID" value="<?php
-                                                echo($result["CompanyID"]);
+                                                echo($result["UserID"]);
                                             ?>">
                                             <input type="submit" value="View">
                                         </form>
@@ -128,10 +132,7 @@
                                 echo("No company is found!");
                             }
                             else {
-                                echo(
-                                    "Company ID $companyID is not associated with any company of " .
-                                    $_SESSION["Username"] . "!"
-                                );
+                                echo("Company ID $companyID is not associated with any company!");
                             }
                         ?> *</span>
                     <?php endif; ?>
