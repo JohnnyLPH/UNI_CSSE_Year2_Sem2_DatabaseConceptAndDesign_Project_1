@@ -33,6 +33,14 @@
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
+
+        <!-- Chart.js-->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"
+        integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
+        <!-- Google Chart API-->
+        <script type='text/javascript'src='https://www.gstatic.com/charts/loader.js'></script>
     </head>
 
     <body>
@@ -47,9 +55,16 @@
         <main>
             <div class="w3-row">
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%">
-                    <h2 class="w3-bar-item" >Welcome, <?php
-                        echo($_SESSION["Username"]);
-                    ?></h2>
+                    <div class="w3-center">
+                        <h2 class="w3-center w3-bar-item" >Welcome, <?php
+                            echo($_SESSION["Username"]);
+                        ?></h2>
+                        <img src="https://cdn-icons-png.flaticon.com/512/270/270023.png" id="icon" alt="User Icon" /><br><br>
+                    </div>
+                    <button class="fullW" onclick="document.location='/Admin/reportCompany.php'">View Company Report</button><br><br>
+                    <button class="fullW" onclick="document.location='/Admin/reportClient.php'">View Client Report</button><br><br>
+                    <button class="fullW" onclick="document.location='/Admin/reportStaff.php'">View Staff Report</button><br><br>
+                    <button class="fullW" onclick="document.location='/Admin/reportSales.php'">View Sales Report</button><br><br>
                 </div>
                 
                 <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;">
@@ -147,3 +162,5 @@
         </footer>
     </body>
 </html>
+
+
