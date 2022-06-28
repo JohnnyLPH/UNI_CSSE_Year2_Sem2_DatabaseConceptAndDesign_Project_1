@@ -118,18 +118,19 @@
             }
         }
     }
-
     $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Client: Registration Page</title>
+        <title>Admin: Client Registration Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
+        <link rel="stylesheet" href="/css/main.css">
         <link rel="stylesheet" href="/css/form.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-vivid.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
 
@@ -143,13 +144,17 @@
 
     <body>
         <header>
-            <!--<h1>Client: Registration Page</h1>-->
+            <div class="maintheme w3-container">
+                <h4 style="font-size: 36px">Admin: Client Registration Page</h4>
+            </div>
         </header>
+
+        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
 
         <main>
             <div class="wrapper fadeInDown">
                 <div id="formHeader">
-                    <h1>Client Sign Up</h1>
+                    <h1>Client Sign Up:</h1>
                 </div>
                 <div id="formContentW2">
                     <br>
