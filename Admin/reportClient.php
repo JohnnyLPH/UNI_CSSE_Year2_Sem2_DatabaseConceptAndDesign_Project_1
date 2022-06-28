@@ -20,6 +20,13 @@
     $totalTree = getTreeCount($conn);
     $totalPurchase = getPurchaseRequestCount($conn, 1);
 
+    $allClient = getAllClient($conn);
+
+    foreach($allClient as $eachClient){
+        $listClientID[] = $eachClient["UserID"];
+        $blockCount[] = count(getBlockLatestClient($conn,0,0,0,$eachClient["UserID"]));
+    }
+
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -71,17 +78,17 @@
                     <h2>Summary of Affiliated Clients</h2>
                 </div>
 
-                <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
+                <!--<div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
                     <div class='data-value card fadeIn'>
                         <div class='data-group'>
                             <label>This is a card tag</label>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
-                    <h2>Number of Blocks of Trees Owned by Respective Clients</h2>
-                    <canvas id="chart1" style="width:100%;"></canvas>
+                <h3><b>Number of Blocks of Trees Owned by Respective Clients</b></h3>
+                    <canvas id="chart0" style="height: 450px;width:100%;"></canvas>
                 </div>
             </div>
         </main>
@@ -89,38 +96,49 @@
         <footer>
             
         </footer>
-
         <script>
-            const labels = [
-                'A',
-                'B',
-                'C',
-                'D',
-                'E',
-                'F',
-            ];
+            clientID = <?php echo json_encode($listClientID);?>;            
 
-            const data = {
-                labels: labels,
+            //graph for tree by company
+            blocks = <?php echo json_encode($blockCount); ?>;
+
+            const data0 = {
+                labels: clientID,
                 datasets: [{
-                label: 'Trees',
-                backgroundColor: 'rgb(0, 131, 115, 0.7)',
-                borderColor: 'rgb(0, 82, 72)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                    label: 'Blocks',
+                    backgroundColor: 'rgb(0, 131, 115, 0.7)',
+                    borderColor: 'rgb(0, 82, 72)',
+                    data: blocks,
                 }]
             };
 
-            const config = {
+            const config0 = {
                 type: 'bar',
-                data: data,
+                data: data0,
                 options: {
-                    indexAxis: 'y',
+                    indexAxis: 'x',
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Client ID'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Number of Blocks'
+                            },
+                        }
+                    }
                 }
             };
-            const chart1 = new Chart(
-                document.getElementById('chart1'),
-                config
+
+            const chart0 = new Chart(
+                document.getElementById('chart0'),
+                config0
             );
+
         </script>
     </body>
 </html>
