@@ -20,6 +20,15 @@
     $totalTree = getTreeCount($conn);
     $totalPurchase = getPurchaseRequestCount($conn, 1);
 
+    $allStaff = getAllStaff($conn);
+
+    foreach($allStaff as $eachStaff){
+        $listStaffID[] = $eachStaff["UserID"];
+        $listStaffSalary[] = $eachStaff["Salary"];
+        $totalUpdates[] = count(getAllTreeUpdate($conn,0,0,0,0,0,$eachStaff["UserID"]));
+
+    }
+
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -71,17 +80,24 @@
                     <h2>Summary of Affiliated Staffs</h2>
                 </div>
 
-                <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
+                <!--<div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
                     <div class='data-value card fadeIn'>
                         <div class='data-group'>
                             <label>This is a card tag</label>
                         </div>
                     </div>    
-                </div>
+                </div>-->
 
                 <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
-                    <h2>List of Staff By Company</h2>
-                    <canvas id="chart1" style="width:100%;"></canvas>
+                    <h3><b>Staff Salary Summary</b></h3>
+                    <canvas id="chart0" style="height: 350px;width:100%;"></canvas>
+                </div>
+
+                    <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;height:20px"></div>
+
+                <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
+                    <h3><b>Total Tree Records Created by Staff</b></h3>
+                    <canvas id="chart1" style="height: 350px;width:100%;"></canvas>
                 </div>
             </div>
         </main>
@@ -91,35 +107,88 @@
         </footer>
 
         <script>
-            const labels = [
-                'A',
-                'B',
-                'C',
-                'D',
-                'E',
-                'F',
-            ];
+            staffID = <?php echo json_encode($listStaffID); ?>;            
 
-            const data = {
-                labels: labels,
+            //graph for staff and their salaries
+            staffSalary = <?php echo json_encode($listStaffSalary); ?>;
+
+            const data0 = {
+                labels: staffID,
                 datasets: [{
-                label: 'Trees',
-                backgroundColor: 'rgb(0, 131, 115, 0.7)',
-                borderColor: 'rgb(0, 82, 72)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                    label: 'Salary (RM)',
+                    backgroundColor: 'rgb(0, 131, 115, 0.7)',
+                    borderColor: 'rgb(0, 82, 72)',
+                    data: staffSalary,
                 }]
             };
 
-            const config = {
+            const config0 = {
                 type: 'bar',
-                data: data,
+                data: data0,
                 options: {
                     indexAxis: 'y',
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Salary (RM)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Staff ID'
+                            },
+                        }
+                    }
                 }
             };
+
+            const chart0 = new Chart(
+                document.getElementById('chart0'),
+                config0
+            );
+
+            staffID = <?php echo json_encode($listStaffID); ?>;            
+
+            //graph for staff and their tree updates
+            treeUpdates = <?php echo json_encode($totalUpdates); ?>;
+
+            const data1 = {
+                labels: staffID,
+                datasets: [{
+                    label: 'Number of Tree Updates Made',
+                    backgroundColor: 'rgb(0, 131, 115, 0.7)',
+                    borderColor: 'rgb(0, 82, 72)',
+                    data: treeUpdates,
+                }]
+            };
+
+            const config1 = {
+                type: 'bar',
+                data: data1,
+                options: {
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Number of Tree Updates Made'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Staff ID'
+                            },
+                        }
+                    }
+                }
+            };
+
             const chart1 = new Chart(
                 document.getElementById('chart1'),
-                config
+                config1
             );
         </script>
     </body>
