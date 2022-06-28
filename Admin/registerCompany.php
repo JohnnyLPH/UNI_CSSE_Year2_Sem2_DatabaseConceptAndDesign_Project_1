@@ -105,7 +105,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin: Company Registration Page</title>
+        <title>Admin: Manage Company Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
@@ -120,7 +120,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h4 style="font-size: 36px">Admin: Company Registration Page</h4>
+                <h4 style="font-size: 36px">Admin: Manage Company Page</h4>
             </div>
         </header>
 

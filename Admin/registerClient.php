@@ -123,7 +123,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin: Client Registration Page</title>
+        <title>Admin: Manage Client Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
@@ -145,7 +145,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h4 style="font-size: 36px">Admin: Client Registration Page</h4>
+                <h4 style="font-size: 36px">Admin: Manage Client Page</h4>
             </div>
         </header>
 
@@ -212,7 +212,7 @@
 
                             <tr class="fadeIn fourth">
                                 <!-- Email -->
-                                <td>
+                                <td colspan="2">
                                     <div>
                                         <label for="Email">
                                             Email:

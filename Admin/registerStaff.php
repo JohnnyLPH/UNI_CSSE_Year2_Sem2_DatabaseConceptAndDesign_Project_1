@@ -119,7 +119,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin: Staff Registration Page</title>
+        <title>Admin: Manage Staff Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
@@ -131,14 +131,14 @@
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
     </head>
 
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
-
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h4 style="font-size: 36px">Admin: Staff Registration Page</h4>
+                <h4 style="font-size: 36px">Admin: Manage Staff Page</h4>
             </div>
         </header>
+
+        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
 
         <main>
             <div class="wrapper fadeInDown">
