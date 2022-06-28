@@ -24,6 +24,14 @@
 .w3-hover-text-theme:hover {color:#00a591 !important}
 .w3-hover-border-theme:hover {border-color:#00a591 !important}
 
+.blackbox{
+  color:rgb(255, 255, 255) !important;
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  text-align: center;
+  top:0;
+  left:0;
+}
+
 /*
 :root {
     --main-body-color: #EDF6F9;

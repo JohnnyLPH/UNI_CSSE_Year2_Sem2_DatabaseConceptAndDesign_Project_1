@@ -20,6 +20,17 @@
     $totalTree = getTreeCount($conn);
     $totalPurchase = getPurchaseRequestCount($conn, 1);
 
+    $allCompany = getAllCompany($conn);
+    $val=-1;
+
+    foreach ($allCompany as $eachCompany){
+        $listCompanyID[] = $eachCompany["UserID"];
+        $treeCount[] = getTreeCount($conn, $eachCompany["UserID"]);
+        $blockCount[] = getBlockCount($conn, $eachCompany["UserID"]);
+        $allCompanyStaff[] = getStaffCount($conn, $eachCompany["UserID"]);   
+        $allCompanyClientPurchase[] = getPurchaseRequestCount($conn,1, $eachCompany["UserID"]);   
+    }
+
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -70,7 +81,7 @@
                 <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;">
                     <h2>Summary of Affiliated Companies</h2>
                 </div>
-
+                <!--
                 <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
                     <div class='data-value card fadeIn'>
                         <div class='data-group'>
@@ -78,11 +89,37 @@
                         </div>
                     </div>
                 </div>
+                -->
 
                 <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
-                    <h2>Number of Trees By Company</h2>
-                    <canvas id="chart1" style="width:100%;"></canvas>
+                    <h3><b>Number of Trees By Company</b></h3>
+                    <canvas id="chart0" style="height: 350px;width:100%;"></canvas>
                 </div>
+
+                    <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;height:20px"></div>
+
+                <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
+                    <h3><b>Number of Blocks By Company</b></h3>
+                    <canvas id="chart1" style="height: 350px;width:100%;"></canvas>
+                </div>
+
+                    <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;height:20px"></div>
+
+                <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
+                    <h3><b>Number of Staff By Company</b></h3>
+                    <canvas id="chart2" style="height: 350px;width:100%;"></canvas>
+                </div>
+
+                    <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;height:20px"></div>
+
+                <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
+                    <h3><b>Number of Client Purchases By Company</b></h3>
+                    <canvas id="chart3" style="height: 350px;width:100%;"></canvas>
+                </div>
+
+                <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;height:20px"></div>
+
+
             </div>
         </main>
 
@@ -91,35 +128,166 @@
         </footer>
 
         <script>
-            const labels = [
-                'A',
-                'B',
-                'C',
-                'D',
-                'E',
-                'F',
-            ];
+            companyID = <?php echo json_encode($listCompanyID); ?>;            
 
-            const data = {
-                labels: labels,
+            //graph for tree by company
+            trees = <?php echo json_encode($treeCount); ?>;
+
+            const data0 = {
+                labels: companyID,
                 datasets: [{
-                label: 'Trees',
-                backgroundColor: 'rgb(0, 131, 115, 0.7)',
-                borderColor: 'rgb(0, 82, 72)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                    label: 'Trees',
+                    backgroundColor: 'rgb(0, 131, 115, 0.7)',
+                    borderColor: 'rgb(0, 82, 72)',
+                    data: trees,
                 }]
             };
 
-            const config = {
+            const config0 = {
                 type: 'bar',
-                data: data,
+                data: data0,
                 options: {
                     indexAxis: 'y',
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Number of Trees'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Company ID'
+                            },
+                        }
+                    }
                 }
             };
+
+            const chart0 = new Chart(
+                document.getElementById('chart0'),
+                config0
+            );
+
+            //graph for block by company
+            blocks = <?php echo json_encode($blockCount); ?>;
+
+            const data1 = {
+                labels: companyID,
+                datasets: [{
+                    label: 'Blocks',
+                    backgroundColor: 'rgb(0, 131, 115, 0.7)',
+                    borderColor: 'rgb(0, 82, 72)',
+                    data: blocks,
+                }]
+            };
+
+            const config1 = {
+                type: 'bar',
+                data: data1,
+                options: {
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Number of Blocks'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Company ID'
+                            },
+                        }
+                    }
+                }
+            };
+
             const chart1 = new Chart(
                 document.getElementById('chart1'),
-                config
+                config1
+            );
+
+            //graph for staff by company
+            allstaff = <?php echo json_encode($allCompanyStaff); ?>
+
+            const data2 = {
+                labels: companyID,
+                datasets: [{
+                    label: 'Staffs',
+                    backgroundColor: 'rgb(0, 131, 115, 0.7)',
+                    borderColor: 'rgb(0, 82, 72)',
+                    data: allstaff,
+                }]
+            };
+
+            const config2 = {
+                type: 'bar',
+                data: data2,
+                options: {
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Number of Staff'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Company ID'
+                            },
+                        }
+                    }
+                }
+            };
+
+            const chart2 = new Chart(
+                document.getElementById('chart2'),
+                config2
+            );
+
+            //graph for client by company
+            allclientpurchase = <?php echo json_encode($allCompanyClientPurchase); ?>
+
+            const data3 = {
+                labels: companyID,
+                datasets: [{
+                    label: 'Client Purchases',
+                    backgroundColor: 'rgb(0, 131, 115, 0.7)',
+                    borderColor: 'rgb(0, 82, 72)',
+                    data: allclientpurchase,
+                }]
+            };
+
+            const config3 = {
+                type: 'bar',
+                data: data3,
+                options: {
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Number of Client Purchase'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Company ID'
+                            },
+                        }
+                    }
+                }
+            };
+
+            const chart3 = new Chart(
+                document.getElementById('chart3'),
+                config3
             );
         </script>
     </body>
