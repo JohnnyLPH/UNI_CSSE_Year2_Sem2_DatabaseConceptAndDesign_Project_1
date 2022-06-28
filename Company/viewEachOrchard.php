@@ -178,7 +178,7 @@
                             echo($orchardID);
                         ?>">
                         <input type="hidden" name="SearchOption" value="1">
-                        <input class="fullW" type="submit" value="View Related Blocks" style="max-width:100%;">
+                        <input class="fullW" type="submit" value="View Related Blocks">
                     </form>
 
                     <form method="get" action="/Company/manageTree.php">

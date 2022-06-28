@@ -177,7 +177,7 @@
                         <input id="Password" type="password" name="Password" placeholder="Password" class="fadeIn third" required>
                     </div>
                     
-                    <span class="fadeIn first"><?php
+                    <span class="fadeIn first error-message"><?php
                         echo($loginMsg);
                     ?></span>
 
