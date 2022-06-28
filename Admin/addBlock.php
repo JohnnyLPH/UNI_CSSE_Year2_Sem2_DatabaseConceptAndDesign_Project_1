@@ -164,7 +164,11 @@
                                                         echo(" selected");
                                                     }
                                                 ?>><?php
-                                                    echo($result["OrchardID"]);
+                                                    echo(
+                                                        "Orchard " . $result["OrchardID"] . " in " .
+                                                        "Company ID " . $result["CompanyID"]
+                                                    );
+                                                    // echo($result["OrchardID"]);
                                                 ?></option>
                                             <?php endforeach; ?>
                                         </select>
