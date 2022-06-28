@@ -1,5 +1,5 @@
 <?php
-    // Staff Registration Page.
+    // Admin Registration Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/inputValidation.php");
@@ -10,8 +10,8 @@
         header("Location: /index.php");
         exit;
     }
-
-    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempSalary = $tempEDate = $tempCompany = "";
+    
+    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = "";
     $registrationMsg = "";
     $passRegistration = false;
 
@@ -22,9 +22,6 @@
         $tempEmail = (isset($_POST["Email"])) ? cleanInput($_POST["Email"]): "";
         $tempPass = (isset($_POST["Password"])) ? cleanInput($_POST["Password"]): "";
         $tempRPass = (isset($_POST["ReconfirmPassword"])) ? cleanInput($_POST["ReconfirmPassword"]): "";
-        $tempEDate = (isset($_POST["EmploymentDate"])) ? cleanInput($_POST["EmploymentDate"]): "";
-        $tempSalary = (isset($_POST["tempSalary"])) ? cleanInput($_POST["tempSalary"]): "";
-        $tempCompany = (isset($_POST["tempCompany"])) ? cleanInput($_POST["tempCompany"]): "";
 
         $tempID = $tempHash = "";
 
@@ -33,10 +30,7 @@
             empty($tempRName) ||
             empty($tempEmail) ||
             empty($tempPass) ||
-            empty($tempRPass) ||
-            empty($tempEDate) ||
-            empty($tempSalary) ||
-            empty($tempCompany)
+            empty($tempRPass)
         ) {
             $registrationMsg = "* Fill in ALL Fields! *";
             $passRegistration = false;
@@ -65,9 +59,9 @@
 
             // Insert to DB.
             if ($passRegistration) {
-                // Insert to User table with UserType CO.
+                // Insert to User table with UserType AD.
                 $query = "INSERT INTO `User`(`Username`, `Email`, `PasswordHash`, `RealName`, `UserType`)";
-                $query .= " VALUES ('$tempName','$tempEmail','$tempHash','$tempRName','ST')";
+                $query .= " VALUES ('$tempName','$tempEmail','$tempHash','$tempRName','AD')";
 
                 $rs = $conn->query($query);
                 if (!$rs) {
@@ -75,7 +69,7 @@
                     $passRegistration = false;
                 }
 
-                // Insert to Staff table.
+                // Insert to Admin table.
                 if ($passRegistration) {
                     $passRegistration = false;
 
@@ -83,12 +77,12 @@
                     $tempID = $conn->insert_id;
 
                     // Insert with the obtained UserID.
-                    $query = "INSERT INTO `Staff`(`UserID`, `EmployDate`, `Salary`, `CompanyID`)";
-                    $query .= " VALUES ('$tempID','$tempEDate', '$tempSalary', '$tempCompany')";
+                    $query = "INSERT INTO `Admin`(`UserID`)";
+                    $query .= " VALUES ('$tempID')";
                     $rs = $conn->query($query);
 
                     if (!$rs) {
-                        $registrationMsg = "* Fail to insert to Staff table! *";
+                        $registrationMsg = "* Fail to insert to Admin table! *";
                     }
                     else {
                         $passRegistration = true;
@@ -98,31 +92,23 @@
                 // Check if the data is successfully inserted.
                 if ($passRegistration) {
                     // Reset to empty.
-                    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempSalary = $tempEDate = $tempCompany = "";
+                    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = "";
                     $registrationMsg = "* User is successfully registered! *";
                 }
             }
         }
     }
 
-    function getCompanies($conn) {
-        $sql = "SELECT User.UserID, User.RealName FROM User INNER JOIN Company USING(UserID);";
-        $result = $conn->query($sql);
-
-        if($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo ("<option value=\" " . $row["UserID"] . "\"> " . $row["RealName"] . "</option>");
-            }
-        }
-    }
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Staff: Registration Page</title>
+        <title>Admin: Registration Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
+        <!--<link rel="stylesheet" href="/css/main.css">-->
         <link rel="stylesheet" href="/css/form.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
@@ -131,19 +117,18 @@
 
     <body>
         <header>
-            <!--<h1>Staff: Registration Page</h1>-->
+            
         </header>
 
         <main>
             <div class="wrapper fadeInDown">
                 <div id="formHeader">
-                    <h1>Staff Sign Up</h1>
+                    <h1>Admin Sign Up</h1>
                 </div>
-
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="Comp Icon" />
-                    
-                    <form method="post" action="/Staff/registration.php">
+                    <img class="fadeIn first" src="https://img.freepik.com/free-vector/isometric-illustration-representing-man-pointing-screen-website-personal-profile-front-gadgets_30590-283.jpg" id="icon" alt="Comp Icon" />
+
+                    <form method="post" action="/Admin/registerAdmin.php">
                         <table>
                             <tr>
                                 <td colspan="2">
@@ -154,7 +139,7 @@
                                     ?></span>
                                 </td>
                             </tr>
-                            
+
                             <tr class="fadeIn second">
                                 <!-- Username -->
                                 <td>
@@ -162,7 +147,7 @@
                                         <label for="Username">
                                             Username:
                                         </label><br>
-                                        <input id="Username" type="text" name="Username" value="<?php 
+                                        <input id="Username" type="text" name="Username" value="<?php
                                             echo($tempName);
                                         ?>" placeholder="Username" required>
                                     </div>
@@ -172,18 +157,18 @@
                                 <td>
                                     <div>
                                         <label for="RealName">
-                                            Staff Name:
+                                            Admin Name:
                                         </label><br>
                                         <input id="RealName" type="text" name="RealName" value="<?php
                                             echo($tempRName);
-                                        ?>" placeholder="Staff Name" required>
+                                        ?>" placeholder="Admin Name" required>
                                     </div>
                                 </td>
                             </tr>
 
                             <tr class="fadeIn third">
                                 <!-- Email -->
-                                <td>
+                                <td colspan="2">
                                     <div>
                                         <label for="Email">
                                             Email:
@@ -193,50 +178,9 @@
                                         ?>" placeholder="abc@email.com" required>
                                     </div>
                                 </td>
-
-                                <!-- Company -->
-                                <td>
-                                    <div>
-                                        <label for="tempCompany">
-                                            Company:
-                                        </label><br>
-                                        <select id="tempCompany" name="tempCompany">
-                                            <?php 
-                                                getCompanies($conn);    
-                                                $conn->close(); 
-                                            ?>
-                                        </select>
-                                    </div>
-                                </td>
                             </tr>
 
                             <tr class="fadeIn fourth">
-                                <!-- Salary -->
-                                <td>
-                                    <div>
-                                        <label for="tempSalary">
-                                            Salary:
-                                        </label><br>
-                                        <input id="tempSalary" type="number" name="tempSalary" value="<?php
-                                            echo($tempSalary);
-                                        ?>" placeholder="Salary" required>
-                                    </div>
-                                </td>
-
-                                <!-- EmploymentDate -->
-                                <td>
-                                    <div>
-                                        <label for="EmploymentDate">
-                                            Employment Date:
-                                        </label><br>
-                                        <input id="EmploymentDate" type="date" name="EmploymentDate" value="<?php
-                                            echo($tempEDate);
-                                        ?>" placeholder="Employment Date" required>
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                            <tr class="fadeIn fifth">
                                 <!-- Password -->
                                 <td>
                                     <div>
@@ -255,21 +199,24 @@
                                         </label><br>
                                         <input id="ReconfirmPassword" type="password" name="ReconfirmPassword" placeholder="Reconfirm Password" required>
                                     </div>
-                                </td> 
+                                </td>
                             </tr>
 
-                            <tr class="fadeIn sixth">
+                            <tr class="fadeIn fifth">
                                 <td colspan="2">
-                                    <br>
-                                    <input type="submit" value="Sign Up"></input>
+                                    <div>
+                                        <br>
+                                        <input type="submit" value="Sign Up">
+                                    </div>
                                 </td>
                             </tr>
                         </table>
                     </form>
-
+                    <br>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/login.php?UserType=ST">Back to Login</a></h2><br>
+                        <h2><a class="underlineHover" href="/login.php?UserType=AD">Back to Login</a><h2><br>
                     </div>
+                    
                 </div>
             </div>
         </main>

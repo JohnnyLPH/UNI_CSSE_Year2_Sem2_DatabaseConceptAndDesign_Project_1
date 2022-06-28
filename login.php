@@ -191,22 +191,9 @@
                 <br>
 
                 <div id="formFooter">
-                    <h2><a class="underlineHover" href="/<?php
-                        if (isset($queryString["UserType"])) {
-                            if ($queryString["UserType"] == "CO") {
-                                echo("Company");
-                            }
-                            else if ($queryString["UserType"] == "ST") {
-                                echo("Staff");
-                            }
-                            else if ($queryString["UserType"] == "CL") {
-                                echo("Client");
-                            }
-                            else if ($queryString["UserType"] == "AD") {
-                                echo("Admin");
-                            }
-                        }
-                    ?>/registration.php">Sign Up</a></h2>
+                    <?php if ($queryString["UserType"] == "AD"): ?>
+                        <h2><a class="underlineHover" href="/Admin/registerAdmin.php">Sign Up</a></h2>
+                    <?php endif; ?>
                     <h2><a class="underlineHover" href="/index.php">Switch UserType</a></h2>
                 </div>
                 

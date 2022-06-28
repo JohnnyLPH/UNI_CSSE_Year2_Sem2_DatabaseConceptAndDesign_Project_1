@@ -5,8 +5,8 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . "/inputValidation.php");
 
     $tempLoginCheck = checkLogin($conn);
-    // Logged in.
-    if ($tempLoginCheck != 0) {
+    // Not logged in as Admin.
+    if ($tempLoginCheck != 4) {
         header("Location: /index.php");
         exit;
     }
@@ -155,7 +155,7 @@
                     <br>
                     <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20190721/ourlarge/pngtree-business-meeting-with-client-illustration-concept-modern-flat-design-concept-png-image_1567633.jpg" id="icon" alt="Comp Icon" />
                     <br>
-                    <form method="post" action="/Client/registration.php" enctype="multipart/form-data">
+                    <form method="post" action="/Admin/registerClient.php" enctype="multipart/form-data">
                         <table>
                             <tr>
                                 <td colspan="2">
@@ -476,9 +476,9 @@
                         </table>
                     </form>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/login.php?UserType=CL">Back to Login</a><h2><br>
+                        <h2><a class="underlineHover" href="/Admin/manageClient.php">Back to Manage Client</a><h2><br>
                     </div>
-                </div>           
+                </div>
             </div>
         </main>
 
