@@ -115,10 +115,10 @@
                     <h1>Add New Tree:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://static.vecteezy.com/system/resources/previews/002/140/928/non_2x/gardening-concept-illustration-with-man-and-women-planting-a-tree-free-vector.jpg" id="icon" alt="Tree Icon" />
+                    <img class="fadeIn first" src="https://static.vecteezy.com/system/resources/previews/002/140/928/non_2x/gardening-concept-illustration-with-man-and-women-planting-a-tree-free-vector.jpg" id="icon45" alt="Tree Icon" />
 
-                    <form method="post" action="/Admin/addTree.php">
-                        <table>
+                    <form method="post" action="/Admin/addTree.php" >
+                        <table >
                             <tr>
                                 <td colspan="2">
                                     <span class="<?php
@@ -129,7 +129,7 @@
                                 </td>
                             </tr>
 
-                            <tr class="fadeIn second">
+                            <tr class="fadeIn second" >
                                 <!-- SpeciesName -->
                                 <td colspan="2">
                                     <div>

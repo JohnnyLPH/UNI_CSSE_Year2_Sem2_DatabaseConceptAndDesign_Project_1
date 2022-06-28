@@ -110,7 +110,7 @@
         <meta charset="utf-8">
         
         <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/css/form.css">
+        <link rel="stylesheet" href="/css/formFont.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-vivid.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
@@ -132,7 +132,7 @@
                     <h1>Company Sign Up:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="Comp Icon" />
+                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon45" alt="Comp Icon" />
 
                     <form method="post" action="/Admin/registerCompany.php">
                         <table>

@@ -21,7 +21,6 @@
     $totalPurchase = getPurchaseRequestCount($conn, 1);
 
     $allCompany = getAllCompany($conn);
-    $val=-1;
 
     foreach ($allCompany as $eachCompany){
         $listCompanyID[] = $eachCompany["UserID"];

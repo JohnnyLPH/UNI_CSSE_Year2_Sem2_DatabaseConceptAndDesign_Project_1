@@ -120,7 +120,7 @@
                     <h1>Add New Block:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://i.pinimg.com/originals/07/20/ad/0720add75420ae4ad05075760c5c0723.jpg" id="icon" alt="Block Icon" />
+                    <img class="fadeIn first" src="https://i.pinimg.com/originals/07/20/ad/0720add75420ae4ad05075760c5c0723.jpg" id="icon45" alt="Block Icon" />
 
                     <form method="post" action="/Admin/addBlock.php">
                         <table>

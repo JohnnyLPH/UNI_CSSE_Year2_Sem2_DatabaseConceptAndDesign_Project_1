@@ -285,7 +285,7 @@ input[type=text], input[type=password], input[type=email], input[type=date], inp
   display: inline-block;
   font-size: 16px;
   margin: 5px;
-  width: 95%;
+  width: 100%;
   border: 2px solid #f6f6f6;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
@@ -483,6 +483,13 @@ button:active  {
   object-fit: cover;
   height: 200px;
   width: 200px;
+  -webkit-border-radius: 10px 10px 10px 10px;
+  border-radius: 10px 10px 10px 10px;
+}
+
+#icon45 {
+  object-fit: cover;
+  width: 45%;
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
 }
