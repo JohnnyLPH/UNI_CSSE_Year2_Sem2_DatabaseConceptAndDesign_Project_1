@@ -1,5 +1,5 @@
 <?php
-    // Admin Manage Orchard Page.
+    // Admin Manage PurchaseRequest Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dataManagement.php");
@@ -60,6 +60,15 @@
             <div class="w3-row">
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
+                    <?php if ($result["ApprovalStatus"] == 0): ?>
+                        <form method="get" action="/Admin/editPurchase.php">
+                            <input type="hidden" name="RequestID" value="<?php
+                                echo($requestID);
+                            ?>">
+                            <input class="fullW" type="submit" value="Update Approval Status">
+                        </form>
+                    <?php endif; ?>
+
                     <form method="get" action="/Admin/viewEachCompany.php">
                         <input type="hidden" name="CompanyID" value="<?php
                             echo($result["CompanyID"]);

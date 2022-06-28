@@ -30,7 +30,7 @@
         exit;
     }
 
-    $TreeID = $queryString["TreeID"];
+    $treeID = $queryString["TreeID"];
     $result = $allTree[0];
 
     $tempPass = "";
@@ -57,7 +57,7 @@
 
             // Delete from DB.
             if ($passDeleting) {
-                if (!deleteTree($conn, $TreeID)) {
+                if (!deleteTree($conn, $treeID)) {
                     $deleteMsg = "* Fail to delete Tree from database! *";
                     $passDeleting = false;
                 }
@@ -98,14 +98,14 @@
             <div class="wrapper fadeInDown">
                 <div id="formHeader">
                     <h1>Delete Tree ID <?php
-                        echo($TreeID);
+                        echo($treeID);
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
                     <img class="fadeIn first" src="https://static.vecteezy.com/system/resources/previews/002/140/928/non_2x/gardening-concept-illustration-with-man-and-women-planting-a-tree-free-vector.jpg" id="icon" alt="Tree Icon" />
 
                     <form method="post" action="/Admin/deleteTree.php?TreeID=<?php
-                        echo($TreeID);
+                        echo($treeID);
                     ?>">
                         <table>
                             <tr>
@@ -154,7 +154,7 @@
                     <div id="formFooter">
                         <?php if(!$passDeleting): ?>
                             <h2><a class="underlineHover" href="/Admin/viewEachTree.php?TreeID=<?php
-                                echo($TreeID);
+                                echo($treeID);
                             ?>">Back to View Tree</a><h2><br>
                         <?php else: ?>
                             <h2><a class="underlineHover" href="/Admin/manageTree.php">Back to Manage Tree</a><h2><br>
