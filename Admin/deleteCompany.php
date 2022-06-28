@@ -102,7 +102,7 @@
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://us.123rf.com/450wm/goodstudio/goodstudio1910/goodstudio191000131/131189697-family-working-in-fruit-garden-together-flat-vector-illustration-people-gathering-apples-berries-and.jpg" id="icon" alt="Company Icon" />
+                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="Company Icon" />
 
                     <form method="post" action="/Admin/deleteCompany.php?CompanyID=<?php
                         echo($companyID);
@@ -153,7 +153,7 @@
                     <br>
                     <div id="formFooter">
                         <?php if(!$passDeleting): ?>
-                            <h2><a class="underlineHover" href="/Admin/viewEachOrchard.php?CompanyID=<?php
+                            <h2><a class="underlineHover" href="/Admin/viewEachCompany.php?CompanyID=<?php
                                 echo($companyID);
                             ?>">Back to View Company</a><h2><br>
                         <?php else: ?>

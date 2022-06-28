@@ -1110,17 +1110,17 @@
             return false;
         }
 
+        $rs = $conn->query($query);
+        if (!$rs) {
+            return false;
+        }
+
         // Delete from User.
         $deleteQuery = "DELETE FROM `User`";
         $deleteQuery .= " WHERE `User`.`UserID` = '$clientID'";
         $deleteQuery .= ";";
 
-        $rs = $conn->query($deleteQuery);
-        if (!$rs) {
-            return false;
-        }
-
-        return $conn->query($query);
+        return $conn->query($deleteQuery);
     }
 
     // Delete Staff.
@@ -1153,7 +1153,16 @@
         }
 
         // Delete all TreeUpdate of StaffID.
-        if (!deleteTreeUpdate($conn, 0, 0, $staffID)) {
+        $allRow = getAllStaff($conn, $companyID, $staffID);
+        foreach ($allRow as $result) {
+            // Delete related TreeUpdate.
+            if (!deleteTreeUpdate($conn, 0, 0, $result["UserID"])) {
+                return false;
+            }
+        }
+
+        $rs = $conn->query($query);
+        if (!$rs) {
             return false;
         }
 
@@ -1162,12 +1171,7 @@
         $deleteQuery .= " WHERE `User`.`UserID` = '$staffID'";
         $deleteQuery .= ";";
 
-        $rs = $conn->query($deleteQuery);
-        if (!$rs) {
-            return false;
-        }
-
-        return $conn->query($query);
+        return $conn->query($deleteQuery);
     }
 
     // Delete Company.
@@ -1197,17 +1201,17 @@
             return false;
         }
 
+        $rs = $conn->query($query);
+        if (!$rs) {
+            return false;
+        }
+
         // Delete from User.
         $deleteQuery = "DELETE FROM `User`";
         $deleteQuery .= " WHERE `User`.`UserID` = '$companyID'";
         $deleteQuery .= ";";
 
-        $rs = $conn->query($deleteQuery);
-        if (!$rs) {
-            return false;
-        }
-
-        return $conn->query($query);
+        return $conn->query($deleteQuery);
     }
 
     // Delete Admin.
@@ -1239,16 +1243,16 @@
             return false;
         }
 
+        $rs = $conn->query($query);
+        if (!$rs) {
+            return false;
+        }
+
         // Delete from User.
         $deleteQuery = "DELETE FROM `User`";
         $deleteQuery .= " WHERE `User`.`UserID` = '$adminID'";
         $deleteQuery .= ";";
 
-        $rs = $conn->query($deleteQuery);
-        if (!$rs) {
-            return false;
-        }
-
-        return $conn->query($query);
+        return $conn->query($deleteQuery);
     }
 ?>
