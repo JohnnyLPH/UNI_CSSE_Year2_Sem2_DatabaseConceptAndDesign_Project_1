@@ -74,6 +74,12 @@
                 $passRegistration = false;
             }
 
+            // Check Salary.
+            if ($passRegistration && (!is_numeric($tempSalary) || $tempSalary < 500)) {
+                $registrationMsg = "* Valid salary (>= 500)! *";
+                $passRegistration = false;
+            }
+
             // Check EmployDate.
             if ($passRegistration) {
                 // From DateTime to Date.
@@ -247,7 +253,7 @@
                                 <td>
                                     <div>
                                         <label for="tempSalary">
-                                            Salary:
+                                            Salary (RM):
                                         </label><br>
                                         <input id="tempSalary" type="number" name="tempSalary" value="<?php
                                             echo($tempSalary);

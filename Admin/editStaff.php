@@ -53,7 +53,8 @@
             empty($tempName) ||
             empty($tempRName) ||
             empty($tempEmail) ||
-            empty($tempEDate)
+            empty($tempEDate) ||
+            empty($tempSalary)
         ) {
             $editMsg = "* Fill in ALL Fields! *";
             $passEditing = false;
@@ -94,6 +95,29 @@
                 $passEditing = false;
             }
 
+            // Check Salary.
+            if ($passEditing && (!is_numeric($tempSalary) || $tempSalary < 500)) {
+                $editMsg = "* Valid salary (>= 500)! *";
+                $tempSalary = "";
+                $passEditing = false;
+            }
+
+            $checkCompany = getAllCompany($conn, $result["CompanyID"]);
+
+            // Check EmployDate.
+            if ($passEditing) {
+                // From DateTime to Date.
+                $checkDate = new DateTime($checkCompany[0]["EstablishDate"]);
+                $checkDate = $checkDate->format('Y-m-d');
+
+                if ($tempEDate < $checkDate) {
+                    $tempCompID = $checkCompany[0]["UserID"];
+                    $editMsg = "* Invalid Employment Date, Company ID $tempCompID is established on $checkDate! *";
+                    $tempEDate = "";
+                    $passEditing = false;
+                }
+            }
+
             // Check Password.
             if (
                 $passEditing &&
@@ -109,6 +133,7 @@
                 // Update in Staff table.
                 $query = "UPDATE `Staff`";
                 $query .= " SET `EmployDate`='$tempEDate'";
+                $query .= ", `Salary`='$tempSalary'";
                 $query .= " WHERE `Staff`.`UserID`='$staffID';";
 
                 $rs = $conn->query($query);
@@ -117,22 +142,24 @@
                     $passEditing = false;
                 }
 
-                // Update in User table.
-                $query = "UPDATE `User`";
-                $query .= " SET `Username`='$tempName'";
-                $query .= ", `Email`='$tempEmail'";
-
-                if ($editPass) {
-                    $query .= ", `PasswordHash`='$tempHash'";
-                }
-
-                $query .= ", `RealName`='$tempRName'";
-                $query .= " WHERE `User`.`UserID`='$staffID';";
-
-                $rs = $conn->query($query);
-                if (!$rs) {
-                    $editMsg = "* Fail to update in User table! *";
-                    $passEditing = false;
+                if ($passEditing) {
+                    // Update in User table.
+                    $query = "UPDATE `User`";
+                    $query .= " SET `Username`='$tempName'";
+                    $query .= ", `Email`='$tempEmail'";
+    
+                    if ($editPass) {
+                        $query .= ", `PasswordHash`='$tempHash'";
+                    }
+    
+                    $query .= ", `RealName`='$tempRName'";
+                    $query .= " WHERE `User`.`UserID`='$staffID';";
+    
+                    $rs = $conn->query($query);
+                    if (!$rs) {
+                        $editMsg = "* Fail to update in User table! *";
+                        $passEditing = false;
+                    }
                 }
 
                 // Check if the data is successfully updated.
@@ -158,6 +185,10 @@
         // From DateTime to Date.
         $tempEDate = new DateTime($result["EmployDate"]);
         $tempEDate = $tempEDate->format('Y-m-d');
+    }
+
+    if (empty($tempSalary)) {
+        $tempSalary = $result["Salary"];
     }
 
     $conn->close();
@@ -194,9 +225,9 @@
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="Staff Icon" />
+                    <img class="fadeIn first" src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="Staff Icon" />
 
-                    <form method="post" action="/Admin/editCompany.php?StaffID=<?php
+                    <form method="post" action="/Admin/editStaff.php?StaffID=<?php
                         echo($staffID);
                     ?>">
                         <table>
@@ -238,7 +269,7 @@
 
                             <tr class="fadeIn third">
                                 <!-- Email -->
-                                <td>
+                                <td colspan="2">
                                     <div>
                                         <label for="Email">
                                             Email:
@@ -248,16 +279,30 @@
                                         ?>" placeholder="abc@email.com" required>
                                     </div>
                                 </td>
+                            </tr>
+
+                            <tr class="fadeIn fourth">
+                                <!-- Salary -->
+                                <td>
+                                    <div>
+                                        <label for="Salary">
+                                            Salary (RM):
+                                        </label><br>
+                                        <input id="Salary" type="number" name="Salary" value="<?php
+                                            echo($tempSalary);
+                                        ?>" placeholder="Salary" step=".01" min="500" required>
+                                    </div>
+                                </td>
 
                                 <!-- EmployDate -->
                                 <td>
                                     <div>
                                         <label for="EmployDate">
-                                            Establish Date:
+                                            Employment Date:
                                         </label><br>
                                         <input id="EmployDate" type="date" name="EmployDate" value="<?php
                                             echo($tempEDate);
-                                        ?>" placeholder="Establish Date" required>
+                                        ?>" placeholder="Employment Date" required>
                                     </div>
                                 </td>
                             </tr>
@@ -296,7 +341,7 @@
                     </form>
                     <br>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/Admin/viewEachCompany.php?StaffID=<?php
+                        <h2><a class="underlineHover" href="/Admin/viewEachStaff.php?StaffID=<?php
                             echo($staffID);
                         ?>">Back to View Staff</a><h2><br>
                     </div>

@@ -116,24 +116,26 @@
                     $passEditing = false;
                 }
 
-                // Update in User table.
-                $query = "UPDATE `User`";
-                $query .= " SET `Username`='$tempName'";
-                $query .= ", `Email`='$tempEmail'";
-
-                if ($editPass) {
-                    $query .= ", `PasswordHash`='$tempHash'";
+                if ($passEditing) {
+                    // Update in User table.
+                    $query = "UPDATE `User`";
+                    $query .= " SET `Username`='$tempName'";
+                    $query .= ", `Email`='$tempEmail'";
+    
+                    if ($editPass) {
+                        $query .= ", `PasswordHash`='$tempHash'";
+                    }
+    
+                    $query .= ", `RealName`='$tempRName'";
+                    $query .= " WHERE `User`.`UserID`='$companyID';";
+    
+                    $rs = $conn->query($query);
+                    if (!$rs) {
+                        $editMsg = "* Fail to update in User table! *";
+                        $passEditing = false;
+                    }
                 }
-
-                $query .= ", `RealName`='$tempRName'";
-                $query .= " WHERE `User`.`UserID`='$companyID';";
-
-                $rs = $conn->query($query);
-                if (!$rs) {
-                    $editMsg = "* Fail to update in User table! *";
-                    $passEditing = false;
-                }
-
+                
                 // Check if the data is successfully updated.
                 if ($passEditing) {
                     $editMsg = "* Company is successfully updated! *";
