@@ -3,6 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/inputValidation.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/dataManagement.php");
 
     $tempLoginCheck = checkLogin($conn);
     // Not logged in as Admin.
@@ -13,10 +14,18 @@
 
     $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempSalary = $tempEDate = $tempCompany = "";
     $registrationMsg = "";
-    $passRegistration = false;
+    $passRegistration = true;
+
+    $allCompany = getAllCompany($conn);
+
+    // Disable registration if no existing company.
+    if (count($allCompany) < 1) {
+        $registrationMsg = "* Registration is not allowed as there is no existing company! *";
+        $passRegistration = false;
+    }
 
     // Registration attempt.
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($passRegistration && $_SERVER["REQUEST_METHOD"] == "POST") {
         $tempName = (isset($_POST["Username"])) ? cleanInput($_POST["Username"]): "";
         $tempRName = (isset($_POST["RealName"])) ? cleanInput($_POST["RealName"]): "";
         $tempEmail = (isset($_POST["Email"])) ? cleanInput($_POST["Email"]): "";
@@ -55,6 +64,27 @@
             if ($passRegistration && checkExistEmail($conn, $tempEmail)) {
                 $registrationMsg = "* Email is used by another user! *";
                 $passRegistration = false;
+            }
+
+            $checkCompany = getAllCompany($conn, $tempCompany);
+
+            // Check valid CompanyID.
+            if ($passRegistration && count($checkCompany) < 1) {
+                $registrationMsg = "* Choose an existing Company! *";
+                $passRegistration = false;
+            }
+
+            // Check EmployDate.
+            if ($passRegistration) {
+                // From DateTime to Date.
+                $checkDate = new DateTime($checkCompany[0]["EstablishDate"]);
+                $checkDate = $checkDate->format('Y-m-d');
+
+                if ($tempEDate < $checkDate) {
+                    $registrationMsg = "* Invalid Employment Date, Company ID $tempCompany is established on $checkDate! *";
+                    $tempEDate = $checkDate;
+                    $passRegistration = false;
+                }
             }
 
             // Check Password.
@@ -101,17 +131,6 @@
                     $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempSalary = $tempEDate = $tempCompany = "";
                     $registrationMsg = "* User is successfully registered! *";
                 }
-            }
-        }
-    }
-
-    function getCompanies($conn) {
-        $sql = "SELECT User.UserID, User.RealName FROM User INNER JOIN Company USING(UserID) ORDER BY User.UserID DESC;";
-        $result = $conn->query($sql);
-
-        if($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo ("<option value=\" " . $row["UserID"] . "\"> " . $row["RealName"] . "</option>");
             }
         }
     }
@@ -207,10 +226,17 @@
                                             Company:
                                         </label><br>
                                         <select id="tempCompany" name="tempCompany">
-                                            <?php 
-                                                getCompanies($conn);    
-                                                $conn->close(); 
-                                            ?>
+                                            <?php foreach ($allCompany as $result): ?>
+                                                <option value="<?php
+                                                    echo($result["UserID"]);
+                                                ?>"<?php
+                                                    if ($tempCompany == $result["UserID"]) {
+                                                        echo(" selected");
+                                                    }
+                                                ?>><?php
+                                                    echo($result["UserID"] . " - " . $result["RealName"]);
+                                                ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </td>
@@ -267,7 +293,11 @@
                             <tr class="fadeIn sixth">
                                 <td colspan="2">
                                     <br>
-                                    <input type="submit" value="Sign Up">
+                                    <input type="submit" value="Sign Up"<?php
+                                        if (count($allCompany) < 1) {
+                                            echo(" disabled");
+                                        }
+                                    ?>>
                                 </td>
                             </tr>
                         </table>
