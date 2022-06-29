@@ -54,9 +54,10 @@
         }
         else {
             $tempName = $_POST["Username"];
+            $tempNameEscaped = $conn->real_escape_string($tempName);
             $tempPass = $_POST["Password"];
             // Check login credentials.
-            $query = "SELECT UserID, Username, PasswordHash, UserType FROM User WHERE Username='$tempName';";
+            $query = "SELECT UserID, Username, PasswordHash, UserType FROM User WHERE Username='$tempNameEscaped';";
 
             $rs = $conn->query($query);
             if ($rs) {

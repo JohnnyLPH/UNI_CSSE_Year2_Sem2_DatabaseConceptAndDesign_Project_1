@@ -59,9 +59,13 @@
 
             // Insert to DB.
             if ($passRegistration) {
+                $tempNameEscaped = $conn->real_escape_string($tempName);
+                $tempEmailEscaped = $conn->real_escape_string($tempEmail);
+                $tempRNameEscaped = $conn->real_escape_string($tempRName);
+
                 // Insert to User table with UserType AD.
                 $query = "INSERT INTO `User`(`Username`, `Email`, `PasswordHash`, `RealName`, `UserType`)";
-                $query .= " VALUES ('$tempName','$tempEmail','$tempHash','$tempRName','AD')";
+                $query .= " VALUES ('$tempNameEscaped','$tempEmailEscaped','$tempHash','$tempRNameEscaped','AD')";
 
                 $rs = $conn->query($query);
                 if (!$rs) {

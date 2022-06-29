@@ -64,9 +64,10 @@
 
             // Insert to DB.
             if ($passAdding) {
+                $tempAddressEscaped = $conn->real_escape_string($tempAddress);
                 // Insert to Orchard table.
                 $query = "INSERT INTO `Orchard`(`Address`, `Latitude`, `Longitude`, `CompanyID`)";
-                $query .= " VALUES ('$tempAddress','$tempLatitude','$tempLongitude','$tempCompID');";
+                $query .= " VALUES ('$tempAddressEscaped','$tempLatitude','$tempLongitude','$tempCompID');";
 
                 $rs = $conn->query($query);
                 if (!$rs) {

@@ -117,16 +117,20 @@
                 }
 
                 if ($passEditing) {
+                    $tempNameEscaped = $conn->real_escape_string($tempName);
+                    $tempEmailEscaped = $conn->real_escape_string($tempEmail);
+                    $tempRNameEscaped = $conn->real_escape_string($tempRName);
+
                     // Update in User table.
                     $query = "UPDATE `User`";
-                    $query .= " SET `Username`='$tempName'";
-                    $query .= ", `Email`='$tempEmail'";
+                    $query .= " SET `Username`='$tempNameEscaped'";
+                    $query .= ", `Email`='$tempEmailEscaped'";
     
                     if ($editPass) {
                         $query .= ", `PasswordHash`='$tempHash'";
                     }
     
-                    $query .= ", `RealName`='$tempRName'";
+                    $query .= ", `RealName`='$tempRNameEscaped'";
                     $query .= " WHERE `User`.`UserID`='$companyID';";
     
                     $rs = $conn->query($query);

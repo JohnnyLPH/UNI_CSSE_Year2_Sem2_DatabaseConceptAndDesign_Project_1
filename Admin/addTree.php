@@ -64,9 +64,10 @@
 
             // Insert to DB.
             if ($passAdding) {
+                $tempSpeciesNameEscaped = $conn->real_escape_string($tempSpeciesName);
                 // Insert to Tree table.
                 $query = "INSERT INTO `Tree`(`SpeciesName`, `Latitude`, `Longitude`, `BlockID`)";
-                $query .= " VALUES ('$tempSpeciesName','$tempLatitude','$tempLongitude','$tempBlockID');";
+                $query .= " VALUES ('$tempSpeciesNameEscaped','$tempLatitude','$tempLongitude','$tempBlockID');";
 
                 $rs = $conn->query($query);
                 if (!$rs) {

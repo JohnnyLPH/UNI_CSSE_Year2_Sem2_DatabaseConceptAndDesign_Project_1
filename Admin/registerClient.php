@@ -70,7 +70,7 @@
             if ($passRegistration) {
                 // Only allow PNG or JPG.
                 $allowImageType = array('png', 'jpeg', 'jpg');
-                $imageName = (isset($_FILES['ClientPfp']['name'])) ? cleanInput($_FILES['ClientPfp']['name']): "";
+                $imageName = (isset($_FILES["ClientPfp"]["name"])) ? cleanInput($_FILES["ClientPfp"]["name"]): "";
                 $imageName = str_replace(" ", "_", $imageName);
 
                 // Get image type.
@@ -78,8 +78,8 @@
                 
                 // Check if image is provided (actual max is 2 MiB).
                 if (
-                    !isset($_FILES['ClientPfp']) ||
-                    $_FILES['ClientPfp']['size'] < 1 || $_FILES['ClientPfp']['size'] > 2097152 ||
+                    !isset($_FILES["ClientPfp"]) ||
+                    $_FILES["ClientPfp"]["size"] < 1 || $_FILES["ClientPfp"]["size"] > 2097152 ||
                     !in_array($imageFileType, $allowImageType)
                 ) {
                     $registrationMsg = "* Upload a Profile Picture (Max: 2 MB; Only PNG or JPG)!";
@@ -93,9 +93,13 @@
 
             // Insert to DB.
             if ($passRegistration) {
+                $tempNameEscaped = $conn->real_escape_string($tempName);
+                $tempEmailEscaped = $conn->real_escape_string($tempEmail);
+                $tempRNameEscaped = $conn->real_escape_string($tempRName);
+
                 // Insert to User table with UserType CO.
                 $query = "INSERT INTO `User`(`Username`, `Email`, `PasswordHash`, `RealName`, `UserType`)";
-                $query .= " VALUES ('$tempName','$tempEmail','$tempHash','$tempRName','CL')";
+                $query .= " VALUES ('$tempNameEscaped','$tempEmailEscaped','$tempHash','$tempRNameEscaped','CL')";
 
                 $rs = $conn->query($query);
                 if (!$rs) {
@@ -123,8 +127,12 @@
                     }
                     
                     // Insert with the obtained UserID.
+                    $tempAddressEscaped = $conn->real_escape_string($tempAddress);
+                    $tempCountryEscaped = $conn->real_escape_string($tempCountry);
+                    $fullPathEscaped = $conn->real_escape_string($fullPath);
+
                     $query = "INSERT INTO `Client`(`UserID`, `Country`,`Address`,`Photo`)";
-                    $query .= " VALUES ('$tempID','$tempCountry','$tempAddress','$fullPath')";
+                    $query .= " VALUES ('$tempID','$tempCountryEscaped','$tempAddressEscaped','$fullPathEscaped')";
                     $rs = $conn->query($query);
 
                     if (!$rs) {
@@ -288,6 +296,19 @@
                                         <select id="Country" type="select" name="Country" placeholder="Country" required>
                                             <option value="">Select your country</option>
                                             <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/countryOption.php"); ?>
+                                            <?php foreach($countryList as $eachCountry): ?>
+                                                <option style="<?php
+                                                    echo($optionStyle);
+                                                ?>" value="<?php
+                                                    echo($eachCountry);
+                                                ?>"<?php
+                                                    if ($tempCountry == $eachCountry) {
+                                                        echo(" selected");
+                                                    }
+                                                ?>><?php
+                                                    echo($eachCountry);
+                                                ?></option>
+                                            <?php endforeach; ?>
                                         </select>
                                     </div>
                                 </td>

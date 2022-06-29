@@ -1,5 +1,5 @@
 <?php
-    // Admin Manage Staff Page.
+    // Admin Manage Client Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/inputValidation.php");
@@ -18,22 +18,22 @@
         parse_str($_SERVER['QUERY_STRING'], $queryString);
     }
 
-    $allStaff = NULL;
-    // Staff is not available for editing.
+    $allClient = NULL;
+    // Client is not available for editing.
     if (
-        !isset($queryString["StaffID"]) ||
-        !is_numeric($queryString["StaffID"]) ||
-        $queryString["StaffID"] < 1 ||
-        count($allStaff = getAllStaff($conn, 0, $queryString["StaffID"])) < 1
+        !isset($queryString["ClientID"]) ||
+        !is_numeric($queryString["ClientID"]) ||
+        $queryString["ClientID"] < 1 ||
+        count($allClient = getAllClient($conn, $queryString["ClientID"])) < 1
     ) {
-        header("Location: /Admin/manageStaff.php");
+        header("Location: /Admin/manageClient.php");
         exit;
     }
 
-    $staffID = $queryString["StaffID"];
-    $result = $allStaff[0];
+    $clientID = $queryString["ClientID"];
+    $result = $allClient[0];
 
-    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempEDate = $tempSalary = "";
+    $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = $tempAddress = $tempCountry = "";
     $editMsg = "";
     $passEditing = false;
 
@@ -44,8 +44,8 @@
         $tempEmail = (isset($_POST["Email"])) ? cleanInput($_POST["Email"]): "";
         $tempPass = (isset($_POST["Password"])) ? cleanInput($_POST["Password"]): "";
         $tempRPass = (isset($_POST["ReconfirmPassword"])) ? cleanInput($_POST["ReconfirmPassword"]): "";
-        $tempEDate = (isset($_POST["EmployDate"])) ? cleanInput($_POST["EmployDate"]): "";
-        $tempSalary = (isset($_POST["Salary"])) ? cleanInput($_POST["Salary"]): "";
+        $tempAddress = (isset($_POST["Address"])) ? cleanInput($_POST["Address"]): "";
+        $tempCountry = (isset($_POST["Country"])) ? cleanInput($_POST["Country"]): "";
 
         $tempHash = "";
 
@@ -53,8 +53,8 @@
             empty($tempName) ||
             empty($tempRName) ||
             empty($tempEmail) ||
-            empty($tempEDate) ||
-            empty($tempSalary)
+            empty($tempAddress) ||
+            empty($tempCountry)
         ) {
             $editMsg = "* Fill in ALL Fields! *";
             $passEditing = false;
@@ -62,7 +62,7 @@
         else {
             // Set to true at first.
             $passEditing = true;
-            $editPass = false;
+            $editPass = $editImage = false;
             
             // Check if new password is provided.
             if (!empty($tempPass) || !empty($tempRPass)) {
@@ -95,29 +95,6 @@
                 $passEditing = false;
             }
 
-            // Check Salary.
-            if ($passEditing && (!is_numeric($tempSalary) || $tempSalary < 500)) {
-                $editMsg = "* Valid salary (>= 500)! *";
-                $tempSalary = "";
-                $passEditing = false;
-            }
-
-            $checkCompany = getAllCompany($conn, $result["CompanyID"]);
-
-            // Check EmployDate.
-            if ($passEditing) {
-                // From DateTime to Date.
-                $checkDate = new DateTime($checkCompany[0]["EstablishDate"]);
-                $checkDate = $checkDate->format('Y-m-d');
-
-                if ($tempEDate < $checkDate) {
-                    $tempCompID = $checkCompany[0]["UserID"];
-                    $editMsg = "* Invalid Employment Date, Company ID $tempCompID is established on $checkDate! *";
-                    $tempEDate = "";
-                    $passEditing = false;
-                }
-            }
-
             // Check Password.
             if (
                 $passEditing &&
@@ -128,17 +105,80 @@
                 $passEditing = false;
             }
 
+            $oldImagePath = $result["Photo"];
+            $newImageName = $imageName = $imageFileType = "";
+            // Target path to store image.
+            $fullPath = $targetImagePath = "/img/client/";
+
+            // Check image.
+            if ($passEditing && isset($_FILES["Photo"]["name"]) && strlen($_FILES["Photo"]["name"]) > 0) {
+                $editImage = true;
+
+                // Only allow PNG or JPG.
+                $allowImageType = array('png', 'jpeg', 'jpg');
+                $imageName = (isset($_FILES["Photo"]["name"])) ? cleanInput($_FILES["Photo"]["name"]): "";
+                $imageName = str_replace(" ", "_", $imageName);
+
+                // Get image type.
+                $imageFileType = (!empty($imageName)) ? pathinfo($imageName, PATHINFO_EXTENSION): "";
+
+                // New image name.
+                date_default_timezone_set('Asia/Kuala_Lumpur');
+                $newImageName = "clientID" . $clientID . "_" . date('Y-m-d') . "_" . round(microtime(true));
+                $newImageName .= "." . $imageFileType;
+                $fullPath .= $newImageName;
+                
+                // Check if image is provided (actual max is 2 MiB).
+                if (
+                    $_FILES["Photo"]["size"] < 1 || $_FILES["Photo"]["size"] > 2097152 ||
+                    !in_array($imageFileType, $allowImageType)
+                ) {
+                    $editMsg = "* Invalid Profile Picture (Max: 2 MB; Only PNG or JPG)!";
+                    $passEditing = false;
+                }
+                // Check if file already exist.
+                elseif ($oldImagePath == ($targetImagePath . $imageName)) {
+                    $editMsg = "* Image with same name is currently in use!";
+                    $passEditing = false;
+                }
+                // Try to create folder if not exist, remember to add root path.
+                elseif (!is_dir($_SERVER['DOCUMENT_ROOT'] . $targetImagePath)) {
+                    mkdir($_SERVER['DOCUMENT_ROOT'] . $targetImagePath, 0777, true);
+                }
+
+                // Move image to folder.
+                if ($passEditing) {
+                    if (
+                        $_FILES["Photo"]["error"] == 0 &&
+                        !move_uploaded_file($_FILES["Photo"]["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . $fullPath)
+                    ) {
+                        $passEditing = false;
+                        $editMsg = "* Error saving Profile Picture!";
+                    }
+                }
+            }
+
             // Update in DB.
             if ($passEditing) {
-                // Update in Staff table.
-                $query = "UPDATE `Staff`";
-                $query .= " SET `EmployDate`='$tempEDate'";
-                $query .= ", `Salary`='$tempSalary'";
-                $query .= " WHERE `Staff`.`UserID`='$staffID';";
+                $tempAddressEscaped = $conn->real_escape_string($tempAddress);
+                $tempCountryEscaped = $conn->real_escape_string($tempCountry);
+                $fullPathEscaped = $conn->real_escape_string($fullPath);
+
+                // Update in Client table.
+                $query = "UPDATE `Client`";
+                $query .= " SET `Address`='$tempAddressEscaped'";
+                $query .= ", `Country`='$tempCountryEscaped'";
+
+                if ($editImage) {
+                    $query .= ", `Photo`='$fullPathEscaped'";
+                }
+
+                $query .= " WHERE `Client`.`UserID`='$clientID';";
 
                 $rs = $conn->query($query);
                 if (!$rs) {
-                    $editMsg = "* Fail to update in Staff table! *";
+                    $editMsg = "* Fail to update in Client table! *";
+                    echo($query);
                     $passEditing = false;
                 }
 
@@ -157,7 +197,7 @@
                     }
     
                     $query .= ", `RealName`='$tempRNameEscaped'";
-                    $query .= " WHERE `User`.`UserID`='$staffID';";
+                    $query .= " WHERE `User`.`UserID`='$clientID';";
     
                     $rs = $conn->query($query);
                     if (!$rs) {
@@ -168,7 +208,28 @@
 
                 // Check if the data is successfully updated.
                 if ($passEditing) {
-                    $editMsg = "* Staff is successfully updated! *";
+                    $editMsg = "* Client is successfully updated! *";
+
+                    // Remove the old image.
+                    if (
+                        $editImage &&
+                        !empty($oldImagePath) &&
+                        strlen($oldImagePath) >= strlen($targetImagePath) &&
+                        substr($oldImagePath, 0, strlen($targetImagePath)) == $targetImagePath &&
+                        $oldImagePath != "/img/client/default_client.jpg"
+                    ) {
+                        if (file_exists($_SERVER['DOCUMENT_ROOT'] . cleanInput($oldImagePath))) {
+                            unlink($_SERVER['DOCUMENT_ROOT'] . cleanInput($oldImagePath));
+                        }
+                    }
+                }
+                else {
+                    // Remove the new image.
+                    if ($editImage) {
+                        if (file_exists($_SERVER['DOCUMENT_ROOT'] . cleanInput($fullPath))) {
+                            unlink($_SERVER['DOCUMENT_ROOT'] . cleanInput($fullPath));
+                        }
+                    }
                 }
             }
         }
@@ -185,14 +246,12 @@
         $tempEmail = $result["Email"];
     }
 
-    if (empty($tempEDate)) {
-        // From DateTime to Date.
-        $tempEDate = new DateTime($result["EmployDate"]);
-        $tempEDate = $tempEDate->format('Y-m-d');
+    if (empty($tempAddress)) {
+        $tempAddress = $result["Address"];
     }
 
-    if (empty($tempSalary)) {
-        $tempSalary = $result["Salary"];
+    if (empty($tempCountry)) {
+        $tempCountry = $result["Country"];
     }
 
     $conn->close();
@@ -200,7 +259,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin: Manage Staff Page</title>
+        <title>Admin: Manage Client Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
 
@@ -215,7 +274,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h4 style="font-size: 36px">Admin: Manage Staff Page</h4>
+                <h4 style="font-size: 36px">Admin: Manage Client Page</h4>
             </div>
         </header>
 
@@ -224,16 +283,16 @@
         <main>
             <div class="wrapper fadeInDown">
                 <div id="formHeader">
-                    <h1>Edit Staff ID <?php
-                        echo($staffID);
+                    <h1>Edit Client ID <?php
+                        echo($clientID);
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="Staff Icon" />
+                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20190721/ourlarge/pngtree-business-meeting-with-client-illustration-concept-modern-flat-design-concept-png-image_1567633.jpg" id="icon" alt="Client Icon" />
 
-                    <form method="post" action="/Admin/editStaff.php?StaffID=<?php
-                        echo($staffID);
-                    ?>">
+                    <form method="post" action="/Admin/editClient.php?ClientID=<?php
+                        echo($clientID);
+                    ?>" enctype="multipart/form-data">
                         <table>
                             <tr>
                                 <td colspan="2">
@@ -246,6 +305,18 @@
                             </tr>
 
                             <tr class="fadeIn second">
+                                <!-- Photo -->
+                                <td colspan="2">
+                                    <div>
+                                        <label for="Photo">
+                                            New Profile Picture (Optional):
+                                        </label><br>
+                                        <input type="file" id="Photo" name="Photo" accept="image/png, image/jpg, image/jpeg">
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="fadeIn third">
                                 <!-- Username -->
                                 <td>
                                     <div>
@@ -262,16 +333,16 @@
                                 <td>
                                     <div>
                                         <label for="RealName">
-                                            Staff Name:
+                                            Client Name:
                                         </label><br>
                                         <input id="RealName" type="text" name="RealName" value="<?php
                                             echo($tempRName);
-                                        ?>" placeholder="Staff Name" required>
+                                        ?>" placeholder="Client Name" required>
                                     </div>
                                 </td>
                             </tr>
 
-                            <tr class="fadeIn third">
+                            <tr class="fadeIn fourth">
                                 <!-- Email -->
                                 <td colspan="2">
                                     <div>
@@ -285,33 +356,49 @@
                                 </td>
                             </tr>
 
-                            <tr class="fadeIn fourth">
-                                <!-- Salary -->
-                                <td>
+                            <tr class="fadeIn fifth">
+                                <!-- Address -->
+                                <td colspan="2">
                                     <div>
-                                        <label for="Salary">
-                                            Salary (RM):
+                                        <label for="Address">
+                                            Address:
                                         </label><br>
-                                        <input id="Salary" type="number" name="Salary" value="<?php
-                                            echo($tempSalary);
-                                        ?>" placeholder="Salary" step=".01" min="500" required>
-                                    </div>
-                                </td>
-
-                                <!-- EmployDate -->
-                                <td>
-                                    <div>
-                                        <label for="EmployDate">
-                                            Employment Date:
-                                        </label><br>
-                                        <input id="EmployDate" type="date" name="EmployDate" value="<?php
-                                            echo($tempEDate);
-                                        ?>" placeholder="Employment Date" required>
+                                        <textarea id="Address" name="Address" placeholder="Address" required><?php
+                                            echo($tempAddress);
+                                        ?></textarea>
                                     </div>
                                 </td>
                             </tr>
 
-                            <tr class="fadeIn fourth">
+                            <tr class="fadeIn fifth">
+                                <!-- Country -->
+                                <td colspan="2">
+                                    <div>
+                                        <label for="Country">
+                                            Country:
+                                        </label><br>
+                                        <select id="Country" type="select" name="Country" placeholder="Country" required>
+                                            <option value="">Select your country</option>
+                                            <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/countryOption.php"); ?>
+                                            <?php foreach($countryList as $eachCountry): ?>
+                                                <option style="<?php
+                                                    echo($optionStyle);
+                                                ?>" value="<?php
+                                                    echo($eachCountry);
+                                                ?>"<?php
+                                                    if ($tempCountry == $eachCountry) {
+                                                        echo(" selected");
+                                                    }
+                                                ?>><?php
+                                                    echo($eachCountry);
+                                                ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr class="fadeIn fifth">
                                 <!-- Password -->
                                 <td>
                                     <div>
@@ -345,9 +432,9 @@
                     </form>
                     <br>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/Admin/viewEachStaff.php?StaffID=<?php
-                            echo($staffID);
-                        ?>">Back to View Staff</a><h2><br>
+                        <h2><a class="underlineHover" href="/Admin/viewEachClient.php?ClientID=<?php
+                            echo($clientID);
+                        ?>">Back to View Client</a><h2><br>
                     </div>
                 </div>
             </div>

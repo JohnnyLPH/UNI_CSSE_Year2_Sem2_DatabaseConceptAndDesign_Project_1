@@ -9,7 +9,8 @@
 
     // Return true if Username already exist.
     function checkExistUsername($conn, $data) {
-        $query = "SELECT Username FROM User WHERE Username='$data';";
+        $dataEscaped = $conn->real_escape_string($data);
+        $query = "SELECT Username FROM User WHERE Username='$dataEscaped';";
         $rs = $conn->query($query);
         if ($rs) {
             if ($user = mysqli_fetch_assoc($rs)) {
@@ -23,7 +24,8 @@
 
     // Return true if Email already exist.
     function checkExistEmail($conn, $data) {
-        $query = "SELECT Email FROM User WHERE Email='$data';";
+        $dataEscaped = $conn->real_escape_string($data);
+        $query = "SELECT Email FROM User WHERE Email='$dataEscaped';";
         $rs = $conn->query($query);
         if ($rs) {
             if ($user = mysqli_fetch_assoc($rs)) {
