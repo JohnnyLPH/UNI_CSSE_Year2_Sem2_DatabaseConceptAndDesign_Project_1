@@ -106,7 +106,7 @@
     }
 
     function getCompanies($conn) {
-        $sql = "SELECT User.UserID, User.RealName FROM User INNER JOIN Company USING(UserID);";
+        $sql = "SELECT User.UserID, User.RealName FROM User INNER JOIN Company USING(UserID) ORDER BY User.UserID DESC;";
         $result = $conn->query($sql);
 
         if($result->num_rows > 0) {
@@ -225,7 +225,7 @@
                                         </label><br>
                                         <input id="tempSalary" type="number" name="tempSalary" value="<?php
                                             echo($tempSalary);
-                                        ?>" placeholder="Salary" required>
+                                        ?>" placeholder="Salary" step=".01" min="500" required>
                                     </div>
                                 </td>
 

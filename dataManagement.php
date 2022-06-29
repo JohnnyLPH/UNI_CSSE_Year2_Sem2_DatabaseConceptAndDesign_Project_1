@@ -542,6 +542,7 @@
     function getAllTreeUpdate($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $treeID = 0, $updateID = 0, $staffID = 0) {
         $query = "SELECT `TreeUpdate`.`UpdateID`, `TreeUpdate`.`UpdateDate`, `TreeUpdate`.`TreeImage`";
         $query .= ", `TreeUpdate`.`TreeHeight`, `TreeUpdate`.`Diameter`, `TreeUpdate`.`Status`";
+        $query .= ", `Tree`.`TreeID`, `Tree`.`BlockID`";
         $query .= " FROM `TreeUpdate`";
         $query .= " INNER JOIN `Tree` ON `TreeUpdate`.`TreeID` = `Tree`.`TreeID`";
         $query .= " INNER JOIN `Block` ON `Tree`.`BlockID` = `Block`.`BlockID`";
@@ -1166,12 +1167,21 @@
             return false;
         }
 
-        // Delete from User.
-        $deleteQuery = "DELETE FROM `User`";
-        $deleteQuery .= " WHERE `User`.`UserID` = '$staffID'";
-        $deleteQuery .= ";";
+        // Get all StaffID to delete from User.
+        foreach ($allRow as $result) {
+            $tempStaffID = $result["UserID"];
+            
+            $deleteQuery = "DELETE FROM `User`";
+            $deleteQuery .= " WHERE `User`.`UserID` = '$tempStaffID'";
+            $deleteQuery .= ";";
 
-        return $conn->query($deleteQuery);
+            // Delete from User.
+            if (!($conn->query($deleteQuery))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // Delete Company.

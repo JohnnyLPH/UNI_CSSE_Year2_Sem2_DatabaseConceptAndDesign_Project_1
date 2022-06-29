@@ -58,7 +58,7 @@
             <div class="w3-row">
                 <div class="w3-container w3-threequarter w3-theme-d4 w3-animate-left" style="margin-left:25%; padding-bottom:2%; padding-top:2%;">
 
-                    <div class="w3-container w3-half">
+                    <div class="w3-container">
                         <h2>Company ID <?php
                             echo($companyID);
                         ?>:</h2> 

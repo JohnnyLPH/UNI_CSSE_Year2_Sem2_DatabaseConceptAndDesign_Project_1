@@ -116,6 +116,7 @@
                         <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
                             <tr>
                                 <th>Staff ID</th>
+                                <th>Company ID</th>
                                 <th>Username</th>
                                 <th>Salary</th>
                                 <th>Total Tree Update</th>
@@ -125,6 +126,10 @@
                                 <tr>
                                     <td><?php
                                         echo($result["UserID"]);
+                                    ?></td>
+
+                                    <td><?php
+                                        echo($result["CompanyID"]);
                                     ?></td>
 
                                     <td><?php
