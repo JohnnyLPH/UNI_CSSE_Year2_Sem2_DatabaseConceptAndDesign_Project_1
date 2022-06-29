@@ -162,8 +162,8 @@
         return 0;
     }
 
-    // Count purchase request (based on ApprovalStatus, CompanyID, OrchardID, BlockID if provided).
-    function getPurchaseRequestCount($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0) {
+    // Count purchase request (based on ApprovalStatus, CompanyID, OrchardID, BlockID, SaleID, ClientID if provided).
+    function getPurchaseRequestCount($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $saleID = 0, $clientID = 0) {
         $query = "SELECT COUNT(`PurchaseRequest`.`RequestID`) FROM `PurchaseRequest`";
         $query .= " INNER JOIN `OnSale` ON `PurchaseRequest`.`SaleID` = `OnSale`.`SaleID`";
         $query .= " INNER JOIN `Block` ON `OnSale`.`BlockID` = `Block`.`BlockID`";
@@ -207,11 +207,85 @@
             }
         }
 
+        if ($saleID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `PurchaseRequest`.`SaleID` = '$saleID'";
+            }
+            else {
+                $query .= " WHERE `PurchaseRequest`.`SaleID` = '$saleID'";
+                $multiWhere = true;
+            }
+        }
+
+        if ($clientID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `PurchaseRequest`.`ClientID` = '$clientID'";
+            }
+            else {
+                $query .= " WHERE `PurchaseRequest`.`ClientID` = '$clientID'";
+                $multiWhere = true;
+            }
+        }
+
         $query .= ";";
         $rs = $conn->query($query);
         if ($rs) {
             if ($resultRow = mysqli_fetch_assoc($rs)) {
                 return $resultRow["COUNT(`PurchaseRequest`.`RequestID`)"];
+            }
+        }
+        return 0;
+    }
+
+    // Count On Sale (based on CompanyID, OrchardID, BlockID, SellerID if provided).
+    function getOnSaleCount($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $sellerID = 0) {
+        $query = "SELECT COUNT(`OnSale`.`SaleID`) FROM `OnSale`";
+        $query .= " INNER JOIN `Block` ON `OnSale`.`BlockID` = `Block`.`BlockID`";
+        $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
+
+        // Add WHERE Clause.
+        $multiWhere = false;
+
+        if ($companyID > 0) {
+            $query .= " WHERE `Orchard`.`CompanyID` = '$companyID'";
+            $multiWhere = true;
+        }
+
+        if ($orchardID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Orchard`.`OrchardID` = '$orchardID'";
+            }
+            else {
+                $query .= " WHERE `Orchard`.`OrchardID` = '$orchardID'";
+                $multiWhere = true;
+            }
+        }
+
+        if ($blockID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `Block`.`BlockID` = '$blockID'";
+            }
+            else {
+                $query .= " WHERE `Block`.`BlockID` = '$blockID'";
+                $multiWhere = true;
+            }
+        }
+
+        if ($sellerID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `OnSale`.`SellerID` = '$sellerID'";
+            }
+            else {
+                $query .= " WHERE `OnSale`.`SellerID` = '$sellerID'";
+                $multiWhere = true;
+            }
+        }
+
+        $query .= ";";
+        $rs = $conn->query($query);
+        if ($rs) {
+            if ($resultRow = mysqli_fetch_assoc($rs)) {
+                return $resultRow["COUNT(`OnSale`.`SaleID`)"];
             }
         }
         return 0;
