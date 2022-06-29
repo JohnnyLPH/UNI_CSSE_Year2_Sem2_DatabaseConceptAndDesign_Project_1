@@ -1025,6 +1025,15 @@
             return false;
         }
 
+        // Delete Photo of UpdateID.
+        $allRow = getAllTreeUpdate($conn, 0, 0, 0, $treeID, $updateID, $staffID);
+        foreach ($allRow as $result) {
+            // Delete Photo if exist.
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . $result["TreeImage"])) {
+                unlink($_SERVER['DOCUMENT_ROOT'] . $result["TreeImage"]);
+            }
+        }
+
         return $conn->query($query);
     }
 
@@ -1183,6 +1192,15 @@
         // Delete all PurchaseRequest of ClientID.
         if (!deletePurchaseRequest($conn, 0, 0, $clientID)) {
             return false;
+        }
+
+        // Delete Photo of ClientID.
+        $allRow = getAllClient($conn, $clientID);
+        foreach ($allRow as $result) {
+            // Delete Photo if exist.
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . $result["Photo"])) {
+                unlink($_SERVER['DOCUMENT_ROOT'] . $result["Photo"]);
+            }
         }
 
         $rs = $conn->query($query);

@@ -2,6 +2,8 @@
     // Staff Home Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/dataManagement.php");
+
 
     $tempLoginCheck = checkLogin($conn);
 
@@ -11,8 +13,14 @@
         exit;
     }
 
-    if(!(isset($_GET['treeid']))) {
-        header("Location: update.php");
+    // Tree is not available for updating.
+    if (
+        !isset($_GET['treeid']) ||
+        !is_numeric($_GET['treeid']) ||
+        $_GET['treeid'] < 1 ||
+        count(getAllTree($conn, getAllStaff($conn, 0, $_SESSION['UserID'])[0]["CompanyID"], 0, 0, $_GET["treeid"])) < 1
+    ) {
+        header("Location: /Staff/update.php");
         exit;
     }
 
@@ -136,11 +144,11 @@
                         </table>
                         <br>
                         <div class="w3-center">
-                            <button onclick="document.location='add_update.php?item=<?php echo($treeID); ?>'">Add Update</button>                    
-                            <button onclick="document.location='/Staff/update.php'">Back</button>                    
+                            <button onclick="document.location='add_update.php?item=<?php echo($treeID); ?>'">Add Update</button>
+                            <button onclick="document.location='/Staff/update.php'">Back</button>
                         </div>
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
     </main>

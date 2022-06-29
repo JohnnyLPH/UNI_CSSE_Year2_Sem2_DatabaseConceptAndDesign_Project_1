@@ -79,7 +79,7 @@ function getResults($conn, $staffId)
                         <td> " . $location . "</td>
                         <td> " . $row["PlantDate"] . "</td>
                         <td> " . $row["BlockID"] . "</td>
-                        <td><button onclick='document.location=\"edit_tree.php?treeid= " . $row["TreeID"] . "\"'>Update</button></td>
+                        <td><button onclick='document.location=\"edit_tree.php?treeid=" . $row["TreeID"] . "\"'>Update</button></td>
                     </tr>"
             );
             /*

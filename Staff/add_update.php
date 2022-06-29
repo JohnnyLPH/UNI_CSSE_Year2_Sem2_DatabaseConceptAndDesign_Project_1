@@ -3,6 +3,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/inputValidation.php");
+    require_once($_SERVER['DOCUMENT_ROOT'] . "/dataManagement.php");
 
     $tempLoginCheck = checkLogin($conn);
 
@@ -12,8 +13,14 @@
         exit;
     }
 
-    if(!(isset($_GET['item']))) {
-        header("Location: update.php");
+    // Tree is not available for updating.
+    if (
+        !isset($_GET['item']) ||
+        !is_numeric($_GET['item']) ||
+        $_GET['item'] < 1 ||
+        count(getAllTree($conn, getAllStaff($conn, 0, $_SESSION['UserID'])[0]["CompanyID"], 0, 0, $_GET["item"])) < 1
+    ) {
+        header("Location: /Staff/update.php");
         exit;
     }
 
@@ -24,55 +31,56 @@
     $updateMessage = "";
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $tempTreeID = (isset($_POST["treeid"])) ? cleanInput($_POST["treeid"]): "";
+        $tempStaffID = (isset($_POST["staffid"])) ? cleanInput($_POST["staffid"]): "";
+        $tempTreeHeight = (isset($_POST["treeheight"])) ? cleanInput($_POST["treeheight"]): "";
+        $tempTreeDiameter = (isset($_POST["treediameter"])) ? cleanInput($_POST["treediameter"]): "";
+        $tempStatus = (isset($_POST["treestatus"])) ? cleanInput($_POST["treestatus"]): "";
+        $tempUpdateDate = (isset($_POST["updatedate"])) ? cleanInput($_POST["updatedate"]): "";
+
         if (
-            !isset($_POST["treeid"]) || empty($_POST["treeid"]) ||
-            !isset($_POST["staffid"]) || empty($_POST["staffid"]) ||
-            !isset($_POST["treeheight"]) || empty($_POST["treeheight"]) ||
-            !isset($_POST["treediameter"]) || empty($_POST["treediameter"]) ||
-            !isset($_POST["treestatus"]) || empty($_POST["treestatus"]) ||
-            !isset($_POST["updatedate"]) || empty($_POST["updatedate"])
+            empty($tempTreeID) ||
+            empty($tempStaffID) ||
+            empty($tempTreeHeight) ||
+            empty($tempTreeDiameter) ||
+            empty($tempStatus) ||
+            empty($tempUpdateDate)
         ) {
             $updateMessage = "* Fill in ALL Fields! *";
         }
         else {
-            $tempTreeID = cleanInput($_POST["treeid"]);
-            $tempStaffID = cleanInput($_POST["staffid"]);
-            $tempTreeHeight = cleanInput($_POST["treeheight"]);
-            $tempTreeDiameter = cleanInput($_POST["treediameter"]);
-            $tempStatus = cleanInput($_POST["treestatus"]);
-            $tempUpdateDate = cleanInput($_POST["updatedate"]);
+            // Target path to store image.
+            $filepath = $targetImagePath = "/img/tree/";
 
-            if (
-                empty($tempTreeID) ||
-                empty($tempStaffID) ||
-                empty($tempTreeHeight) ||
-                empty($tempTreeDiameter) ||
-                empty($tempStatus) ||
-                empty($tempUpdateDate)
-            ) {
-                $updateMessage = "* Fill in ALL Fields! *";
+            // Process image path.
+            $tempTreeImage = explode(".", $_FILES["treeimage"]["name"]);
+            $newfilename = "treeID$tempTreeID" . "_" . $tempUpdateDate . "_" . round(microtime(true));
+            $newfilename .= "." . end($tempTreeImage);
+
+            $filepath .= $newfilename;
+            $filePathEscaped = $conn->real_escape_string($filepath);
+
+            // Insert to TreeUpdate table.
+            $query = "INSERT INTO `TreeUpdate`(`TreeID`, `StaffID`, `TreeImage`, `TreeHeight`, `Diameter`, `Status`, `UpdateDate`)";
+            $query .= " VALUES ('$tempTreeID','$tempStaffID','$filePathEscaped','$tempTreeHeight','$tempTreeDiameter', '$tempStatus','$tempUpdateDate')";
+
+            $rs = $conn->query($query);
+            if (!$rs) {
+                $updateMessage = "* Fail to insert to TreeUpdate table! *";
             }
             else {
-                // Process image path
-
-                $tempTreeImage = explode(".", $_FILES["treeimage"]["name"]);
-                $newfilename = $tempTreeID . "_" . $tempUpdateDate . "_" . round(microtime(true)) . "." . end($tempTreeImage);
-                $filepath = "../img/tree/" . $newfilename;
-                $filePathEscaped = $conn->real_escape_string($filepath);
-
-                // Insert to User table with UserType CO.
-                $query = "INSERT INTO `TreeUpdate`(`TreeID`, `StaffID`, `TreeImage`, `TreeHeight`, `Diameter`, `Status`, `UpdateDate`)";
-                $query .= " VALUES ('$tempTreeID','$tempStaffID','$filePathEscaped','$tempTreeHeight','$tempTreeDiameter', '$tempStatus','$tempUpdateDate')";
-
-                $rs = $conn->query($query);
-                if (!$rs) {
-                    $updateMessage = "* Something Wrong! *";
-                } else {
-                    // Reset to empty.
-                    move_uploaded_file($_FILES["treeimage"]["tmp_name"], $filepath);
-                    $tempTreeID = $tempStaffID = $tempTreeHeight = $tempTreeDiameter = $tempTreeImage = $tempStatus = $tempUpdateDate = "";
-                    $updateMessage = "* Successfully Updated! *";
+                // Try to create folder if not exist, remember to add root path.
+                if (!is_dir($_SERVER['DOCUMENT_ROOT'] . $targetImagePath)) {
+                    mkdir($_SERVER['DOCUMENT_ROOT'] . $targetImagePath, 0777, true);
                 }
+
+                // Reset to empty.
+                move_uploaded_file(
+                    $_FILES["treeimage"]["tmp_name"],
+                    $_SERVER['DOCUMENT_ROOT'] . cleanInput($filepath)
+                );
+                $tempTreeID = $tempStaffID = $tempTreeHeight = $tempTreeDiameter = $tempTreeImage = $tempStatus = $tempUpdateDate = "";
+                $updateMessage = "* Tree is successfully Updated! *";
             }
         }
     }
@@ -107,7 +115,7 @@
                 <h1>Update Tree</h1>
             </div>
             
-            <div id="formContentW2">               
+            <div id="formContentW2">
                 <div class="fadeIn first"><br>
                     <!--placeholder image-->
                     <img src="https://icon-library.com/images/tree-icon/tree-icon-23.jpg" id="icon" alt="tree" />
@@ -125,10 +133,10 @@
                     <input type="text" id="treeid" name="staffid" value="<?php echo($_SESSION['UserID']); ?>" readonly><br>
 
                     <label for="treeheight"><h3>Height: </h3></label>
-                    <input type="number" id="treeheight" name="treeheight" placeholder="Height" step="0.01"><br>
+                    <input type="number" id="treeheight" name="treeheight" placeholder="Height" step="0.01" min="0.5"><br>
                     
                     <label for="treediameter"><h3>Diameter: </h3></label>
-                    <input type="number" id="treediameter" name="treediameter" placeholder="Diameter" step="0.01"><br>
+                    <input type="number" id="treediameter" name="treediameter" placeholder="Diameter" step="0.01" min="0.05"><br>
 
                     <label for="treestatus"><h3>Status: </h3></label>
                     <div class="wrapper">
@@ -137,7 +145,7 @@
                             <label for="green_status">
                                 Green
                             </label><br>
-                            <input class="w3-radio" type="radio" id="green_status" name="treestatus" value="G">
+                            <input class="w3-radio" type="radio" id="green_status" name="treestatus" value="G" checked>
                         </div>
                         <div class="card w3-vivid-orange-yellow">
                             <img src="https://previews.123rf.com/images/sotnichenko/sotnichenko1910/sotnichenko191000002/131476609-veins-in-the-yellow-autumn-leaf-close-up-nature-texture-abstract-background.jpg" id="iconHalf" alt="tree" /><br>
@@ -156,7 +164,7 @@
                     </div>
 
                     <label for="treeimage"><h3>Image: </h3></label>
-                    <input type="file" id="treeimage" name="treeimage" accept="image/*"><br>
+                    <input type="file" id="treeimage" name="treeimage" accept="image/png, image/jpg, image/jpeg" required><br>
 
                     <label for="updatedate"><h3>Update Date: </h3></label>
                     <input type="date" id="updatedate" name="updatedate" value="<?php echo date('Y-m-d'); ?>" readonly><br>
