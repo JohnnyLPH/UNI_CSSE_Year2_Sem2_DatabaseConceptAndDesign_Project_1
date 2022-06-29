@@ -87,9 +87,11 @@
 
             // Update in DB.
             if ($passEditing) {
+                $tempSpeciesNameEscaped = $conn->real_escape_string($tempSpeciesName);
+                
                 // Update in Tree table.
                 $query = "UPDATE `Tree`";
-                $query .= " SET `SpeciesName`='$tempSpeciesName'";
+                $query .= " SET `SpeciesName`='$tempSpeciesNameEscaped'";
                 $query .= ", `Latitude`='$tempLatitude'";
                 $query .= ", `Longitude`='$tempLongitude'";
                 $query .= ", `BlockID`='$tempBlockID'";

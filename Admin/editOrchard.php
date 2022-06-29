@@ -85,9 +85,11 @@
 
             // Update in DB.
             if ($passEditing) {
+                $tempAddressEscaped = $conn->real_escape_string($tempAddress);
+                
                 // Update in Orchard table.
                 $query = "UPDATE `Orchard`";
-                $query .= " SET `Address`='$tempAddress'";
+                $query .= " SET `Address`='$tempAddressEscaped'";
                 $query .= ", `Latitude`='$tempLatitude'";
                 $query .= ", `Longitude`='$tempLongitude'";
                 $query .= ", `CompanyID`='$tempCompID'";

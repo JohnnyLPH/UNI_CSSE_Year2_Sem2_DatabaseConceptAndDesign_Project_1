@@ -58,10 +58,11 @@
                 $tempTreeImage = explode(".", $_FILES["treeimage"]["name"]);
                 $newfilename = $tempTreeID . "_" . $tempUpdateDate . "_" . round(microtime(true)) . "." . end($tempTreeImage);
                 $filepath = "../img/tree/" . $newfilename;
+                $filePathEscaped = $conn->real_escape_string($filepath);
 
                 // Insert to User table with UserType CO.
                 $query = "INSERT INTO `TreeUpdate`(`TreeID`, `StaffID`, `TreeImage`, `TreeHeight`, `Diameter`, `Status`, `UpdateDate`)";
-                $query .= " VALUES ('$tempTreeID','$tempStaffID','$filepath','$tempTreeHeight','$tempTreeDiameter', '$tempStatus','$tempUpdateDate')";
+                $query .= " VALUES ('$tempTreeID','$tempStaffID','$filePathEscaped','$tempTreeHeight','$tempTreeDiameter', '$tempStatus','$tempUpdateDate')";
 
                 $rs = $conn->query($query);
                 if (!$rs) {
