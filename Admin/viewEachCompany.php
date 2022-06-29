@@ -184,7 +184,7 @@
                         <input type="hidden" name="SearchKey" value="<?php
                             echo($companyID);
                         ?>">
-                        <input type="hidden" name="SearchOption" value="21">
+                        <input type="hidden" name="SearchOption" value="1">
                         <input class="fullW" type="submit" value="View Related Purchases">
                     </form>
                     

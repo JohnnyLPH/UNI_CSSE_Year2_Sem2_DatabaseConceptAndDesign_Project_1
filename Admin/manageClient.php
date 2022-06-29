@@ -83,8 +83,8 @@
                                 <th>Client ID</th>
                                 <th>Username</th>
                                 <th>Total Block Owned</th>
-                                <th>Total Sale</th>
                                 <th>Total Purchase Request</th>
+                                <th>Total Sale</th>
                                 <th>Action</th>
                             </tr>
                             <?php foreach ($allClient as $result): ?>
@@ -102,11 +102,11 @@
                                     ?></td>
 
                                     <td><?php
-                                        echo(getOnSaleCount($conn, 0, 0, 0, $result["UserID"]));
+                                        echo(getPurchaseRequestCount($conn, -1, 0, 0, 0, 0, $result["UserID"]));
                                     ?></td>
 
                                     <td><?php
-                                        echo(getPurchaseRequestCount($conn, -1, 0, 0, 0, 0, $result["UserID"]));
+                                        echo(getOnSaleCount($conn, 0, 0, 0, $result["UserID"]));
                                     ?></td>
                             
                                     <td>
