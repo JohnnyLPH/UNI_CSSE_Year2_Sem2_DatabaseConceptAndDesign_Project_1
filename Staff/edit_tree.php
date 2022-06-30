@@ -115,7 +115,7 @@
                         <h2 class="w3-center" style="color:black">Tree ID: <?php echo($treeID); ?></h2>
                         <div class="fadeIn first">
                             <!--placeholder image-->
-                            <img src="https://icon-library.com/images/tree-icon/tree-icon-23.jpg" id="icon" alt="tree" />
+                            <img src="/img/defaults/treeIcon.jpg" id="icon" alt="tree" />
                         </div>
                         <br>
                         <!-- Table -->
