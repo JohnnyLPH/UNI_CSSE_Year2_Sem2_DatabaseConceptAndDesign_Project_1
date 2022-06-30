@@ -199,7 +199,7 @@
                                             <label for="ApprovalStatus">
                                                 Approval Status:
                                             </label><br>
-                                            <select id="ApprovalStatus" name="ApprovalStatus">
+                                            <select class="fullW selectForm" id="ApprovalStatus" name="ApprovalStatus">
                                                 <option value="2">Rejected</option>
                                                 <option value="1">Approved</option>
                                             </select>
