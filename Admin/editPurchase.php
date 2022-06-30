@@ -123,7 +123,7 @@
                 </div>
                 <div id="formContentW2">
                     <br>
-                    <img class="fadeIn first" src="https://img.freepik.com/free-vector/shop-with-sign-we-are-open_23-2148547718.jpg" id="icon45" alt="PurchaseRequest Icon" />
+                    <img class="fadeIn first" src="/img/defaults/purchaseIcon.png" id="icon45" alt="PurchaseRequest Icon" />
 
                     <form method="post" action="/Admin/editPurchase.php?RequestID=<?php
                         echo($requestID);

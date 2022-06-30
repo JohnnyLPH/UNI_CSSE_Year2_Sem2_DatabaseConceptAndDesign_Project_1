@@ -160,7 +160,7 @@
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://static.vecteezy.com/system/resources/previews/002/140/928/non_2x/gardening-concept-illustration-with-man-and-women-planting-a-tree-free-vector.jpg" id="icon" alt="Tree Icon" />
+                    <img class="fadeIn first" src="/img/defaults/treeIcon.jpg" id="icon" alt="Tree Icon" />
 
                     <form method="post" action="/Admin/editTree.php?TreeID=<?php
                         echo($treeID);

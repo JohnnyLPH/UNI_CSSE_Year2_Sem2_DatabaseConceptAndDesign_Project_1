@@ -116,7 +116,7 @@
                     <h1>Add New Orchard:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://us.123rf.com/450wm/goodstudio/goodstudio1910/goodstudio191000131/131189697-family-working-in-fruit-garden-together-flat-vector-illustration-people-gathering-apples-berries-and.jpg" id="icon45" alt="Orchard Icon" />
+                    <img class="fadeIn first" src="/img/defaults/orchardIcon.png" id="icon45" alt="Orchard Icon" />
 
                     <form method="post" action="/Admin/addOrchard.php">
                         <table>

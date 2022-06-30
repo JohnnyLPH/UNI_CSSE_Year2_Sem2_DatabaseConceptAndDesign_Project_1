@@ -102,7 +102,7 @@
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="Company Icon" />
+                    <img class="fadeIn first" src="/img/defaults/companyIcon.jpg" id="icon" alt="Company Icon" />
 
                     <form method="post" action="/Admin/deleteCompany.php?CompanyID=<?php
                         echo($companyID);

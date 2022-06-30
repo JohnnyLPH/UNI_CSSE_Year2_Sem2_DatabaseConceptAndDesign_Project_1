@@ -102,7 +102,7 @@
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://i.pinimg.com/originals/07/20/ad/0720add75420ae4ad05075760c5c0723.jpg" id="icon" alt="Block Icon" />
+                    <img class="fadeIn first" src="/img/defaults/blockIcon.jpg" id="icon" alt="Block Icon" />
 
                     <form method="post" action="/Admin/deleteBlock.php?BlockID=<?php
                         echo($BlockID);

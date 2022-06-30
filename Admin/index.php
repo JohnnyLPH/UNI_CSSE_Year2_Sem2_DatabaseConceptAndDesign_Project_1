@@ -40,7 +40,7 @@
         integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg==" 
         crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
         <!-- Google Chart API-->
-        <script type='text/javascript'src='https://www.gstatic.com/charts/loader.js'></script>
+        <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
     </head>
 
     <body>
@@ -59,7 +59,7 @@
                         <h2 class="w3-center w3-bar-item" >Welcome, <?php
                             echo($_SESSION["Username"]);
                         ?></h2>
-                        <img src="https://cdn-icons-png.flaticon.com/512/270/270023.png" id="icon" alt="User Icon" /><br><br>
+                        <img src="/img/defaults/adminUserIcon.png" id="icon" alt="User Icon" /><br><br>
                     </div>
                     <button class="fullW" onclick="document.location='/Admin/reportCompany.php'">View Company Report</button><br><br>
                     <button class="fullW" onclick="document.location='/Admin/reportClient.php'">View Client Report</button><br><br>
@@ -74,7 +74,7 @@
                 <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
                     <div class='data-value card fadeIn first'>
                         <div class='data-group'>
-                            <img src="https://img.freepik.com/free-vector/isometric-illustration-representing-man-pointing-screen-website-personal-profile-front-gadgets_30590-283.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/adminIcon.png" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalAdmin);
@@ -84,7 +84,7 @@
                     </div>
                     <div class='data-value card fadeIn second'>
                         <div class='data-group'>
-                            <img src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/companyIcon.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalCompany);
@@ -94,7 +94,7 @@
                     </div>
                     <div class='data-value card fadeIn third'>
                         <div class='data-group'>
-                            <img src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/staffIcon.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalStaff);
@@ -104,7 +104,7 @@
                     </div>
                     <div class='data-value card fadeIn fourth'>
                         <div class='data-group'>
-                            <img src="https://png.pngtree.com/png-vector/20190721/ourlarge/pngtree-business-meeting-with-client-illustration-concept-modern-flat-design-concept-png-image_1567633.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/clientIcon.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalClient);
@@ -115,7 +115,7 @@
 
                     <div class='data-value card fadeIn first'>
                         <div class='data-group'>
-                            <img src="https://us.123rf.com/450wm/goodstudio/goodstudio1910/goodstudio191000131/131189697-family-working-in-fruit-garden-together-flat-vector-illustration-people-gathering-apples-berries-and.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/orchardIcon.png" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalOrchard);
@@ -125,7 +125,7 @@
                     </div>
                     <div class='data-value card fadeIn second'>
                         <div class='data-group'>
-                            <img src="https://i.pinimg.com/originals/07/20/ad/0720add75420ae4ad05075760c5c0723.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/blockIcon.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalBlock);
@@ -135,7 +135,7 @@
                     </div>
                     <div class='data-value card fadeIn third'>
                         <div class='data-group'>
-                            <img src="https://static.vecteezy.com/system/resources/previews/002/140/928/non_2x/gardening-concept-illustration-with-man-and-women-planting-a-tree-free-vector.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/treeIcon.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalTree);
@@ -145,7 +145,7 @@
                     </div>
                     <div class='data-value card fadeIn fourth'>
                         <div class='data-group'>
-                            <img src="https://img.freepik.com/free-vector/shop-with-sign-we-are-open_23-2148547718.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/purchaseIcon.png" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalPurchase);

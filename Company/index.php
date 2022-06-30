@@ -55,7 +55,7 @@
                 <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">                        
                     <div class='data-value card fadeIn first'>
                         <div class='data-group'>
-                            <img src="https://us.123rf.com/450wm/goodstudio/goodstudio1910/goodstudio191000131/131189697-family-working-in-fruit-garden-together-flat-vector-illustration-people-gathering-apples-berries-and.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/orchardIcon.png" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalOrchard);
@@ -65,7 +65,7 @@
                     </div>
                     <div class='data-value card fadeIn second'>
                         <div class='data-group'>
-                            <img src="https://i.pinimg.com/originals/07/20/ad/0720add75420ae4ad05075760c5c0723.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/blockIcon.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalBlock);
@@ -75,7 +75,7 @@
                     </div>
                     <div class='data-value card fadeIn third'>
                         <div class='data-group'>
-                            <img src="https://static.vecteezy.com/system/resources/previews/002/140/928/non_2x/gardening-concept-illustration-with-man-and-women-planting-a-tree-free-vector.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/treeIcon.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalTree);
@@ -85,7 +85,7 @@
                     </div>
                     <div class='data-value card fadeIn fourth'>
                         <div class='data-group'>
-                            <img src="https://img.freepik.com/free-vector/shop-with-sign-we-are-open_23-2148547718.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/purchaseIcon.png" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalPurchase);
