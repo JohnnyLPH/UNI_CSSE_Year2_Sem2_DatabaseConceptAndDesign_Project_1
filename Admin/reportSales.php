@@ -25,7 +25,7 @@
 
     foreach ($allCompany as $eachCompany){
         $listCompanyID[] = $eachCompany["UserID"];
-        $salebyCompanyID[] = count(getAllOnSale($conn,$eachCompany["UserID"]));
+        $salebyCompanyID[] = getAllOnSale($conn,$eachCompany["UserID"]);
         
     }
 
@@ -89,6 +89,12 @@
                 </div>-->
 
                 <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
+                    <?php 
+
+                    ?>
+                </div>
+
+                <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
                     <h3><b>Monthly Average Sales </b></h3>
                     <canvas id="chart" style="height:450px;width:100%;"></canvas>
                 </div>
@@ -107,12 +113,27 @@
             //graph for company sales
 
             const data = {
-                labels: companyID,
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
                 datasets: [{
-                    label: 'Average Sales (RM)',
-                    backgroundColor: 'rgb(0, 131, 115, 0.7)',
-                    borderColor: 'rgb(0, 82, 72)',
-                    data: salebycompanyID,
+                    label: 'Company A',
+                    backgroundColor: 'rgb(216,51,74)',
+                    borderColor: 'rgb(216,51,74)',
+                    data: [1000,2000,3000,4000,5000,6000,5000,8000,7000,6000,6000,5000],
+                },{
+                    label: 'Company B',
+                    backgroundColor: 'rgb(252,110,81)',
+                    borderColor: 'rgb(252,110,81)',
+                    data: [2000,3000,5000,3000,3000,4500,3400,2500,4000,4500,5000,6000],
+                },{
+                    label: 'Company C',
+                    backgroundColor: 'rgb(255,206,84)',
+                    borderColor: 'rgb(255,206,84)',
+                    data: [3000,3000,3000,3000,4000,4500,4500,6000,5500,5500,5000,4500],
+                },{
+                    label: 'Company D',
+                    backgroundColor: 'rgb(160,212,104)',
+                    borderColor: 'rgb(160,212,104)',
+                    data: [4000,5000,3500,6000,5500,5000,8000,5500,4500,5000,5000,6500],
                 }]
             };
             
@@ -164,7 +185,7 @@
                         x: {
                                 title: {
                                     display: true,
-                                    text: 'Company ID'
+                                    /*text: 'Company ID'*/
                                 }
                         }
                     },
