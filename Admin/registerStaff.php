@@ -153,7 +153,7 @@
         <meta charset="utf-8">
         
         <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/css/form.css">
+        <link rel="stylesheet" href="/css/formFont.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-vivid.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
@@ -170,13 +170,13 @@
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
 
         <main>
-            <div class="wrapper fadeInDown">
+            <div class="wrapperForm fadeInDown">
                 <div id="formHeader">
                     <h1>Staff Sign Up:</h1>
                 </div>
 
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="Comp Icon" />
+                    <img class="fadeIn first" src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon45" alt="Comp Icon" />
                     
                     <form method="post" action="/Admin/registerStaff.php">
                         <table>
@@ -235,7 +235,7 @@
                                         <label for="tempCompany">
                                             Company:
                                         </label><br>
-                                        <select id="tempCompany" name="tempCompany">
+                                        <select class="selectForm" id="tempCompany" name="tempCompany">
                                             <?php foreach ($allCompany as $result): ?>
                                                 <option value="<?php
                                                     echo($result["UserID"]);

@@ -176,7 +176,7 @@
         <meta charset="utf-8">
         
         <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/css/form.css">
+        <link rel="stylesheet" href="/css/formFont.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-vivid.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
@@ -200,13 +200,13 @@
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
 
         <main>
-            <div class="wrapper fadeInDown">
+            <div class="wrapperForm fadeInDown">
                 <div id="formHeader">
                     <h1>Client Sign Up:</h1>
                 </div>
                 <div id="formContentW2">
                     <br>
-                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20190721/ourlarge/pngtree-business-meeting-with-client-illustration-concept-modern-flat-design-concept-png-image_1567633.jpg" id="icon" alt="Comp Icon" />
+                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20190721/ourlarge/pngtree-business-meeting-with-client-illustration-concept-modern-flat-design-concept-png-image_1567633.jpg" id="icon45" alt="Comp Icon" />
                     <br>
                     <form method="post" action="/Admin/registerClient.php" enctype="multipart/form-data">
                         <table>
@@ -293,8 +293,8 @@
                                         <label for="Country">
                                             Country:
                                         </label><br>
-                                        <select id="Country" type="select" name="Country" placeholder="Country" required>
-                                            <option value="">Select your country</option>
+                                        <select class="fullW selectForm" id="Country" type="select" name="Country" placeholder="Country" required>
+                                            <option selected disabled value="">Select your country</option>
                                             <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/countryOption.php"); ?>
                                             <?php foreach($countryList as $eachCountry): ?>
                                                 <option style="<?php

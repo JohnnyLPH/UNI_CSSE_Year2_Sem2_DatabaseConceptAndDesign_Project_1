@@ -177,7 +177,7 @@
                                         <label for="BlockID">
                                             Block:
                                         </label><br>
-                                        <select id="BlockID" name="BlockID">
+                                        <select class="fullW selectForm" id="BlockID" name="BlockID">
                                             <?php foreach ($allBlock as $result): ?>
                                                 <option value="<?php
                                                     echo($result["BlockID"]);

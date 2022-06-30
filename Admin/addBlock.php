@@ -155,7 +155,7 @@
                                         <label for="OrchardID">
                                             Orchard:
                                         </label><br>
-                                        <select id="OrchardID" name="OrchardID">
+                                        <select class="fullW selectForm" id="OrchardID" name="OrchardID">
                                             <?php foreach ($allOrchard as $result): ?>
                                                 <option value="<?php
                                                     echo($result["OrchardID"]);

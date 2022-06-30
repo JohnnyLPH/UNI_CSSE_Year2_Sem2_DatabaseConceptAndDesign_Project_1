@@ -218,7 +218,7 @@
             ];
 
             const chart = new Chart(
-                document.getElementById('chart0'),
+                document.getElementById('chart'),
                 config
             );
 

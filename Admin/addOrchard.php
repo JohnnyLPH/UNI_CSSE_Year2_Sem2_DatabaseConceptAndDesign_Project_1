@@ -177,7 +177,7 @@
                                         <label for="CompanyID">
                                             Company (Owner):
                                         </label><br>
-                                        <select id="CompanyID" name="CompanyID">
+                                        <select class="fullW selectForm" id="CompanyID" name="CompanyID">
                                             <?php foreach ($allCompany as $result): ?>
                                                 <option value="<?php
                                                     echo($result["UserID"]);
