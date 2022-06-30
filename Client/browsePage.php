@@ -39,7 +39,8 @@
 
             $numberOfTrees = getTreeCount($conn, $row["CompanyID"], $row["OrchardID"], $row["BlockID"]);
 
-            $temp = getAllOnSale($conn, 0, 0, 0, $row["SaleID"], 0);
+            $saleID = $row["SaleID"];
+            $temp = getAllOnSale($conn, 0, 0, 0, $saleID, 0);
             $seller = ($temp[0]["SellerID"] == 0) ? "(None)" : $temp[0]["SellerID"];
             $salePrice = $temp[0]["SalePrice"];
             $saleDate = $temp[0]["SaleDate"];
@@ -75,6 +76,7 @@
                     <td>" . $location . "</td>
                     <td>" . $numberOfTrees . "</td>
                     <td>" . $seller . "</td>
+                    <td>" . $saleID . "</td>
                     <td>" . $salePrice . "</td>
                     <td>" . $saleDate . "</td>" . $actionForm . "
                 </tr>"
@@ -121,6 +123,7 @@
                         <th>Orchard Location</th>
                         <th>Total Trees</th>
                         <th>Seller ID</th>
+                        <th>Sale ID</th>
                         <th>Sale Price</th>
                         <th>Sale Date</th>
                         <th>Action</th>
