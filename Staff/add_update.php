@@ -99,7 +99,6 @@
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-vivid.css">
     <!--<link rel="shortcut icon" href="/favicon.ico">-->
     <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
-    <script src="./staff/image.js" defer></script>
 </head>
 <body>
     <header>
@@ -166,14 +165,6 @@
 
                     <label for="treeimage"><h3>Image: </h3></label>
                     <input class="fullW95" type="file" id="treeimage" name="treeimage" accept="image/png, image/jpg, image/jpeg" required><br>
-
-                    <!-- <h2>Testing</h2>
-                    <input class="fullW95" type="file" id="image-input" name="image-input" accept="image/png, image/jpg, image/jpeg" required><br>
-                    <div class="display-image" id="display-image">
-                        <img src="" alt="Image Preview" class="display-image__display">
-                        <span>Image Preview</span>
-                    </div>
-                    <script src="./staff/image.js" defer></script> -->
 
                     <label for="updatedate"><h3>Update Date: </h3></label>
                     <input class="fullW95" type="date" id="updatedate" name="updatedate" value="<?php echo date('Y-m-d'); ?>" readonly><br>
