@@ -1229,12 +1229,21 @@
             return false;
         }
 
-        // Delete from User.
-        $deleteQuery = "DELETE FROM `User`";
-        $deleteQuery .= " WHERE `User`.`UserID` = '$clientID'";
-        $deleteQuery .= ";";
+        // Get all ClientID to delete from User.
+        foreach ($allRow as $result) {
+            $tempClientID = $result["UserID"];
+            
+            $deleteQuery = "DELETE FROM `User`";
+            $deleteQuery .= " WHERE `User`.`UserID` = '$tempClientID'";
+            $deleteQuery .= ";";
 
-        return $conn->query($deleteQuery);
+            // Delete from User.
+            if (!($conn->query($deleteQuery))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // Delete Staff.
@@ -1318,23 +1327,34 @@
 
         // Delete all Staff and all Orchard of CompanyID.
         if (
-            !deleteStaff($conn, 0, $companyID) ||
-            !deleteOrchard($conn, 0, $companyID)
+            !deleteStaff($conn, 0, $companyID, true) ||
+            !deleteOrchard($conn, 0, $companyID, true)
         ) {
             return false;
         }
+
+        $allRow = getAllCompany($conn, $companyID);
 
         $rs = $conn->query($query);
         if (!$rs) {
             return false;
         }
 
-        // Delete from User.
-        $deleteQuery = "DELETE FROM `User`";
-        $deleteQuery .= " WHERE `User`.`UserID` = '$companyID'";
-        $deleteQuery .= ";";
+        // Get all CompanyID to delete from User.
+        foreach ($allRow as $result) {
+            $tempCompanyID = $result["UserID"];
+            
+            $deleteQuery = "DELETE FROM `User`";
+            $deleteQuery .= " WHERE `User`.`UserID` = '$tempCompanyID'";
+            $deleteQuery .= ";";
 
-        return $conn->query($deleteQuery);
+            // Delete from User.
+            if (!($conn->query($deleteQuery))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // Delete Admin.
@@ -1351,19 +1371,30 @@
 
         $query .= ";";
 
-        // Reconfirm to delete all if no condition is provided.
-        if ($adminID < 1 && !$confirmDel) {
+        // Do not allow delete as there should be at least 1 Admin.
+        if (getAdminCount($conn) < 2 || $adminID < 1) {
             return false;
         }
 
-        // Update PurchaseRequest AdminID to NULL.
-        $updateQuery = "UPDATE `PurchaseRequest`";
-        $updateQuery .= " SET `AdminID`=NULL";
-        $updateQuery .= " WHERE `PurchaseRequest`.`AdminID`='$adminID';";
+        // Reconfirm to delete all if no condition is provided.
+        // if ($adminID < 1 && !$confirmDel) {
+        //     return false;
+        // }
 
-        $rs = $conn->query($updateQuery);
-        if (!$rs) {
-            return false;
+        // Update PurchaseRequest AdminID to NULL.
+        $allRow = getAllAdmin($conn, $adminID);
+        foreach ($allRow as $result) {
+            $tempAdminID = $result["UserID"];
+
+            // Update related PurchaseRequest.
+            $updateQuery = "UPDATE `PurchaseRequest`";
+            $updateQuery .= " SET `AdminID`=NULL";
+            $updateQuery .= " WHERE `PurchaseRequest`.`AdminID`='$tempAdminID';";
+    
+            $rs = $conn->query($updateQuery);
+            if (!$rs) {
+                return false;
+            }
         }
 
         $rs = $conn->query($query);
@@ -1371,11 +1402,20 @@
             return false;
         }
 
-        // Delete from User.
-        $deleteQuery = "DELETE FROM `User`";
-        $deleteQuery .= " WHERE `User`.`UserID` = '$adminID'";
-        $deleteQuery .= ";";
+        // Get all AdminID to delete from User.
+        foreach ($allRow as $result) {
+            $tempAdminID = $result["UserID"];
+            
+            $deleteQuery = "DELETE FROM `User`";
+            $deleteQuery .= " WHERE `User`.`UserID` = '$tempAdminID'";
+            $deleteQuery .= ";";
 
-        return $conn->query($deleteQuery);
+            // Delete from User.
+            if (!($conn->query($deleteQuery))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 ?>
