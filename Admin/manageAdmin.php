@@ -1,5 +1,5 @@
 <?php
-    // Admin Manage Company Page.
+    // Admin Manage Admin Page.
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dbConnection.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/loginAuthenticate.php");
     require_once($_SERVER['DOCUMENT_ROOT'] . "/dataManagement.php");
@@ -17,20 +17,20 @@
         parse_str($_SERVER['QUERY_STRING'], $queryString);
     }
     
-    // Check if valid CompanyID is provided for search, set to 0 if not.
-    $companyID = (
+    // Check if valid AdminID is provided for search, set to 0 if not.
+    $adminID = (
         !isset($queryString["SearchKey"]) ||
         !is_numeric($queryString["SearchKey"]) ||
         $queryString["SearchKey"] < 1
     ) ? 0: $queryString["SearchKey"];
 
-    // Return all the company.
-    $allCompany = getAllCompany($conn, $companyID);
+    // Return all the Admin.
+    $allAdmin = getAllAdmin($conn, $adminID);
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin: Manage Company Page</title>
+        <title>Admin: Manage Admin Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
@@ -43,7 +43,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Manage Company Page</h1>
+                <h1>Admin: Manage Admin Page</h1>
             </div>
         </header>
 
@@ -51,44 +51,43 @@
 
         <main>
             <div class="w3-container w3-theme-d4 w3-animate-opacity">
-                <h2 class="w3-center">All Companies:</h2>
+                <h2 class="w3-center">All Admins:</h2>
 
-                <form id="reset-search" method="get" action="/Admin/manageCompany.php"></form>
-                <form id="register-company" method="get" action="/Admin/registerCompany.php"></form>
+                <form id="reset-search" method="get" action="/Admin/manageAdmin.php"></form>
+                <form id="register-Admin" method="get" action="/Admin/registerAdmin.php"></form>
 
-                <form class="w3-center" method="get" action="/Admin/manageCompany.php">
+                <form class="w3-center" method="get" action="/Admin/manageAdmin.php">
                     <input style="width:98%" id="SearchKey" type="number" name="SearchKey" value="<?php
-                        // Valid CompanyID.
-                        if ($companyID > 0) {
-                            echo($companyID);
+                        // Valid AdminID.
+                        if ($adminID > 0) {
+                            echo($adminID);
                         }
-                    ?>" placeholder="Enter Company ID" min="1" required>
+                    ?>" placeholder="Enter Admin ID" min="1" required>
                     
                     <input type="submit" value="Search">
 
                     <input form="reset-search" type="submit" value="Reset"<?php
                         // Disable if not searching.
-                        if ($companyID < 1) {
+                        if ($adminID < 1) {
                             echo(" disabled");
                         }
                     ?>>
 
-                    <input form="register-company" type="submit" value="Register New Company">
+                    <input form="register-Admin" type="submit" value="Register New Admin">
                 </form>
 
                 <div class="w3-container w3-center" style="align-content:center;">
-                    <?php if (count($allCompany) > 0): ?>
+                    <?php if (count($allAdmin) > 0): ?>
                         <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
                             <tr>
-                                <th>Company ID</th>
+                                <th>Admin ID</th>
                                 <th>Username</th>
-                                <th>Total Staff</th>
-                                <th>Total Block</th>
-                                <th>Total Tree</th>
-                                <th>Success Client Purchase</th>
+                                <th>Total Processed Request</th>
+                                <th>Total Accepted</th>
+                                <th>Total Rejected</th>
                                 <th>Action</th>
                             </tr>
-                            <?php foreach ($allCompany as $result): ?>
+                            <?php foreach ($allAdmin as $result): ?>
                                 <tr>
                                     <td><?php
                                         echo($result["UserID"]);
@@ -99,24 +98,32 @@
                                     ?></td>
 
                                     <td><?php
-                                        echo(getStaffCount($conn, $result["UserID"]));
+                                        echo(
+                                            getPurchaseRequestCount(
+                                                $conn, -1, 0, 0, 0, 0, 0, $result["UserID"]
+                                            )
+                                        );
                                     ?></td>
 
                                     <td><?php
-                                        echo(getBlockCount($conn, $result["UserID"]));
+                                        echo(
+                                            getPurchaseRequestCount(
+                                                $conn, 1, 0, 0, 0, 0, 0, $result["UserID"]
+                                            )
+                                        );
                                     ?></td>
 
                                     <td><?php
-                                        echo(getTreeCount($conn, $result["UserID"]));
-                                    ?></td>
-
-                                    <td><?php
-                                        echo(getPurchaseRequestCount($conn, 1, $result["UserID"]));
+                                        echo(
+                                            getPurchaseRequestCount(
+                                                $conn, 2, 0, 0, 0, 0, 0, $result["UserID"]
+                                            )
+                                        );
                                     ?></td>
                             
                                     <td>
-                                        <form method="get" action="/Admin/viewEachCompany.php">
-                                            <input type="hidden" name="CompanyID" value="<?php
+                                        <form method="get" action="/Admin/viewEachAdmin.php">
+                                            <input type="hidden" name="AdminID" value="<?php
                                                 echo($result["UserID"]);
                                             ?>">
                                             <input type="submit" value="View">
@@ -128,11 +135,11 @@
                         <br>
                     <?php else: ?>
                         <span>* <?php
-                            if ($companyID < 1) {
-                                echo("No company is found!");
+                            if ($adminID < 1) {
+                                echo("No Admin is found!");
                             }
                             else {
-                                echo("Company ID $companyID is not associated with any company!");
+                                echo("Admin ID $adminID is not associated with any Admin!");
                             }
                         ?> *</span>
                     <?php endif; ?>

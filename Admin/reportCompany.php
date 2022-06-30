@@ -120,7 +120,7 @@
                     <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;height:20px"></div>
 
                 <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
-                    <h3><b>Number of Client Block Purchases By Company</b></h3>
+                    <h3><b>Number of Success Block Purchases By Company</b></h3>
                     <canvas id="chart3" style="height: 350px;width:100%;"></canvas>
                 </div>
 
@@ -279,7 +279,7 @@
                         x: {
                             title: {
                                 display: true,
-                                text: 'Number of Client Purchase'
+                                text: 'Number of Success Client Purchase'
                             }
                         },
                         y: {

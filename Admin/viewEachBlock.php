@@ -176,7 +176,16 @@
                         </tr>
 
                         <tr>
-                            <td>Client Purchase</td>
+                            <td>Total Purchase Request</td>
+                            <td><?php
+                                echo(getPurchaseRequestCount(
+                                    $conn, -1, $result["CompanyID"], $result["OrchardID"], $result["BlockID"]
+                                ));
+                            ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Success Client Purchase</td>
                             <td><?php
                                 echo(getPurchaseRequestCount(
                                     $conn, 1, $result["CompanyID"], $result["OrchardID"], $result["BlockID"]

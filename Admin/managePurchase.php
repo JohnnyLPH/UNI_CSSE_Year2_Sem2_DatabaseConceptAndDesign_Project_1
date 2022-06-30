@@ -59,7 +59,7 @@
 
     // Return all the purchase request.
     $allPurchaseRequest = getAllPurchaseRequest(
-        $conn, -1, $companyID, $orchardID, $blockID, $requestID, $saleID, $clientID, true
+        $conn, -1, $companyID, $orchardID, $blockID, $requestID, $saleID, $clientID, 0, true
     );
 ?>
 <!DOCTYPE html>

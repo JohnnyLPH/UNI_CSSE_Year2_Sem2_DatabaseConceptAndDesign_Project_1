@@ -162,8 +162,8 @@
         return 0;
     }
 
-    // Count purchase request (based on ApprovalStatus, CompanyID, OrchardID, BlockID, SaleID, ClientID if provided).
-    function getPurchaseRequestCount($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $saleID = 0, $clientID = 0) {
+    // Count purchase request (based on ApprovalStatus, CompanyID, OrchardID, BlockID, SaleID, ClientID, AdminID if provided).
+    function getPurchaseRequestCount($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $saleID = 0, $clientID = 0, $adminID = 0) {
         $query = "SELECT COUNT(`PurchaseRequest`.`RequestID`) FROM `PurchaseRequest`";
         $query .= " INNER JOIN `OnSale` ON `PurchaseRequest`.`SaleID` = `OnSale`.`SaleID`";
         $query .= " INNER JOIN `Block` ON `OnSale`.`BlockID` = `Block`.`BlockID`";
@@ -223,6 +223,16 @@
             }
             else {
                 $query .= " WHERE `PurchaseRequest`.`ClientID` = '$clientID'";
+                $multiWhere = true;
+            }
+        }
+
+        if ($adminID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `PurchaseRequest`.`AdminID` = '$adminID'";
+            }
+            else {
+                $query .= " WHERE `PurchaseRequest`.`AdminID` = '$adminID'";
                 $multiWhere = true;
             }
         }
@@ -295,8 +305,8 @@
     function getAllAdmin($conn, $adminID = 0) {
         $query = "SELECT `Admin`.`UserID`";
         $query .= ", `User`.`Username`, `User`.`Email`, `User`.`RealName`, `User`.`UserType`";
-        $query .= " FROM `Company`";
-        $query .= " INNER JOIN `User` ON `Company`.`UserID` = `User`.`UserID`";
+        $query .= " FROM `Admin`";
+        $query .= " INNER JOIN `User` ON `Admin`.`UserID` = `User`.`UserID`";
         
         // Add WHERE Clause.
         $multiWhere = false;
@@ -692,8 +702,8 @@
         return $allRow;
     }
 
-    // Return all rows of Purchase Request (based on ApprovalStatus, CompanyID, OrchardID, BlockID, RequestID, SaleID, ClientID if provided).
-    function getAllPurchaseRequest($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $requestID = 0, $saleID = 0, $clientID = 0, $orderByStatus = false) {
+    // Return all rows of Purchase Request (based on ApprovalStatus, CompanyID, OrchardID, BlockID, RequestID, SaleID, ClientID, AdminID if provided).
+    function getAllPurchaseRequest($conn, $approvalStatus = -1, $companyID = 0, $orchardID = 0, $blockID = 0, $requestID = 0, $saleID = 0, $clientID = 0, $adminID = 0, $orderByStatus = false) {
         $query = "SELECT `PurchaseRequest`.`RequestID`, `Orchard`.`CompanyID`, `Orchard`.`OrchardID`";
         $query .= ", `Block`.`BlockID`, `User`.`RealName`, `OnSale`.`SaleDate`, `OnSale`.`SalePrice`";
         $query .= ", `OnSale`.`SellerID`, `PurchaseRequest`.`SaleID`, `PurchaseRequest`.`RequestDate`";
@@ -770,6 +780,16 @@
             }
             else {
                 $query .= " WHERE `PurchaseRequest`.`ClientID` = '$clientID'";
+                $multiWhere = true;
+            }
+        }
+
+        if ($adminID > 0) {
+            if ($multiWhere) {
+                $query .= " AND `PurchaseRequest`.`AdminID` = '$adminID'";
+            }
+            else {
+                $query .= " WHERE `PurchaseRequest`.`AdminID` = '$adminID'";
                 $multiWhere = true;
             }
         }

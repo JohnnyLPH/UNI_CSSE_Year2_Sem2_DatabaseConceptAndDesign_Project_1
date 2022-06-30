@@ -143,7 +143,7 @@
                                 <th>Company ID</th>
                                 <th>Total Tree</th>
                                 <th>Client ID (Owner)</th>
-                                <th>Client Purchase</th>
+                                <th>Success Client Purchase</th>
                                 <th>Action</th>
                             </tr>
                             <?php foreach ($allBlock as $result): ?>
