@@ -177,29 +177,7 @@
                         </table>
                         <br>
                     <?php else: ?>
-                        <span>* <?php
-                            if ($orchardID + $blockID + $clientID < 1) {
-                                echo("No block is found!");
-                            }
-                            elseif ($searchOption == 1) {
-                                echo(
-                                    "Orchard ID $orchardID is not associated with any block of " .
-                                    $_SESSION["Username"] . "!"
-                                );
-                            }
-                            elseif ($searchOption == 2) {
-                                echo(
-                                    "Block ID $blockID is not associated with any block of " .
-                                    $_SESSION["Username"] . "!"
-                                );
-                            }
-                            else {
-                                echo(
-                                    "Client ID $clientID is not associated with any block of " .
-                                    $_SESSION["Username"] . "!"
-                                );
-                            }
-                        ?> *</span>
+                        <span>* No block is found! *</span>
                     <?php endif; ?>
                 </div>
             </div>
