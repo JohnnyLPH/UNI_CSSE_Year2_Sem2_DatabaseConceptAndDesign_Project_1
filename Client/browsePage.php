@@ -15,14 +15,13 @@
         $result = getBlockLatestClient($conn);
         
         if(sizeof($result) <= 0) {
-            echo(" * No Block On Sale * ");
+            echo("<span>* No block is found! *</span>");
             return;
         }
 
-        $counter = 1;
+        $counter = 0;
 
         foreach($result as $row) {
-
             if(!(empty($row["ClientID"]) || $row["ApprovalStatus"] != 1)) {
                 continue;
             }
@@ -42,7 +41,7 @@
 
             $actionForm = "";
 
-            if($row["ApprovalStatus"] < 1) {
+            if($row["ApprovalStatus"] < 1 && $row["ClientID"] > 0) {
                 $actionForm = ($_SESSION["UserID"] == $row["ClientID"]) ? "<td><i>Pending Approval</i></td>" : "<td><i>Block On Hold</i></td>";
             } else {
                 $actionForm = "                 
@@ -53,7 +52,7 @@
                                 <input type=\"hidden\" name=\"request_block_price\" id=\"request_block_price\" value=\"" . $salePrice . "\">
                                 <label for=\"request_price\">Request Price</label>
                                 <span>
-                                    <input type=\"number\" name=\"request_price\" min=\"" . $salePrice . "\" placeholder=\"Min " . $salePrice . "\">
+                                    <input type=\"number\" name=\"request_price\" min=\"" . $salePrice . "\" step=\"1000\" placeholder=\"Min " . $salePrice . "\">
 
                                     <input type=\"submit\" value=\"request\">
                                 </span>
@@ -65,7 +64,7 @@
 
             echo("
                 <tr>
-                    <td>" . $counter . "</td>
+                    <td>" . ++$counter . "</td>
                     <td>" . $row["BlockID"] . "</td>
                     <td>" . $companyName . "</td>
                     <td>" . $location . "</td>
@@ -75,8 +74,11 @@
                     <td>" . $saleDate . "</td>" . $actionForm . "
                 </tr>"
             );
+        }
 
-            $counter++;
+        if($counter == 0) {
+            echo("<span>* No block on sale! *</span>");
+            return;
         }
     }
 ?>
