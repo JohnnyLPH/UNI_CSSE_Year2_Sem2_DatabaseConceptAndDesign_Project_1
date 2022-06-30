@@ -305,6 +305,7 @@
     function getAllAdmin($conn, $adminID = 0) {
         $query = "SELECT `Admin`.`UserID`";
         $query .= ", `User`.`Username`, `User`.`Email`, `User`.`RealName`, `User`.`UserType`";
+        $query .= ", `User`.`PasswordHash`";
         $query .= " FROM `Admin`";
         $query .= " INNER JOIN `User` ON `Admin`.`UserID` = `User`.`UserID`";
         
