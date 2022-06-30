@@ -143,6 +143,7 @@
                                 <th>Orchard ID</th>
                                 <th>Company ID</th>
                                 <th>Tree Species</th>
+                                <th>Tree Plant Date</th>
                                 <th>Action</th>
                             </tr>
                             <?php foreach ($allTree as $result): ?>
@@ -166,6 +167,12 @@
                                     <td><?php
                                         echo($result["SpeciesName"]);
                                     ?></td>
+
+                                    <td>
+                                        <?php
+                                        echo($result["PlantDate"]);
+                                        ?>
+                                    </td>
                                     
                                     <td>
                                         <form method="get" action="/Admin/viewEachTree.php">
