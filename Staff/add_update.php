@@ -127,16 +127,16 @@
                 <form action="add_update.php?item=<?php echo($treeID); ?>" method="POST" enctype="multipart/form-data">
                     <br>    
                     <label for="treeid"><h3>Tree ID: </h3></label>
-                    <input type="text" id="treeid" name="treeid" value="<?php echo($treeID); ?>" readonly><br>
+                    <input class="fullW95" type="text" id="treeid" name="treeid" value="<?php echo($treeID); ?>" readonly><br>
 
                     <label for="staffid"><h3>Staff ID: </h3></label>
-                    <input type="text" id="treeid" name="staffid" value="<?php echo($_SESSION['UserID']); ?>" readonly><br>
+                    <input class="fullW95" type="text" id="treeid" name="staffid" value="<?php echo($_SESSION['UserID']); ?>" readonly><br>
 
                     <label for="treeheight"><h3>Height: </h3></label>
-                    <input type="number" id="treeheight" name="treeheight" placeholder="Height" step="0.01" min="0.5"><br>
+                    <input class="fullW95" type="number" id="treeheight" name="treeheight" placeholder="Height" step="0.01" min="0.5"><br>
                     
                     <label for="treediameter"><h3>Diameter: </h3></label>
-                    <input type="number" id="treediameter" name="treediameter" placeholder="Diameter" step="0.01" min="0.05"><br>
+                    <input class="fullW95" type="number" id="treediameter" name="treediameter" placeholder="Diameter" step="0.01" min="0.05"><br>
 
                     <label for="treestatus"><h3>Status: </h3></label>
                     <div class="wrapper">
@@ -164,10 +164,10 @@
                     </div>
 
                     <label for="treeimage"><h3>Image: </h3></label>
-                    <input type="file" id="treeimage" name="treeimage" accept="image/png, image/jpg, image/jpeg" required><br>
+                    <input class="fullW95" type="file" id="treeimage" name="treeimage" accept="image/png, image/jpg, image/jpeg" required><br>
 
                     <label for="updatedate"><h3>Update Date: </h3></label>
-                    <input type="date" id="updatedate" name="updatedate" value="<?php echo date('Y-m-d'); ?>" readonly><br>
+                    <input class="fullW95" type="date" id="updatedate" name="updatedate" value="<?php echo date('Y-m-d'); ?>" readonly><br>
 
                     <input type="submit" id="submit" name="submit" value="Submit">
                 </form>

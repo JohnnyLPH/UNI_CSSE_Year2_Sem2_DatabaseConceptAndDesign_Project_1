@@ -377,7 +377,7 @@
                                         <label for="Country">
                                             Country:
                                         </label><br>
-                                        <select id="Country" type="select" name="Country" placeholder="Country" required>
+                                        <select class="fullW selectForm" id="Country" type="select" name="Country" placeholder="Country" required>
                                             <option value="">Select your country</option>
                                             <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/countryOption.php"); ?>
                                             <?php foreach($countryList as $eachCountry): ?>
