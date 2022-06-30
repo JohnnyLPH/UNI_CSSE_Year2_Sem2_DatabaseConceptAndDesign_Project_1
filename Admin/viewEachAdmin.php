@@ -189,7 +189,7 @@
                         ?>" style="max-width:100%;">
                     </form>
 
-                    <?php if ($adminCount > 0): ?>
+                    <?php if ($adminCount > 1): ?>
                         <form method="get" action="/Admin/deleteAdmin.php">
                             <input type="hidden" name="AdminID" value="<?php
                                 echo($adminID);

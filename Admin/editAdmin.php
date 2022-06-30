@@ -198,7 +198,7 @@
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="/img/defaults/companyIcon.jpg" id="icon" alt="Admin Icon" />
+                    <img class="fadeIn first" src="/img/defaults/adminIcon.png" id="icon" alt="Admin Icon" />
 
                     <form method="post" action="/Admin/editAdmin.php?AdminID=<?php
                         echo($adminID);

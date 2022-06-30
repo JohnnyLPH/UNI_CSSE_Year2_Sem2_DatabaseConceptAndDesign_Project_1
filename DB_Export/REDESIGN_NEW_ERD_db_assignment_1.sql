@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 29, 2022 at 03:05 PM
+-- Generation Time: Jun 30, 2022 at 11:38 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -37,7 +37,8 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`UserID`) VALUES
 (23),
-(31);
+(49),
+(50);
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,8 @@ INSERT INTO `block` (`BlockID`, `OrchardID`) VALUES
 (10, 5),
 (11, 5),
 (21, 10),
-(23, 10);
+(23, 10),
+(25, 12);
 
 -- --------------------------------------------------------
 
@@ -101,9 +103,7 @@ INSERT INTO `client` (`UserID`, `Address`, `Country`, `Photo`) VALUES
 (27, 'No 99, Street 99.', 'Austria', '/img/client/clientID27_2022-06-29_1656507296.jpg'),
 (30, 'No 1, Street A.', 'Benin', '/img/client/clientID30_2022-06-29_1656507199.jpg'),
 (41, 'No B, Street Client B.', 'Australia', '/img/client/clientID41_2022-06-29_1656507093.jpg'),
-(42, 'No D, Street D.', 'China', '/img/client/clientID42_2022-06-29_1656507876.jpg'),
-(43, 'No E, Street E.', 'Cote d\'Ivoire', '/img/client/clientID43_2022-06-29_1656490962.jpg'),
-(44, 'No E, Street E.', 'Sudan', '/img/client/clientID44_2022-06-29_1656504735.jpg');
+(42, 'No D, Street D.', 'China', '/img/client/clientID42_2022-06-29_1656507876.jpg');
 
 -- --------------------------------------------------------
 
@@ -163,7 +163,9 @@ INSERT INTO `onsale` (`SaleID`, `BlockID`, `SalePrice`, `SaleDate`, `SellerID`) 
 (11, 4, 15000, '2022-06-26 15:29:17', 4),
 (12, 15, 5000.08, '2022-06-27 20:23:05', NULL),
 (18, 21, 14912, '2022-06-27 22:36:28', NULL),
-(20, 23, 12345, '2022-06-28 12:38:27', NULL);
+(20, 23, 12345, '2022-06-28 12:38:27', NULL),
+(22, 23, 10000, '2022-06-29 23:43:54', NULL),
+(23, 25, 14111, '2022-06-30 14:31:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -189,7 +191,9 @@ INSERT INTO `orchard` (`OrchardID`, `Address`, `Latitude`, `Longitude`, `Company
 (3, 'Jalan UP 4/2, Ukay Perdana, 68000 Ampang, Selangor', 3.22003, 101.768, 16),
 (4, 'KM48 Persimpangan Bertingkat, Lebuhraya Karak, 28750 Bentong, Pahang', 3.37125, 101.856, 14),
 (5, 'Jalan Besar Kampung Baharu Teras 27600, 27600 Raub, Pahang', 3.76008, 101.793, 14),
-(10, 'No 89, Street Test, Sabah.', 1.231, 103.123, 22);
+(10, 'No 89, Street Test, Sabah.', 1.231, 103.123, 22),
+(12, 'Another New Orchard', 90, 123, 38),
+(13, 'Test A New Orchard', 1, 9, 38);
 
 -- --------------------------------------------------------
 
@@ -222,7 +226,9 @@ INSERT INTO `purchaserequest` (`RequestID`, `SaleID`, `ClientID`, `RequestDate`,
 (8, 9, 5, '2022-06-24 13:54:38', 10000, 23, 2),
 (9, 11, 3, '2022-06-26 15:17:20', 15000, 23, 1),
 (10, 9, 5, '2022-06-27 13:54:38', 10000, 23, 1),
-(11, 1, 4, '2022-06-28 15:12:45', 12000, 23, 2);
+(11, 1, 4, '2022-06-28 15:12:45', 12000, 23, 2),
+(14, 7, 4, '2022-06-30 11:53:55', 10000, NULL, 2),
+(15, 7, 1, '2022-06-30 15:51:26', 20000, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -300,7 +306,11 @@ INSERT INTO `tree` (`TreeID`, `SpeciesName`, `Latitude`, `Longitude`, `PlantDate
 (24, 'Quaking Aspen', 3.37125, 101.856, '2022-06-16 16:11:55', 4),
 (25, 'Red Pine', 3.76008, 101.791, '2022-06-16 16:11:55', 5),
 (26, 'American Chestnut', 1.51381, 110.362, '2022-06-23 23:47:14', 9),
-(27, 'American Chestnut', 1.5169, 120.383, '2022-06-27 21:49:47', 9);
+(27, 'American Chestnut', 1.5169, 120.383, '2022-06-27 21:49:47', 9),
+(34, 'American Chestnut', 69.69, 69.69, '2022-06-29 21:25:27', 23),
+(37, 'American Chestnut', 69, 69, '2022-06-29 23:28:04', 23),
+(38, 'American Chestnut', 9, 6, '2022-06-29 23:28:46', 23),
+(39, 'Fat Nut', 12, 21, '2022-06-29 23:28:56', 23);
 
 -- --------------------------------------------------------
 
@@ -392,20 +402,19 @@ INSERT INTO `user` (`UserID`, `Username`, `Email`, `PasswordHash`, `RealName`, `
 (20, 'companyF', 'companyF@gmail.com', '$2y$10$O3Y4UZQgLmnakhBWo0m5pu91V18y4ASyRhf3XEgiXp6lueQTFByaC', 'Company F', 'CO'),
 (21, 'companyG', 'companyG@gmail.com', '$2y$10$sZaERhUBBMgGsQhqF/kkhutB0hyU21kOxsp2zWY55QdMiO/ICMuxi', 'Company G', 'CO'),
 (22, 'companyH', 'companyH@gmail.com', '$2y$10$dq/lVrjhct6MnqGHltIfuO8xqw5XEH2iHptniKPs08Fk3Ay8xtOVG', 'Company H', 'CO'),
-(23, 'LPH', 'adminlph@gmail.com', '$2y$10$zC41MBIhehz.asdh6KPNhexeFgWEN7Tss2WqUOAFxevWV64Am74I.', 'Mr Lau, P.H.', 'AD'),
+(23, 'LPH', 'adminlph@gmail.com', '$2y$10$OVtzd7NRIsy9QtKVJimYAuLIsJLJagV/ZsFhRYeB3yk9OeWVNG61K', 'Mr Lau, P.H.', 'AD'),
 (24, 'BlackMan', 'mj@gmail.com', '$2y$10$eKZtwCUZ4kpsB6co7WDjwOqDudGqW.ckjOKfXtrK5eZXKR/TLnYxK', 'Michael Jordan', 'CL'),
 (25, 'Deez', 'dMJ@gmail.com', '$2y$10$1980r2SUfhKFrwEsETxh.OeeA5kO8IsTp6YRXJ9COwnSMN5U4pUlW', 'Michael Jackson', 'CL'),
 (26, 'staffA', 'staffA@gmail.com', '$2y$10$zC41MBIhehz.asdh6KPNhexeFgWEN7Tss2WqUOAFxevWV64Am74I.', 'Staff A', 'ST'),
 (27, 'clientA', 'clientA@gmail.com', '$2y$10$BSI7263MJgKhKQYWnZ7vxu.xgCqzO6zsxp6LpB65BTq8NjushEGA6', 'Client A', 'CL'),
 (29, 'staffB', 'staffB@gmail.com', '$2y$10$g4ErGmRtXbX4ztPUhE85qeh.BHB90XTM7S1mQU4/4RrnMN2Re3NJm', 'Staff B', 'ST'),
 (30, 'clientB', 'clientB@gmail.com', '$2y$10$c.DnM2PvUVsR4WFepSNbK.TmBnWvCwChnI1/W4U.0GqNu.s64wWwy', 'Client B', 'CL'),
-(31, 'adminA', 'adminA@gmail.com', '$2y$10$5/ZEuChC/G.3XaPTSPX/auRSApiV2xPxZoZMMbblPIOfbENUVfHxO', 'Admin A', 'AD'),
 (38, 'companyI', 'companyI@gmail.com', '$2y$10$d8H7DOZrmwwdIt5QovBpu.SJxrru/7Gd9v93Exu.hDDc.81CVbcLK', 'Company I', 'CO'),
 (39, 'staffC', 'staffC@gmail.com', '$2y$10$apqOcePweNCp4t6yd0.i/uEWWRsBPEoBxBNx.yHB/1TSMb9a9DUfi', 'Staff C', 'ST'),
 (41, 'clientC', 'clientC@gmail.com', '$2y$10$sVkkp8iVFEFA.p5Mbjfgw.Z1EMbrP.zlRhpL65LLBaFRDZWSzAAja', 'Client C', 'CL'),
 (42, 'clientD', 'clientD@gmail.com', '$2y$10$19IhNIspio8o7G6V8jTO6uhBhAY14xhL6Xe8XJAl7mQOJ5t1pbaI2', 'Client D', 'CL'),
-(43, 'clientE', 'clientE@gmail.com', '$2y$10$LW9EokwVM9jnoXIsvSYkNeuHYahSN21IVv5bwlIOaSOd1RLde.DCS', 'Client E', 'CL'),
-(44, 'clientF', 'clientF@gmail.com', '$2y$10$yUrHdEHUi5oIO.Ex99h8o.miRdcbPBFZdlbTHqMJGyrBx24fLJkSW', 'Client F', 'CL');
+(49, 'adminA', 'adminA@gmail.com', '$2y$10$44ZJ72pV5/2ulxK8/la8De8a0rNL2tOgErPm3wf3WPICSwiQNXjPm', 'Admin A', 'AD'),
+(50, 'adminB', 'adminB@gmail.com', '$2y$10$RPMp58PPh41KToECWI5ofOWA3Aqv2BqSctzc1/pXEpBVRNGIoU.4C', 'Admin B', 'AD');
 
 --
 -- Indexes for dumped tables
@@ -496,43 +505,43 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `block`
 --
 ALTER TABLE `block`
-  MODIFY `BlockID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `BlockID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `onsale`
 --
 ALTER TABLE `onsale`
-  MODIFY `SaleID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `SaleID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `orchard`
 --
 ALTER TABLE `orchard`
-  MODIFY `OrchardID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `OrchardID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `purchaserequest`
 --
 ALTER TABLE `purchaserequest`
-  MODIFY `RequestID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `RequestID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `tree`
 --
 ALTER TABLE `tree`
-  MODIFY `TreeID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `TreeID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `treeupdate`
 --
 ALTER TABLE `treeupdate`
-  MODIFY `UpdateID` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `UpdateID` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `UserID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- Constraints for dumped tables

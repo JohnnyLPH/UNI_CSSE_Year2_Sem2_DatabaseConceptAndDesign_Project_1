@@ -64,7 +64,7 @@
 
             // Delete from DB.
             if ($passDeleting) {
-                if (!deleteCompany($conn, $adminID)) {
+                if (!deleteAdmin($conn, $adminID)) {
                     $deleteMsg = "* Fail to delete Admin from database! *";
                     $passDeleting = false;
                 }
@@ -109,7 +109,7 @@
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="/img/defaults/companyIcon.jpg" id="icon" alt="Admin Icon" />
+                    <img class="fadeIn first" src="/img/defaults/adminIcon.png" id="icon" alt="Admin Icon" />
 
                     <form method="post" action="/Admin/deleteAdmin.php?AdminID=<?php
                         echo($adminID);
@@ -131,9 +131,23 @@
                                     <td colspan="2">
                                         <div>
                                             <label for="Password">
-                                                Admin Password:
+                                                Your Admin Password:
                                             </label><br>
                                             <input id="Password" type="password" name="Password" placeholder="Enter Password to Delete" required>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr class="fadeIn second">
+                                    <!-- AdminPassword -->
+                                    <td colspan="2">
+                                        <div>
+                                            <label for="AdminPassword">
+                                                Current Password (for Admin ID <?php
+                                                    echo($adminID);
+                                                ?>):
+                                            </label><br>
+                                            <input id="AdminPassword" type="password" name="AdminPassword" placeholder="Enter Password to Delete" required>
                                         </div>
                                     </td>
                                 </tr>
