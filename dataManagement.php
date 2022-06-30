@@ -504,7 +504,7 @@
         // LEFT JOIN `Client` ON `PurchaseRequest`.`ClientID` = `Client`.`UserID`
         // LEFT JOIN `User` ON `Client`.`UserID` = `User`.`UserID`
         // ORDER BY `Block`.`BlockID`, `OnSale`.`SaleID` DESC, `PurchaseRequest`.`RequestID` DESC;
-        $query = "SELECT `Block`.`BlockID`, `Orchard`.`OrchardID`, `Orchard`.`CompanyID`";
+        $query = "SELECT `Block`.`BlockID`, `Orchard`.`OrchardID`, `Orchard`.`CompanyID`, `OnSale`.`SaleID`";
         $query .= ", `PurchaseRequest`.`ClientID`, `PurchaseRequest`.`ApprovalStatus`, `User`.`RealName`";
         $query .= " FROM `Block`";
         $query .= " INNER JOIN `Orchard` ON `Block`.`OrchardID` = `Orchard`.`OrchardID`";
