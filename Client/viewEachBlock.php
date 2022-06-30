@@ -86,22 +86,24 @@
         <?php include($_SERVER['DOCUMENT_ROOT'] . "/Client/navigationBar.php"); ?>
 
         <main>
-            <table>
-                <h2>
-                    Block ID: <?php echo($blockID); ?>
-                </h2>
-                <thead>
-                    <tr>
-                        <td>No.</td>
-                        <td>Tree ID</td>
-                        <td>Species Name</td>
-                        <td>Location</td>
-                        <td>Plant Date</td>
-                    </tr>
-                </thead>
+            <div class="w3-container w3-theme-d4 w3-animate-opacity">
+                <h2 class="w3-center"> Block ID: <?php echo($blockID); ?></h2>
 
-                <?php displayTrees($conn, $blockID); ?>
-            </table>
+                <div class="w3-container w3-center" style="align-content:center;">
+                    <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
+                        <tr>
+                            <th>No.</th>
+                            <th>Tree ID</th>
+                            <th>Species Name</th>
+                            <th>Location</th>
+                            <th>Plant Date</th>
+                            <th>Action</th>
+                        </tr>
+
+                        <?php displayTrees($conn, $blockID); ?>
+                    </table>
+                </div>
+            </div>
         </main>
 
         <footer>
