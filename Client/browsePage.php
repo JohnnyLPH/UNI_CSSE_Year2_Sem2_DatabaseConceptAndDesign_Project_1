@@ -22,7 +22,12 @@
         $counter = 0;
 
         foreach($result as $row) {
-            if(!(empty($row["ClientID"]) || $row["ApprovalStatus"] != 1)) {
+            if (
+                !(empty($row["ClientID"]) ||
+                $row["ApprovalStatus"] != 1) ||
+                empty($row["SaleID"]) ||
+                $row["SaleID"] < 1
+            ) {
                 continue;
             }
 
