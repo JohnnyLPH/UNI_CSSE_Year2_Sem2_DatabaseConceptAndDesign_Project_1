@@ -21,9 +21,12 @@
     $totalPurchase = getPurchaseRequestCount($conn, 1);
 
     $allCompany = getAllCompany($conn);
+    $allSales = getAllOnSale($conn);
 
     foreach ($allCompany as $eachCompany){
         $listCompanyID[] = $eachCompany["UserID"];
+        $salebyCompanyID[] = count(getAllOnSale($conn,$eachCompany["UserID"]));
+        
     }
 
     $conn->close();
@@ -97,115 +100,85 @@
         </footer>
 
         <script>
+ 
             companyID = <?php echo json_encode($listCompanyID); ?>;            
+            salebycompanyID = <?php echo json_encode($salebyCompanyID); ?>;            
 
             //graph for company sales
 
-            /*const data0 = {
+            const data = {
                 labels: companyID,
                 datasets: [{
-                    label: '1',
+                    label: 'Average Sales (RM)',
                     backgroundColor: 'rgb(0, 131, 115, 0.7)',
                     borderColor: 'rgb(0, 82, 72)',
-                    data: trees,
-                },{
-                    label: '2',
-                    backgroundColor: 'rgb(0, 131, 115, 0.7)',
-                    borderColor: 'rgb(0, 82, 72)',
-                    data: trees,
+                    data: salebycompanyID,
                 }]
             };
+            
+            /*const DATA_COUNT = 7;
+            const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
 
-            const config0 = {
-                type: 'line',
-                data: data0,
-                options: {
-                    indexAxis: 'y',
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Average Monthly Block Price (RM)'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'Company ID'
-                            },
-                        }
-                    }
+            const labels = Utils.months({count: 7});
+            const data = {
+            labels: labels,
+            datasets: [
+                {
+                label: 'Dataset 1',
+                data: Utils.numbers(NUMBER_CFG),
+                borderColor: Utils.CHART_COLORS.red,
+                backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
+                },
+                {
+                label: 'Dataset 2',
+                data: Utils.numbers(NUMBER_CFG),
+                borderColor: Utils.CHART_COLORS.blue,
+                backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
                 }
-            };
+            ]
+            };*/
 
-            const chart0 = new Chart(
-                document.getElementById('chart0'),
-                config0
-            );*/
-
-            //config
             const config = {
                 type: 'line',
                 data: data,
                 options: {
                     responsive: true,
                     interaction: {
-                    mode: 'index',
-                    intersect: false,
-                    },
-                    stacked: false,
-                    plugins: {
-                    title: {
-                        display: true,
-                        text: 'Chart.js Line Chart - Multi Axis'
-                    }
-                    },
-                    scales: {
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-
-                        // grid line settings
-                        grid: {
-                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                        mode: 'index',
+                        intersect: false,
                         },
+                        stacked: false,
+                        plugins: {
+                        title: {
+                            display: true,
+                            /*text: 'Chart.js Line Chart - Multi Axis'*/
+                        }
+                        },
+                        scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            text: 'Average Monthly Block Price (RM)'
+                        },
+                        x: {
+                                title: {
+                                    display: true,
+                                    text: 'Company ID'
+                                }
+                        }
                     },
-                    }
-                },
+                }
             };
+
+            const chart = new Chart(
+                document.getElementById('chart'),
+                config
+            );
+
             
-            //setup
-            const DATA_COUNT = 7;
-            const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
 
-            const labels = Utils.months({count: 7});
-            const data = {
-                labels: labels,
-                datasets: [
-                    {
-                    label: 'Dataset 1',
-                    data: Utils.numbers(NUMBER_CFG),
-                    borderColor: Utils.CHART_COLORS.red,
-                    backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-                    yAxisID: 'y',
-                    },
-                    {
-                    label: 'Dataset 2',
-                    data: Utils.numbers(NUMBER_CFG),
-                    borderColor: Utils.CHART_COLORS.blue,
-                    backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
-                    yAxisID: 'y1',
-                    }
-                ]
-            };
-
-            const actions = [
+            /*const actions = [
                 {
                     name: 'Randomize',
                     handler(chart) {
@@ -215,12 +188,56 @@
                     chart.update();
                     }
                 },
-            ];
+                {
+                    name: 'Add Dataset',
+                    handler(chart) {
+                    const data = chart.data;
+                    const dsColor = Utils.namedColor(chart.data.datasets.length);
+                    const newDataset = {
+                        label: 'Dataset ' + (data.datasets.length + 1),
+                        backgroundColor: Utils.transparentize(dsColor, 0.5),
+                        borderColor: dsColor,
+                        data: Utils.numbers({count: data.labels.length, min: -100, max: 100}),
+                    };
+                    chart.data.datasets.push(newDataset);
+                    chart.update();
+                    }
+                },
+                {
+                    name: 'Add Data',
+                    handler(chart) {
+                    const data = chart.data;
+                    if (data.datasets.length > 0) {
+                        data.labels = Utils.months({count: data.labels.length + 1});
 
-            const chart = new Chart(
-                document.getElementById('chart'),
-                config
-            );
+                        for (let index = 0; index < data.datasets.length; ++index) {
+                        data.datasets[index].data.push(Utils.rand(-100, 100));
+                        }
+
+                        chart.update();
+                    }
+                    }
+                },
+                {
+                    name: 'Remove Dataset',
+                    handler(chart) {
+                    chart.data.datasets.pop();
+                    chart.update();
+                    }
+                },
+                {
+                    name: 'Remove Data',
+                    handler(chart) {
+                    chart.data.labels.splice(-1, 1); // remove the label first
+
+                    chart.data.datasets.forEach(dataset => {
+                        dataset.data.pop();
+                    });
+
+                    chart.update();
+                    }
+                }
+            ];*/
 
 
 
