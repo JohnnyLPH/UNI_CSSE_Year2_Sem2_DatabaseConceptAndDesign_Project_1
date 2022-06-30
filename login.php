@@ -161,7 +161,7 @@
                     ?>Login</h1>
 
                     <div class="fadeIn first">
-                        <img src="https://icon-library.com/images/username-icon/username-icon-11.jpg" id="icon" alt="User Icon" />
+                        <img src="/img/defaults/TealUserIcon.png" id="icon" alt="User Icon" />
                     </div>
                     <br>
                     <div>

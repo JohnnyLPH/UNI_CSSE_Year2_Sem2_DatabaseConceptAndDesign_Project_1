@@ -288,7 +288,7 @@
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://png.pngtree.com/png-vector/20190721/ourlarge/pngtree-business-meeting-with-client-illustration-concept-modern-flat-design-concept-png-image_1567633.jpg" id="icon" alt="Client Icon" />
+                    <img class="fadeIn first" src="/img/defaults/clientIcon.jpg" id="icon" alt="Client Icon" />
 
                     <form method="post" action="/Admin/editClient.php?ClientID=<?php
                         echo($clientID);

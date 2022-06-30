@@ -130,7 +130,7 @@
                     <h1>Admin Sign Up</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://img.freepik.com/free-vector/isometric-illustration-representing-man-pointing-screen-website-personal-profile-front-gadgets_30590-283.jpg" id="icon" alt="Comp Icon" />
+                    <img class="fadeIn first" src="/img/defaults/adminIcon.png" id="icon" alt="Comp Icon" />
 
                     <form method="post" action="/Admin/registerAdmin.php">
                         <table>

@@ -229,7 +229,7 @@
                     ?>:</h1>
                 </div>
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="Staff Icon" />
+                    <img class="fadeIn first" src="/img/defaults/staffIcon.jpg" id="icon" alt="Staff Icon" />
 
                     <form method="post" action="/Admin/editStaff.php?StaffID=<?php
                         echo($staffID);

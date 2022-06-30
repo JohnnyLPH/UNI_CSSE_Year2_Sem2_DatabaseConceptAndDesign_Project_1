@@ -176,7 +176,7 @@
                 </div>
 
                 <div id="formContentW2">
-                    <img class="fadeIn first" src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon45" alt="Comp Icon" />
+                    <img class="fadeIn first" src="/img/defaults/staffIcon.jpg" id="icon45" alt="Comp Icon" />
                     
                     <form method="post" action="/Admin/registerStaff.php">
                         <table>

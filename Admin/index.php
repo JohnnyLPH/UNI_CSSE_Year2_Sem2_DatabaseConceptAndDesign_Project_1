@@ -74,7 +74,7 @@
                 <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
                     <div class='data-value card fadeIn first'>
                         <div class='data-group'>
-                            <img src="https://img.freepik.com/free-vector/isometric-illustration-representing-man-pointing-screen-website-personal-profile-front-gadgets_30590-283.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/adminIcon.png" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalAdmin);
@@ -84,7 +84,7 @@
                     </div>
                     <div class='data-value card fadeIn second'>
                         <div class='data-group'>
-                            <img src="https://png.pngtree.com/png-vector/20200124/ourmid/pngtree-client-and-designer-working-together-graphic-design-3d-isometric-illustration-perfect-png-image_2133712.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/companyIcon.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalCompany);
@@ -94,7 +94,7 @@
                     </div>
                     <div class='data-value card fadeIn third'>
                         <div class='data-group'>
-                            <img src="https://thumbs.dreamstime.com/b/call-center-customer-support-hotline-operator-advises-client-online-technical-vector-illustration-139728240.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/staffIcon.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalStaff);
@@ -104,7 +104,7 @@
                     </div>
                     <div class='data-value card fadeIn fourth'>
                         <div class='data-group'>
-                            <img src="https://png.pngtree.com/png-vector/20190721/ourlarge/pngtree-business-meeting-with-client-illustration-concept-modern-flat-design-concept-png-image_1567633.jpg" id="icon" alt="User Icon" />
+                            <img src="/img/defaults/clientIcon.jpg" id="icon" alt="User Icon" />
                             <br>
                             <span class='overall-data'><?php
                                 echo($totalClient);
