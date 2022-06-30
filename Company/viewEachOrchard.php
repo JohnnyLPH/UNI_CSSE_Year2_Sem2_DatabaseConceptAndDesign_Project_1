@@ -31,6 +31,11 @@
 
     $orchardID = $queryString["OrchardID"];
     $result = $allOrchard[0];
+
+    $blockCount = getBlockCount($conn, $_SESSION["UserID"], $result["OrchardID"]);
+    $treeCount = getTreeCount($conn, $_SESSION["UserID"], $result["OrchardID"]);
+    $totalPurchaseCount = getPurchaseRequestCount($conn, -1, $_SESSION["UserID"], $result["OrchardID"]);
+    $successPurchaseCount = getPurchaseRequestCount($conn, 1, $_SESSION["UserID"], $result["OrchardID"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -147,28 +152,28 @@
                             <tr>
                                 <td>Total Block</td>
                                 <td><?php
-                                    echo(getBlockCount($conn, $_SESSION["UserID"], $result["OrchardID"]));
+                                    echo($blockCount);
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Total Tree</td>
                                 <td><?php
-                                    echo(getTreeCount($conn, $_SESSION["UserID"], $result["OrchardID"]));
+                                    echo($treeCount);
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Total Purchase Request</td>
                                 <td><?php
-                                    echo(getPurchaseRequestCount($conn, -1, $_SESSION["UserID"], $result["OrchardID"]));
+                                    echo($totalPurchaseCount);
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Success Client Purchase</td>
                                 <td><?php
-                                    echo(getPurchaseRequestCount($conn, 1, $_SESSION["UserID"], $result["OrchardID"]));
+                                    echo($successPurchaseCount);
                                 ?></td>
                             </tr>
                         </table>
@@ -180,30 +185,36 @@
                 </div>
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
-                    <form method="get" action="/Company/manageBlock.php">
-                        <input type="hidden" name="SearchKey" value="<?php
-                            echo($orchardID);
-                        ?>">
-                        <input type="hidden" name="SearchOption" value="1">
-                        <input class="fullW" type="submit" value="View Related Blocks">
-                    </form>
+                    <?php if ($blockCount > 0): ?>
+                        <form method="get" action="/Company/manageBlock.php">
+                            <input type="hidden" name="SearchKey" value="<?php
+                                echo($orchardID);
+                            ?>">
+                            <input type="hidden" name="SearchOption" value="1">
+                            <input class="fullW" type="submit" value="View Related Blocks">
+                        </form>
+                    <?php endif; ?>
 
-                    <form method="get" action="/Company/manageTree.php">
-                        <input type="hidden" name="SearchKey" value="<?php
-                            echo($orchardID);
-                        ?>">
-                        <input type="hidden" name="SearchOption" value="1">
-                        <input class="fullW" type="submit" value="View Related Trees">
-                    </form>
-                    
-                    <form method="get" action="/Company/managePurchase.php">
-                        <input type="hidden" name="SearchKey" value="<?php
-                            echo($orchardID);
-                        ?>">
-                        <input type="hidden" name="SearchOption" value="1">
-                        <input class="fullW" type="submit" value="View Related Purchases">
-                    </form>
-                    
+                    <?php if ($treeCount > 0): ?>
+                        <form method="get" action="/Company/manageTree.php">
+                            <input type="hidden" name="SearchKey" value="<?php
+                                echo($orchardID);
+                            ?>">
+                            <input type="hidden" name="SearchOption" value="1">
+                            <input class="fullW" type="submit" value="View Related Trees">
+                        </form>
+                    <?php endif; ?>
+                        
+                    <?php if ($totalPurchaseCount > 0): ?>
+                        <form method="get" action="/Company/managePurchase.php">
+                            <input type="hidden" name="SearchKey" value="<?php
+                                echo($orchardID);
+                            ?>">
+                            <input type="hidden" name="SearchOption" value="1">
+                            <input class="fullW" type="submit" value="View Related Purchases">
+                        </form>
+                    <?php endif; ?>
+                        
                     <form method="get" action="/Company/manageOrchard.php">
                         <input class="fullW" type="submit" value="Back to View All Orchards">
                     </form>

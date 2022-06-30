@@ -83,7 +83,7 @@
                                 <th>Admin ID</th>
                                 <th>Username</th>
                                 <th>Total Processed Request</th>
-                                <th>Total Accepted</th>
+                                <th>Total Approved</th>
                                 <th>Total Rejected</th>
                                 <th>Action</th>
                             </tr>

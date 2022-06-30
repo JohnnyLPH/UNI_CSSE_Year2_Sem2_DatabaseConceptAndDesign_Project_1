@@ -35,6 +35,12 @@
 
     $allPurchaseRequest = getAllPurchaseRequest($conn, -1, 0, 0, 0, 0, 0, $queryString["ClientID"]);
     $allOnSale = getAllOnSale($conn, 0, 0, 0, 0, $queryString["ClientID"]);
+
+    $blockCount = count(getBlockLatestClient($conn, 0, 0, 0, $result["UserID"]));
+    // $totalPurchaseCount = getPurchaseRequestCount($conn, -1, 0, 0, 0, 0, $result["UserID"]);
+    $totalPurchaseCount = count($allPurchaseRequest);
+    // $totalSaleCount = getOnSaleCount($conn, 0, 0, 0, $result["UserID"]);
+    $totalSaleCount = count($allOnSale);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -122,21 +128,21 @@
                             <tr>
                                 <td>Total Block Owned</td>
                                 <td><?php
-                                    echo(count(getBlockLatestClient($conn, 0, 0, 0, $result["UserID"])));
+                                    echo($blockCount);
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Total Purchase Request</td>
                                 <td><?php
-                                    echo(getPurchaseRequestCount($conn, -1, 0, 0, 0, 0, $result["UserID"]));
+                                    echo($totalPurchaseCount);
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Total Sale</td>
                                 <td><?php
-                                    echo(getOnSaleCount($conn, 0, 0, 0, $result["UserID"]));
+                                    echo($totalSaleCount);
                                 ?></td>
                             </tr>
                         </table>
@@ -252,21 +258,25 @@
                         ?> ***" style="max-width:100%;">
                     </form>
 
-                    <form method="get" action="/Admin/manageBlock.php">
-                        <input type="hidden" name="SearchKey" value="<?php
-                            echo($clientID);
-                        ?>">
-                        <input type="hidden" name="SearchOption" value="4">
-                        <input class="fullW" type="submit" value="View Related Blocks">
-                    </form>
+                    <?php if ($blockCount > 0): ?>
+                        <form method="get" action="/Admin/manageBlock.php">
+                            <input type="hidden" name="SearchKey" value="<?php
+                                echo($clientID);
+                            ?>">
+                            <input type="hidden" name="SearchOption" value="4">
+                            <input class="fullW" type="submit" value="View Related Blocks">
+                        </form>
+                    <?php endif; ?>
 
-                    <form method="get" action="/Admin/managePurchase.php">
-                        <input type="hidden" name="SearchKey" value="<?php
-                            echo($clientID);
-                        ?>">
-                        <input type="hidden" name="SearchOption" value="6">
-                        <input class="fullW" type="submit" value="View Related Purchases">
-                    </form>
+                    <?php if ($totalPurchaseCount > 0): ?>
+                        <form method="get" action="/Admin/managePurchase.php">
+                            <input type="hidden" name="SearchKey" value="<?php
+                                echo($clientID);
+                            ?>">
+                            <input type="hidden" name="SearchOption" value="6">
+                            <input class="fullW" type="submit" value="View Related Purchases">
+                        </form>
+                    <?php endif; ?>
                     
                     <form method="get" action="/Admin/manageClient.php">
                         <input class="fullW" type="submit" value="Back to View All Clients">

@@ -192,9 +192,6 @@
                 <br>
 
                 <div id="formFooter">
-                    <?php if ($queryString["UserType"] == "AD"): ?>
-                        <h2><a class="underlineHover" href="/Admin/registerAdmin.php">Sign Up</a></h2>
-                    <?php endif; ?>
                     <h2><a class="underlineHover" href="/index.php">Switch UserType</a></h2>
                 </div>
                 

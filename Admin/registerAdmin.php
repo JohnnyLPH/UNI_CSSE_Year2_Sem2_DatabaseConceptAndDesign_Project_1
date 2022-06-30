@@ -5,12 +5,12 @@
     require_once($_SERVER['DOCUMENT_ROOT'] . "/inputValidation.php");
 
     $tempLoginCheck = checkLogin($conn);
-    // Logged in.
-    if ($tempLoginCheck != 0) {
+    // Not logged in as Admin.
+    if ($tempLoginCheck != 4) {
         header("Location: /index.php");
         exit;
     }
-    
+
     $tempName = $tempRName = $tempEmail = $tempPass = $tempRPass = "";
     $registrationMsg = "";
     $passRegistration = false;
@@ -102,27 +102,31 @@
             }
         }
     }
-
     $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin: Registration Page</title>
+        <title>Admin: Manage Admin Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
-        <!--<link rel="stylesheet" href="/css/main.css">-->
-        <link rel="stylesheet" href="/css/form.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/formFont.css">
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-vivid.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
     </head>
 
     <body>
         <header>
-            
+            <div class="maintheme w3-container">
+                <h4 style="font-size: 36px">Admin: Manage Admin Page</h4>
+            </div>
         </header>
+
+        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Admin/navigationBar.php"); ?>
 
         <main>
             <div class="wrapper fadeInDown">
@@ -218,7 +222,7 @@
                     </form>
                     <br>
                     <div id="formFooter">
-                        <h2><a class="underlineHover" href="/login.php?UserType=AD">Back to Login</a><h2><br>
+                        <h2><a class="underlineHover" href="/Admin/manageAdmin.php">Back to Manage Admin</a><h2><br>
                     </div>
                     
                 </div>

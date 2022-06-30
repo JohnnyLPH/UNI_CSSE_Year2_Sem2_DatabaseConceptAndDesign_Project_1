@@ -31,6 +31,13 @@
 
     $companyID = $queryString["CompanyID"];
     $result = $allCompany[0];
+
+    $staffCount = getStaffCount($conn, $result["UserID"]);
+    $orchardCount = getOrchardCount($conn, $result["UserID"]);
+    $blockCount = getBlockCount($conn, $result["UserID"]);
+    $treeCount = getTreeCount($conn, $result["UserID"]);
+    $totalPurchaseCount = getPurchaseRequestCount($conn, -1, $result["UserID"]);
+    $successPurchaseCount = getPurchaseRequestCount($conn, 1, $result["UserID"]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -102,42 +109,42 @@
                             <tr>
                                 <td>Total Staff</td>
                                 <td><?php
-                                    echo(getStaffCount($conn, $result["UserID"]));
+                                    echo($staffCount);
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Total Orchard</td>
                                 <td><?php
-                                    echo(getOrchardCount($conn, $result["UserID"]));
+                                    echo($orchardCount);
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Total Block</td>
                                 <td><?php
-                                    echo(getBlockCount($conn, $result["UserID"]));
+                                    echo($blockCount);
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Total Tree</td>
                                 <td><?php
-                                    echo(getTreeCount($conn, $result["UserID"]));
+                                    echo($treeCount);
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Total Purchase Request</td>
                                 <td><?php
-                                    echo(getPurchaseRequestCount($conn, -1, $result["UserID"]));
+                                    echo($totalPurchaseCount);
                                 ?></td>
                             </tr>
 
                             <tr>
                                 <td>Success Client Purchase</td>
                                 <td><?php
-                                    echo(getPurchaseRequestCount($conn, 1, $result["UserID"]));
+                                    echo($successPurchaseCount);
                                 ?></td>
                             </tr>
                         </table>
@@ -163,37 +170,45 @@
                         ?> ***" style="max-width:100%;">
                     </form>
 
-                    <form method="get" action="/Admin/manageOrchard.php">
-                        <input type="hidden" name="SearchKey" value="<?php
-                            echo($companyID);
-                        ?>">
-                        <input type="hidden" name="SearchOption" value="1">
-                        <input class="fullW" type="submit" value="View Related Orchards">
-                    </form>
+                    <?php if ($orchardCount > 0): ?>
+                        <form method="get" action="/Admin/manageOrchard.php">
+                            <input type="hidden" name="SearchKey" value="<?php
+                                echo($companyID);
+                            ?>">
+                            <input type="hidden" name="SearchOption" value="1">
+                            <input class="fullW" type="submit" value="View Related Orchards">
+                        </form>
+                    <?php endif; ?>
 
-                    <form method="get" action="/Admin/manageBlock.php">
-                        <input type="hidden" name="SearchKey" value="<?php
-                            echo($companyID);
-                        ?>">
-                        <input type="hidden" name="SearchOption" value="1">
-                        <input class="fullW" type="submit" value="View Related Blocks">
-                    </form>
+                    <?php if ($blockCount > 0): ?>
+                        <form method="get" action="/Admin/manageBlock.php">
+                            <input type="hidden" name="SearchKey" value="<?php
+                                echo($companyID);
+                            ?>">
+                            <input type="hidden" name="SearchOption" value="1">
+                            <input class="fullW" type="submit" value="View Related Blocks">
+                        </form>
+                    <?php endif; ?>
 
-                    <form method="get" action="/Admin/manageTree.php">
-                        <input type="hidden" name="SearchKey" value="<?php
-                            echo($companyID);
-                        ?>">
-                        <input type="hidden" name="SearchOption" value="1">
-                        <input class="fullW" type="submit" value="View Related Trees">
-                    </form>
+                    <?php if ($treeCount > 0): ?>
+                        <form method="get" action="/Admin/manageTree.php">
+                            <input type="hidden" name="SearchKey" value="<?php
+                                echo($companyID);
+                            ?>">
+                            <input type="hidden" name="SearchOption" value="1">
+                            <input class="fullW" type="submit" value="View Related Trees">
+                        </form>
+                    <?php endif; ?>
                     
-                    <form method="get" action="/Admin/managePurchase.php">
-                        <input type="hidden" name="SearchKey" value="<?php
-                            echo($companyID);
-                        ?>">
-                        <input type="hidden" name="SearchOption" value="1">
-                        <input class="fullW" type="submit" value="View Related Purchases">
-                    </form>
+                    <?php if ($totalPurchaseCount > 0): ?>
+                        <form method="get" action="/Admin/managePurchase.php">
+                            <input type="hidden" name="SearchKey" value="<?php
+                                echo($companyID);
+                            ?>">
+                            <input type="hidden" name="SearchOption" value="1">
+                            <input class="fullW" type="submit" value="View Related Purchases">
+                        </form>
+                    <?php endif; ?>
                     
                     <form method="get" action="/Admin/manageCompany.php">
                         <input class="fullW" type="submit" value="Back to View All Companies">
