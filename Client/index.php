@@ -58,7 +58,7 @@
 
                     <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
                         <div class="card fadeIn first">
-                            <img src="https://i.pinimg.com/originals/07/20/ad/0720add75420ae4ad05075760c5c0723.jpg" id="icon" alt="Info" />
+                            <img src="/img/defaults/blockIcon.jpg" id="icon" alt="Info" />
                             <br>
                             <span class='overall-data'><?php
                                 echo("A")
@@ -67,7 +67,7 @@
                             <span class='data-title'> Blocks Owned</span>
                         </div>
                         <div class="card fadeIn second">
-                            <img src="https://i.pinimg.com/originals/07/20/ad/0720add75420ae4ad05075760c5c0723.jpg" id="icon" alt="Info" />
+                            <img src="/img/defaults/blockIcon.jpg" id="icon" alt="Info" />
                             <img src="https://jhinsite.com/wp-content/uploads/2018/02/available_now_banner_homeslider.png" id="oriImg" alt="Info" 
                                 style="position:absolute; top:0%; left:0%; width:70%; "/>
                             <br>

@@ -65,7 +65,7 @@
                         <h2 class="w3-center w3-bar-item" >Welcome, <?php
                             echo($_SESSION["Username"]);
                         ?></h2>
-                        <img src="https://cdn-icons-png.flaticon.com/512/270/270023.png" id="icon" alt="User Icon" /><br><br>
+                        <img src="/img/defaults/adminUserIcon.png" id="icon" alt="User Icon" /><br><br>
                     </div>
                     <button class="fullW" onclick="document.location='/Admin/reportCompany.php'">View Company Report</button><br><br>
                     <button class="fullW" onclick="document.location='/Admin/reportClient.php'">View Client Report</button><br><br>
