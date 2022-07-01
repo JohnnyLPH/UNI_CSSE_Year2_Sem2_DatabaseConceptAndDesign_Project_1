@@ -65,7 +65,7 @@
                     <div class="w3-center">
                         <h2 class="w3-center w3-bar-item" >Welcome, <?php
                             echo($_SESSION["Username"]);
-                        ?></h2>
+                        ?> ! &#129498;</h2>
                         <img src="/img/defaults/adminUserIcon.png" id="icon" alt="User Icon" /><br><br>
                     </div>
                     <button class="fullW" onclick="document.location='/Admin/reportCompany.php'">View Company Report</button><br><br>

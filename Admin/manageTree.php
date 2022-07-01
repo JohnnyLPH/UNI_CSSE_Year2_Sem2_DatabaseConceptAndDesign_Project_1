@@ -68,7 +68,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Manage Tree Page</h1>
+                <h1>&#127795; Admin: Manage Tree Page &#127795;</h1>
             </div>
         </header>
 

@@ -43,7 +43,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Manage Admin Page</h1>
+                <h1>&#129498; Admin: Manage Admin Page &#129498;</h1>
             </div>
         </header>
 
@@ -83,8 +83,8 @@
                                 <th>Admin ID</th>
                                 <th>Username</th>
                                 <th>Total Processed Request</th>
-                                <th>Total Approved</th>
-                                <th>Total Rejected</th>
+                                <th>Total Approved &#10004;</th>
+                                <th>Total Rejected &#10006;</th>
                                 <th>Action</th>
                             </tr>
                             <?php foreach ($allAdmin as $result): ?>

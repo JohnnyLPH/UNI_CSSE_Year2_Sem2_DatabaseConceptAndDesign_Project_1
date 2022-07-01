@@ -72,7 +72,7 @@
                     <div class="w3-center">
                         <h2 class="w3-center w3-bar-item" >Welcome, <?php
                             echo($_SESSION["Username"]);
-                        ?></h2>
+                        ?> ! &#129498;</h2>
                         <img src="/img/defaults/adminUserIcon.png" id="icon" alt="User Icon" /><br><br>
                     </div>
                     <button class="fullW" onclick="document.location='/Admin/reportCompany.php'">View Company Report</button><br><br>
@@ -82,7 +82,7 @@
                 </div>
                 
                 <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;">
-                    <h2>Summary of Recorded Sales</h2>
+                    <h2>Summary of Recorded Sales &#128176;</h2>
                 </div>
 
                 <!--<div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">

@@ -46,7 +46,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Home Page</h1>
+                <h1>&#127984; Admin: Home Page &#127984;</h1>
             </div>
         </header>
 
@@ -58,7 +58,7 @@
                     <div class="w3-center">
                         <h2 class="w3-center w3-bar-item" >Welcome, <?php
                             echo($_SESSION["Username"]);
-                        ?></h2>
+                        ?> ! &#129498;</h2>
                         <img src="/img/defaults/adminUserIcon.png" id="icon" alt="User Icon" /><br><br>
                     </div>
                     <button class="fullW" onclick="document.location='/Admin/reportCompany.php'">View Company Report</button><br><br>
@@ -68,7 +68,7 @@
                 </div>
                 
                 <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;">
-                    <h2>Your Summary:</h2>
+                    <h2>&#128203; Your Summary :</h2>
                 </div>
 
                 <div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
