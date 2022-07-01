@@ -82,7 +82,7 @@
                 </div>
                 
                 <div class="wrapper w3-container w3-threequarter w3-theme-d4" style="margin-left:25%;">
-                    <h2>Summary of Related Sales</h2>
+                    <h2>Summary of Recorded Sales</h2>
                 </div>
 
                 <!--<div class="w3-container w3-threequarter wrapper bgImgTree w3-animate-left" style="margin-left:25%;">
@@ -100,7 +100,7 @@
                 </div>
 
                 <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
-                    <h3><b>Monthly Block Worth </b></h3>
+                    <h3><b>Monthly Block Worth (RM) </b></h3>
                     <canvas id="chart" style="height:450px;width:100%;"></canvas>
                 </div>
             </div>
@@ -112,6 +112,7 @@
 
         <script>
             var tempColor;
+            // 0123456789ABCDEF, 16 possible char.
             function getRandomColor() {
                 var letters = '0123456789ABCDEF'.split('');
                 var color = '#';
@@ -121,6 +122,7 @@
                 tempColor = color;
                 return color;
             }
+
             //graph for company block worth
             const data = {
                 labels: <?php echo(json_encode($allMonth)); ?>,
@@ -130,7 +132,7 @@
                             label: '<?php echo($value); ?>',
                             backgroundColor: getRandomColor(),
                             borderColor: `${tempColor}`,
-                            data: [1000,2000,3000,4000,5000,6000,5000,8000,7000,6000,6000,5000],
+                            data: <?php echo(json_encode($availableBlockWorth[$key])); ?>
                         },
                     <?php endforeach; ?>
                 ]
@@ -205,12 +207,14 @@
                         }
                         },
                         scales: {
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            text: 'Average Monthly Block Price (RM)'
-                        },
+                        y: [
+                            {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                text: 'Average Monthly Block Price (RM)'
+                            }
+                        ],
                         x: {
                                 title: {
                                     display: true,
@@ -288,10 +292,6 @@
                     }
                 }
             ];*/
-
-
-
-
 
         </script>
     </body>

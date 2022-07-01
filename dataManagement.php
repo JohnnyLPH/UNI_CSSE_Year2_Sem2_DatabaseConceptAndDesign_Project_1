@@ -886,8 +886,10 @@
         $allOnSale = getAllOnSale($conn);
 
         $companyList = array();
-        $blockWorthList = array();
+        $blockWorthList = array();  // Store sum first, then replace with average.
         $monthList = array();
+
+        $tempSaleCount = array();  // For calculating average.
 
         // Get last 12 months.
         for ($i = 0; $i < 12; $i++) {
@@ -898,6 +900,53 @@
         foreach ($allOnSale as $onSale) {
             if (!array_key_exists($onSale["CompanyID"], $companyList)) {
                 $companyList[$onSale["CompanyID"]] = "Company ID " . $onSale["CompanyID"];
+                $blockWorthList[$onSale["CompanyID"]] = array();
+                $tempSaleCount[$onSale["CompanyID"]] = array();
+
+                for ($i = 0; $i < count($monthList); $i++) {
+                    $blockWorthList[$onSale["CompanyID"]][] = 0;
+                    $tempSaleCount[$onSale["CompanyID"]][] = 0;
+                }
+            }
+
+            // Check from the closest month.
+            for ($i = count($monthList) - 1; $i > -1; $i--) {
+                // Store if the sale date if within the current month.
+                if (
+                    $onSale["SaleDate"] > $monthList[$i] &&
+                    $onSale["SaleDate"] < date("Y-m", strtotime($monthList[$i] . " +1 months"))
+                ) {
+                    $blockWorthList[$onSale["CompanyID"]][$i] += $onSale["SalePrice"];
+                    $tempSaleCount[$onSale["CompanyID"]][$i]++;
+                    break;
+                }
+            }
+            
+            ksort($blockWorthList[$onSale["CompanyID"]]);
+            ksort($tempSaleCount[$onSale["CompanyID"]]);
+        }
+
+        foreach ($tempSaleCount as $key => $subList) {
+            $tempBlockWorth = 0;
+
+            foreach ($subList as $subKey => $value) {
+                // Found at least 1 sale.
+                if ($value > 0) {
+                    $blockWorthList[$key][$subKey] = $tempBlockWorth = $blockWorthList[$key][$subKey] / $value;
+                }
+                // No sale for the month, use estimation based on available value for next months.
+                else {
+                    // Forward check.
+                    for ($i = $subKey + 1; $i < count($subList); $i++) {
+                        if ($subList[$i] > 0) {
+                            // Average between 2.
+                            $tempBlockWorth = ($tempBlockWorth + ($blockWorthList[$key][$i] / $subList[$i])) / 2;
+                            break;
+                        }
+                    }
+
+                    $blockWorthList[$key][$subKey] = $tempBlockWorth;
+                }
             }
         }
 
