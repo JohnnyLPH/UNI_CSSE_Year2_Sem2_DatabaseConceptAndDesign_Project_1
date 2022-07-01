@@ -99,12 +99,23 @@
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-vivid.css">
     <!--<link rel="shortcut icon" href="/favicon.ico">-->
     <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
+    <script src="{{url('bootstrap')}}/jquery-3.2.1.js"></script>
+    <script src="{{url('bootstrap')}}/js/bootstrap.min.js"></script>
+
+    <script>
+        var loadFile = function(event) {
+              var image = document.getElementById('show_image');
+              image.src=URL.createObjectURL(event.target.files[0]);
+          };
+    </script>
+
 </head>
 <body>
     <header>
         <div class="maintheme w3-container">
             <h4 style="font-size: 36px">Staff: Tree Update</h4>
-        </div>  
+        </div>
+        
     </header>
 
     <?php include($_SERVER['DOCUMENT_ROOT'] . "/staff/navigationBar.php"); ?>
@@ -164,7 +175,9 @@
                     </div>
 
                     <label for="treeimage"><h3>Image: </h3></label>
-                    <input class="fullW95" type="file" id="treeimage" name="treeimage" accept="image/png, image/jpg, image/jpeg" required><br>
+                    <input class="fullW95" type="file" id="treeimage" onchange="loadFile(event)" name="treeimage" accept="image/png, image/jpg, image/jpeg" required><br>
+                    <img id="show_image" width="300">
+                    <br>
 
                     <label for="updatedate"><h3>Update Date: </h3></label>
                     <input class="fullW95" type="date" id="updatedate" name="updatedate" value="<?php echo date('Y-m-d'); ?>" readonly><br>
@@ -173,6 +186,7 @@
                 </form>
             </div>
         </div>
+        
     </main>
 </body>
 </html>
