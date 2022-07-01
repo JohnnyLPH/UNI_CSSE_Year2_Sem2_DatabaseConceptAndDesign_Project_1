@@ -269,6 +269,13 @@
         <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-vivid.css">
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
+
+        <script>
+            var previewImage = function(event) {
+                var image = document.getElementById('icon');
+                image.src = URL.createObjectURL(event.target.files[0]);
+            };
+        </script>
     </head>
 
     <body>
@@ -311,7 +318,7 @@
                                         <label for="Photo">
                                             New Profile Picture (Optional):
                                         </label><br>
-                                        <input type="file" id="Photo" name="Photo" accept="image/png, image/jpg, image/jpeg">
+                                        <input type="file" id="Photo" name="Photo" accept="image/png, image/jpg, image/jpeg" onchange="previewImage(event)">
                                     </div>
                                 </td>
                             </tr>

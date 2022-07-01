@@ -184,9 +184,10 @@
 
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script>
-            $(function(){
-                $("#Country").select2();
-            }); 
+            var previewImage = function(event) {
+                var image = document.getElementById('icon45');
+                image.src = URL.createObjectURL(event.target.files[0]);
+            };
         </script>
     </head>
 
@@ -227,7 +228,7 @@
                                         <label for="ClientPfp">
                                             Profile Picture:
                                         </label><br>
-                                        <input type="file" id="ClientPfp" name="ClientPfp" accept="image/png, image/jpg, image/jpeg" required>
+                                        <input type="file" id="ClientPfp" name="ClientPfp" accept="image/png, image/jpg, image/jpeg" onchange="previewImage(event)" required>
                                     </div>
                                 </td>
                             </tr>
