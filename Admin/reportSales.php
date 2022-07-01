@@ -111,13 +111,42 @@
         </footer>
 
         <script>
+            var counter = 0;
+            const preset = [
+                'rgb(216,51,74)',
+                'rgb(252,110,81)',
+                'rgb(255,206,84)',
+                'rgb(160,212,10)',
+                'rgb(72,207,173)',
+                'rgb(79,193,233)',
+                'rgb(93,156,236)',
+                'rgb(128,103,18)',
+                'rgb(172,146,23)',
+                'rgb(236,135,19)'
+            ];
+            
             var tempColor;
+
             // 0123456789ABCDEF, 16 possible char.
             function getRandomColor() {
                 var letters = '0123456789ABCDEF'.split('');
                 var color = '#';
                 for (var i = 0; i < 6; i++ ) {
                     color += letters[Math.floor(Math.random() * 16)];
+                }
+                tempColor = color;
+                return color;
+            }
+
+            function getPresetColor() {
+                var color;
+                if(counter!=0 && counter<=10 ){
+                    color = preset[counter];
+                    counter++;
+                }else{
+                    counter=0;
+                    color = preset[counter];
+                    counter++;
                 }
                 tempColor = color;
                 return color;
@@ -130,7 +159,7 @@
                     <?php foreach($availableCompany as $key => $value): ?>
                         {
                             label: '<?php echo($value); ?>',
-                            backgroundColor: getRandomColor(),
+                            backgroundColor: getPresetColor(),
                             borderColor: `${tempColor}`,
                             data: <?php echo(json_encode($availableBlockWorth[$key])); ?>
                         },
