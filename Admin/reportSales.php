@@ -29,6 +29,11 @@
         
     }
 
+    $availableCompany = $availableBlockWorth = $allMonth = NULL;
+    // Function in dataManagement file.
+    getMonthlyBlockWorth($conn, $availableCompany, $availableBlockWorth, $allMonth);
+    // var_dump($allMonth);
+
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -95,7 +100,7 @@
                 </div>
 
                 <div class="w3-container w3-threequarter wrapper w3-animate-left w3-theme-l5" style="margin-left:25%;">
-                    <h3><b>Monthly Average Sales </b></h3>
+                    <h3><b>Monthly Block Worth </b></h3>
                     <canvas id="chart" style="height:450px;width:100%;"></canvas>
                 </div>
             </div>
@@ -106,37 +111,61 @@
         </footer>
 
         <script>
- 
-            companyID = <?php echo json_encode($listCompanyID); ?>;            
-            salebycompanyID = <?php echo json_encode($salebyCompanyID); ?>;            
-
-            //graph for company sales
-
+            var tempColor;
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF'.split('');
+                var color = '#';
+                for (var i = 0; i < 6; i++ ) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                tempColor = color;
+                return color;
+            }
+            //graph for company block worth
             const data = {
-                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
-                datasets: [{
-                    label: 'Company A',
-                    backgroundColor: 'rgb(216,51,74)',
-                    borderColor: 'rgb(216,51,74)',
-                    data: [1000,2000,3000,4000,5000,6000,5000,8000,7000,6000,6000,5000],
-                },{
-                    label: 'Company B',
-                    backgroundColor: 'rgb(252,110,81)',
-                    borderColor: 'rgb(252,110,81)',
-                    data: [2000,3000,5000,3000,3000,4500,3400,2500,4000,4500,5000,6000],
-                },{
-                    label: 'Company C',
-                    backgroundColor: 'rgb(255,206,84)',
-                    borderColor: 'rgb(255,206,84)',
-                    data: [3000,3000,3000,3000,4000,4500,4500,6000,5500,5500,5000,4500],
-                },{
-                    label: 'Company D',
-                    backgroundColor: 'rgb(160,212,104)',
-                    borderColor: 'rgb(160,212,104)',
-                    data: [4000,5000,3500,6000,5500,5000,8000,5500,4500,5000,5000,6500],
-                }]
+                labels: <?php echo(json_encode($allMonth)); ?>,
+                datasets: [
+                    <?php foreach($availableCompany as $key => $value): ?>
+                        {
+                            label: '<?php echo($value); ?>',
+                            backgroundColor: getRandomColor(),
+                            borderColor: `${tempColor}`,
+                            data: [1000,2000,3000,4000,5000,6000,5000,8000,7000,6000,6000,5000],
+                        },
+                    <?php endforeach; ?>
+                ]
             };
             
+            // const data = {
+            //     labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
+            //     datasets: [
+            //         {
+            //             label: 'Company A',
+            //             backgroundColor: 'rgb(216,51,74)',
+            //             borderColor: 'rgb(216,51,74)',
+            //             data: [1000,2000,3000,4000,5000,6000,5000,8000,7000,6000,6000,5000],
+            //         },
+            //         {
+            //             label: 'Company B',
+            //             backgroundColor: 'rgb(252,110,81)',
+            //             borderColor: 'rgb(252,110,81)',
+            //             data: [2000,3000,5000,3000,3000,4500,3400,2500,4000,4500,5000,6000],
+            //         },
+            //         {
+            //             label: 'Company C',
+            //             backgroundColor: 'rgb(255,206,84)',
+            //             borderColor: 'rgb(255,206,84)',
+            //             data: [3000,3000,3000,3000,4000,4500,4500,6000,5500,5500,5000,4500],
+            //         },
+            //         {
+            //             label: 'Company D',
+            //             backgroundColor: 'rgb(160,212,104)',
+            //             borderColor: 'rgb(160,212,104)',
+            //             data: [4000,5000,3500,6000,5500,5000,8000,5500,4500,5000,5000,6500],
+            //         }
+            //     ]
+            // };
+
             /*const DATA_COUNT = 7;
             const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
 

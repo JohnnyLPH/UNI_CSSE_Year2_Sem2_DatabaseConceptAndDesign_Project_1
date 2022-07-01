@@ -91,7 +91,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
+    <head>
         <title>Client: Browse Sale Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
@@ -101,38 +101,38 @@
         <!--<link rel="shortcut icon" href="/favicon.ico">-->
         <link rel="shortcut icon" href="https://icon-library.com/images/tree-icon/tree-icon-23.jpg">
     </head>
-<body>
-    <header>
-        <div class="maintheme w3-container">
-            <h1>Client: Browse Sale Page</h1>
-        </div>
-    </header>
-
-    <?php include($_SERVER['DOCUMENT_ROOT'] . "/Client/navigationBar.php"); ?>
-
-    <main>
-        <div class="w3-container w3-theme-d4 w3-animate-opacity">
-            <h2 class="w3-center">On Sale Blocks:</h2>
-
-            <div class="w3-container w3-center" style="align-content:center;">
-                <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
-                    <tr>
-                        <th>No.</th>
-                        <th>Block ID</th>
-                        <th>Company</th>
-                        <th>Orchard Location</th>
-                        <th>Total Trees</th>
-                        <th>Seller ID</th>
-                        <th>Sale ID</th>
-                        <th>Sale Price</th>
-                        <th>Sale Date</th>
-                        <th>Action</th>
-                    </tr>
-
-                    <?php displayOnSaleBlocks($conn); ?>
-                </table>
+    <body>
+        <header>
+            <div class="maintheme w3-container">
+                <h1>Client: Browse Sale Page</h1>
             </div>
-    </main>
+        </header>
 
-</body>
+        <?php include($_SERVER['DOCUMENT_ROOT'] . "/Client/navigationBar.php"); ?>
+
+        <main>
+            <div class="w3-container w3-theme-d4 w3-animate-opacity">
+                <h2 class="w3-center">On Sale Blocks:</h2>
+
+                <div class="w3-container w3-center" style="align-content:center;">
+                    <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
+                        <tr>
+                            <th>No.</th>
+                            <th>Block ID</th>
+                            <th>Company</th>
+                            <th>Orchard Location</th>
+                            <th>Total Trees</th>
+                            <th>Seller ID</th>
+                            <th>Sale ID</th>
+                            <th>Sale Price</th>
+                            <th>Sale Date</th>
+                            <th>Action</th>
+                        </tr>
+
+                        <?php displayOnSaleBlocks($conn); ?>
+                    </table>
+                </div>
+        </main>
+
+    </body>
 </html>

@@ -879,6 +879,34 @@
         return $allRow;
     }
 
+    // For Graph: Block worth, based on Average Sale Price for the last 12 months.
+    // If no sale in a month, use price from previous month.
+    // Pass by reference, modify original variables.
+    function getMonthlyBlockWorth($conn, &$companyList, &$blockWorthList, &$monthList) {
+        $allOnSale = getAllOnSale($conn);
+
+        $companyList = array();
+        $blockWorthList = array();
+        $monthList = array();
+
+        // Get last 12 months.
+        for ($i = 0; $i < 12; $i++) {
+            $backCount = 11 - $i;
+            $monthList[] = date("Y-m", strtotime(date('Y-m-01') . " -$backCount months"));
+        }
+
+        foreach ($allOnSale as $onSale) {
+            if (!array_key_exists($onSale["CompanyID"], $companyList)) {
+                $companyList[$onSale["CompanyID"]] = "Company ID " . $onSale["CompanyID"];
+            }
+        }
+
+        // Sort by key (CompanyID).
+        ksort($companyList);
+        ksort($blockWorthList);
+        return;
+    }
+
     // Return PurchaseRequest ApprovalStatus string.
     function getApprovalStatusStr($approvalStatus) {
         if ($approvalStatus < 1) {
