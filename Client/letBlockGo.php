@@ -165,11 +165,16 @@
                                     ?></td> -->
                                     
                                     <td>
-                                        <form method="GET" action="/Client/viewEachBlock.php">
-                                            <input type="hidden" name="BlockID" value="<?php
-                                                echo($result["BlockID"]);
-                                            ?>">
-                                            <input type="submit" name="view_block" value="View">
+                                        <form action="/Client/sellAuth.php" method="get">
+                                            <table>
+                                                <input type="hidden" name="block_id" id="block_id" value= <?php echo("\" " . $result["BlockID"] . "\"") ?>>
+                                                <label for="sale_price">Sale Price</label>
+                                                <span>
+                                                    <input type="number" name="sale_price" min="5000" step="1000" placeholder="Min 5000">
+
+                                                    <input type="submit" value="Sell">
+                                                </span>
+                                            </table>
                                         </form>
                                     </td>
                                 </tr>
