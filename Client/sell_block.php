@@ -155,7 +155,7 @@
                             <tr class="fadeIn sixth">
                                 <td colspan="2">
                                     <span class="error-message">
-                                        * WARNING: Once confirmed, the status cannot be changed again! *
+                                        * WARNING: Once confirmed, You can't undo the process! *
                                     </span>
                                 </td>
                             </tr>

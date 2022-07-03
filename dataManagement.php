@@ -626,7 +626,7 @@
     // Return all rows of Orchard (based on CompanyID, OrchardID, BlockID, TreeID, UpdateID, StaffID if provided).
     function getAllTreeUpdate($conn, $companyID = 0, $orchardID = 0, $blockID = 0, $treeID = 0, $updateID = 0, $staffID = 0) {
         $query = "SELECT `TreeUpdate`.`UpdateID`, `TreeUpdate`.`UpdateDate`, `TreeUpdate`.`TreeImage`";
-        $query .= ", `TreeUpdate`.`TreeHeight`, `TreeUpdate`.`Diameter`, `TreeUpdate`.`Status`";
+        $query .= ", `TreeUpdate`.`TreeHeight`, `TreeUpdate`.`Diameter`, `TreeUpdate`.`Status`, `TreeUpdate`.`StaffID`";
         $query .= ", `Tree`.`TreeID`, `Tree`.`BlockID`";
         $query .= " FROM `TreeUpdate`";
         $query .= " INNER JOIN `Tree` ON `TreeUpdate`.`TreeID` = `Tree`.`TreeID`";
