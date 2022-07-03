@@ -17,6 +17,33 @@
     $result = mysqli_fetch_array($img);
     $imgPath = $result["Photo"];
 
+    $allBlockOwned = getBlockLatestClient($conn, 0, 0, 0, $_SESSION["UserID"]);
+    
+    // Count owned block.
+    $ownedBlockCount = count($allBlockOwned);
+
+    // Count tree in owned block.
+    $ownedTreeCount = 0;
+    foreach ($allBlockOwned as $eachBlock) {
+        $ownedTreeCount += getTreeCount($conn, 0, 0, $eachBlock["BlockID"]);
+    }
+
+    // Count available block (OnSale).
+    $availableBlockCount = 0;
+    $tempBlockOnSale = getBlockLatestClient($conn);
+    foreach ($tempBlockOnSale as $eachBlock) {
+        if (
+            empty($eachBlock["SaleID"]) ||
+            (
+                $eachBlock["ClientID"] > 0 &&
+                $eachBlock["ApprovalStatus"] == 1
+            )
+        ) {
+            continue;
+        }
+        $availableBlockCount++;
+    }
+
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -61,8 +88,7 @@
                             <img src="/img/defaults/blockIcon.jpg" id="icon" alt="Info" />
                             <br>
                             <span class='overall-data'><?php
-                                echo("A")
-                                //echo($var);
+                                echo($ownedBlockCount);
                             ?></span>
                             <span class='data-title'> Blocks Owned</span>
                         </div>
@@ -72,8 +98,7 @@
                                 style="position:absolute; top:0%; left:0%; width:70%; "/>
                             <br>
                             <span class='overall-data'><?php
-                                echo("B")
-                                //echo($var);
+                                echo($availableBlockCount);
                             ?></span>
                             <span class='data-title'> Blocks Available</span>
                         </div>
@@ -81,8 +106,7 @@
                             <img src="https://static.vecteezy.com/system/resources/thumbnails/003/089/451/small/forest-scenery-background-free-vector.jpg" id="icon" alt="Info" />
                             <br>
                             <span class='overall-data'><?php
-                                echo("C")
-                                //echo($var);
+                                echo($ownedTreeCount);
                             ?></span>
                             <span class='data-title'>Trees in your Block</span>
                         </div>
