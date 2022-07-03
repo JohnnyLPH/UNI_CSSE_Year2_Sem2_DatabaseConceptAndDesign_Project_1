@@ -143,6 +143,7 @@
                                 <th>Company ID</th>
                                 <th>Total Tree</th>
                                 <th>Client ID (Owner)</th>
+                                <th>Total Sale</th>
                                 <th>Success Client Purchase</th>
                                 <th>Action</th>
                             </tr>
@@ -179,6 +180,12 @@
                                         else {
                                             echo("None");
                                         }
+                                    ?></td>
+
+                                    <td><?php
+                                        echo(getOnSaleCount(
+                                            $conn, 0, 0, $result["BlockID"]
+                                        ));
                                     ?></td>
 
                                     <td><?php

@@ -55,6 +55,7 @@
     $successPurchaseCount = getPurchaseRequestCount(
         $conn, 1, $result["CompanyID"], $result["OrchardID"], $result["BlockID"]
     );
+    $totalOnSaleCount = count($allOnSale);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,6 +85,15 @@
             <div class="w3-row">
                 <div class="w3-container w3-quarter w3-sidebar w3-bar-block w3-theme-d5" style="width:25%;">
                     <br>
+                    <?php if ($totalOnSaleCount < 1): ?>
+                        <form method="get" action="/Admin/editBlock.php">
+                            <input type="hidden" name="BlockID" value="<?php
+                                echo($blockID);
+                            ?>">
+                            <input class="fullW" type="submit" value="Set Initial Sale Price" style="max-width:100%;">
+                        </form>
+                    <?php endif; ?>
+
                     <form method="get" action="/Admin/deleteBlock.php">
                         <input type="hidden" name="BlockID" value="<?php
                             echo($blockID);
@@ -185,6 +195,13 @@
                             <td>Client Name (Owner)</td>
                             <td><?php
                                 echo($clientName);
+                            ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Total Sale</td>
+                            <td><?php
+                                echo($totalOnSaleCount);
                             ?></td>
                         </tr>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 30, 2022 at 11:38 AM
+-- Generation Time: Jul 03, 2022 at 07:31 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -71,6 +71,7 @@ INSERT INTO `block` (`BlockID`, `OrchardID`) VALUES
 (5, 5),
 (10, 5),
 (11, 5),
+(27, 5),
 (21, 10),
 (23, 10),
 (25, 12);
@@ -103,7 +104,8 @@ INSERT INTO `client` (`UserID`, `Address`, `Country`, `Photo`) VALUES
 (27, 'No 99, Street 99.', 'Austria', '/img/client/clientID27_2022-06-29_1656507296.jpg'),
 (30, 'No 1, Street A.', 'Benin', '/img/client/clientID30_2022-06-29_1656507199.jpg'),
 (41, 'No B, Street Client B.', 'Australia', '/img/client/clientID41_2022-06-29_1656507093.jpg'),
-(42, 'No D, Street D.', 'China', '/img/client/clientID42_2022-06-29_1656507876.jpg');
+(42, 'No D, Street D.', 'China', '/img/client/clientID42_2022-06-29_1656507876.jpg'),
+(53, 'No E, Street E.', 'Denmark', '/img/client/clientID53_2022-07-01_1656684586.jpg');
 
 -- --------------------------------------------------------
 
@@ -165,7 +167,15 @@ INSERT INTO `onsale` (`SaleID`, `BlockID`, `SalePrice`, `SaleDate`, `SellerID`) 
 (18, 21, 14912, '2022-06-27 22:36:28', NULL),
 (20, 23, 12345, '2022-06-28 12:38:27', NULL),
 (22, 23, 10000, '2022-06-29 23:43:54', NULL),
-(23, 25, 14111, '2022-06-30 14:31:43', NULL);
+(23, 25, 14111, '2022-06-30 14:31:43', NULL),
+(25, 8, 20000, '2022-06-30 21:30:21', 5),
+(26, 27, 30000, '2022-07-01 17:19:40', NULL),
+(27, 5, 15000, '2022-07-03 10:50:25', 3),
+(28, 14, 15000, '2022-07-03 13:19:29', NULL),
+(29, 13, 20000, '2022-07-03 13:21:31', NULL),
+(30, 12, 6000, '2022-07-03 13:21:49', NULL),
+(31, 11, 8000, '2022-07-03 13:22:18', NULL),
+(32, 10, 9000, '2022-07-03 13:22:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -228,7 +238,8 @@ INSERT INTO `purchaserequest` (`RequestID`, `SaleID`, `ClientID`, `RequestDate`,
 (10, 9, 5, '2022-06-27 13:54:38', 10000, 23, 1),
 (11, 1, 4, '2022-06-28 15:12:45', 12000, 23, 2),
 (14, 7, 4, '2022-06-30 11:53:55', 10000, NULL, 2),
-(15, 7, 1, '2022-06-30 15:51:26', 20000, NULL, 0);
+(15, 7, 1, '2022-06-30 15:51:26', 20000, NULL, 0),
+(17, 8, 27, '2022-06-30 21:56:59', 10000, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -414,7 +425,8 @@ INSERT INTO `user` (`UserID`, `Username`, `Email`, `PasswordHash`, `RealName`, `
 (41, 'clientC', 'clientC@gmail.com', '$2y$10$sVkkp8iVFEFA.p5Mbjfgw.Z1EMbrP.zlRhpL65LLBaFRDZWSzAAja', 'Client C', 'CL'),
 (42, 'clientD', 'clientD@gmail.com', '$2y$10$19IhNIspio8o7G6V8jTO6uhBhAY14xhL6Xe8XJAl7mQOJ5t1pbaI2', 'Client D', 'CL'),
 (49, 'adminA', 'adminA@gmail.com', '$2y$10$44ZJ72pV5/2ulxK8/la8De8a0rNL2tOgErPm3wf3WPICSwiQNXjPm', 'Admin A', 'AD'),
-(50, 'adminB', 'adminB@gmail.com', '$2y$10$RPMp58PPh41KToECWI5ofOWA3Aqv2BqSctzc1/pXEpBVRNGIoU.4C', 'Admin B', 'AD');
+(50, 'adminB', 'adminB@gmail.com', '$2y$10$RPMp58PPh41KToECWI5ofOWA3Aqv2BqSctzc1/pXEpBVRNGIoU.4C', 'Admin B', 'AD'),
+(53, 'clientE', 'clientE@gmail.com', '$2y$10$66wSPHZRMAoii0nZmZNJye2qcARxNlG8UI6numZyi2zbHTaxBt3p2', 'Client E', 'CL');
 
 --
 -- Indexes for dumped tables
@@ -505,13 +517,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `block`
 --
 ALTER TABLE `block`
-  MODIFY `BlockID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `BlockID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `onsale`
 --
 ALTER TABLE `onsale`
-  MODIFY `SaleID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `SaleID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `orchard`
@@ -523,7 +535,7 @@ ALTER TABLE `orchard`
 -- AUTO_INCREMENT for table `purchaserequest`
 --
 ALTER TABLE `purchaserequest`
-  MODIFY `RequestID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `RequestID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tree`
@@ -541,7 +553,7 @@ ALTER TABLE `treeupdate`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `UserID` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- Constraints for dumped tables

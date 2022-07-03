@@ -55,6 +55,7 @@
     $successPurchaseCount = getPurchaseRequestCount(
         $conn, 1, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
     );
+    $totalOnSaleCount = count($allOnSale);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -153,6 +154,13 @@
                             <td>Client Name (Owner)</td>
                             <td><?php
                                 echo($clientName);
+                            ?></td>
+                        </tr>
+
+                        <tr>
+                            <td>Total Sale</td>
+                            <td><?php
+                                echo($totalOnSaleCount);
                             ?></td>
                         </tr>
 

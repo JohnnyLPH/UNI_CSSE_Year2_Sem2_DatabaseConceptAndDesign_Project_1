@@ -127,6 +127,7 @@
                                 <th>Orchard ID</th>
                                 <th>Total Tree</th>
                                 <th>Client ID (Owner)</th>
+                                <th>Total Sale</th>
                                 <th>Success Client Purchase</th>
                                 <th>Action</th>
                             </tr>
@@ -159,6 +160,12 @@
                                         else {
                                             echo("None");
                                         }
+                                    ?></td>
+
+                                    <td><?php
+                                        echo(getOnSaleCount(
+                                            $conn, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
+                                        ));
                                     ?></td>
 
                                     <td><?php
