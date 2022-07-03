@@ -43,7 +43,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Manage Company Page</h1>
+                <h1>Admin: Manage Company Page &#128035;</h1>
             </div>
         </header>
 
@@ -86,7 +86,7 @@
                                 <th>Total Block</th>
                                 <th>Total Tree</th>
                                 <th>Success Client Purchase</th>
-                                <th>Action</th>
+                                <th>Action &#129488;</th>
                             </tr>
                             <?php foreach ($allCompany as $result): ?>
                                 <tr>

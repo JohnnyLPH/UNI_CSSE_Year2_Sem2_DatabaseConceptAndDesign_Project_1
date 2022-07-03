@@ -43,7 +43,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Manage Client Page</h1>
+                <h1>Admin: Manage Client Page &#128030;</h1>
             </div>
         </header>
 
@@ -85,7 +85,7 @@
                                 <th>Total Block Owned</th>
                                 <th>Total Purchase Request</th>
                                 <th>Total Sale</th>
-                                <th>Action</th>
+                                <th>Action &#129488;</th>
                             </tr>
                             <?php foreach ($allClient as $result): ?>
                                 <tr>

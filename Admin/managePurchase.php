@@ -78,7 +78,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Manage Purchase Page</h1>
+                <h1>Admin: Manage Purchase Page &#128177;</h1>
             </div>
         </header>
 
@@ -170,7 +170,7 @@
                                 <th>Request Date</th>
                                 <th>Request Price (RM)</th>
                                 <th>Approval Status</th>
-                                <th>Action</th>
+                                <th>Action &#129488;</th>
                             </tr>
                             <?php foreach ($allPurchaseRequest as $result): ?>
                                 <tr>

@@ -57,7 +57,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Home Page</h1>
+                <h1>&#127984; Admin: Home Page &#127984;</h1>
             </div>
         </header>
 
