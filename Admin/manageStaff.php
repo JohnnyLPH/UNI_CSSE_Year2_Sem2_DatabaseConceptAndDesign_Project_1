@@ -60,7 +60,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Manage Staff Page</h1>
+                <h1>Admin: Manage Staff Page &#128029;</h1>
             </div>
         </header>
 
@@ -120,7 +120,7 @@
                                 <th>Username</th>
                                 <th>Salary</th>
                                 <th>Total Tree Update</th>
-                                <th>Action</th>
+                                <th>Action &#129488;</th>
                             </tr>
                             <?php foreach ($allStaff as $result): ?>
                                 <tr>

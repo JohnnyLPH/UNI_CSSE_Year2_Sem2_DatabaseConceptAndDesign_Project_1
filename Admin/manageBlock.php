@@ -68,7 +68,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Manage Block Page</h1>
+                <h1>Admin: Manage Block Page &#128027;</h1>
             </div>
         </header>
 
@@ -145,7 +145,7 @@
                                 <th>Client ID (Owner)</th>
                                 <th>Total Sale</th>
                                 <th>Success Client Purchase</th>
-                                <th>Action</th>
+                                <th>Action &#129488;</th>
                             </tr>
                             <?php foreach ($allBlock as $result): ?>
                                 <tr>

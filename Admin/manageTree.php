@@ -144,7 +144,7 @@
                                 <th>Company ID</th>
                                 <th>Tree Species</th>
                                 <th>Tree Plant Date</th>
-                                <th>Action</th>
+                                <th>Action &#129488;</th>
                             </tr>
                             <?php foreach ($allTree as $result): ?>
                                 <tr>

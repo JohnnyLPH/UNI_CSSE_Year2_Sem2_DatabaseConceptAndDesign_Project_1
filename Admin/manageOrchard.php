@@ -60,7 +60,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Admin: Manage Orchard Page</h1>
+                <h1>Admin: Manage Orchard Page &#128012;</h1>
             </div>
         </header>
 
@@ -119,7 +119,7 @@
                                 <th>Total Block</th>
                                 <th>Total Tree</th>
                                 <th>Success Client Purchase</th>
-                                <th>Action</th>
+                                <th>Action &#129488;</th>
                             </tr>
                             <?php foreach ($allOrchard as $result): ?>
                                 <tr>
