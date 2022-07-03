@@ -11,9 +11,9 @@
         exit;
     }
     
-    function displayOnSaleBlocks($conn) {
-        $result = getBlockLatestClient($conn);
-        
+    function displayOnSaleBlocks($conn, $sellerID) {
+        $result = getAllOnSale($conn, 0, 0, 0, 0, $sellerID);
+
         if(sizeof($result) <= 0) {
             echo("<span>* No block is found! *</span>");
             return;
@@ -22,28 +22,13 @@
         $counter = 0;
 
         foreach($result as $row) {
-            if (
-                !(empty($row["ClientID"]) ||
-                $row["ApprovalStatus"] != 1) ||
-                empty($row["SaleID"]) ||
-                $row["SaleID"] < 1
-            ) {
-                continue;
-            }
 
-            $temp = getAllCompany($conn, $row["CompanyID"]);
-            $companyName = $temp[0]["RealName"];
+            $tempBlock = getAllBlock($conn, 0, 0, $row["BlockID"]);
+            $tempOrchard = getAllOrchard($conn, 0, $tempBlock[0]["OrchardID"]);
+            $tempCompany = getAllCompany($conn, $tempOrchard[0]["CompanyID"]);
 
-            $temp = getAllOrchard($conn, $row["CompanyID"], $row["OrchardID"]);
-            $location = $temp[0]["Latitude"] . ", " . $temp[0]["Longitude"];
-
-            $numberOfTrees = getTreeCount($conn, $row["CompanyID"], $row["OrchardID"], $row["BlockID"]);
-
-            $saleID = $row["SaleID"];
-            $temp = getAllOnSale($conn, 0, 0, 0, $saleID, 0);
-            $seller = ($temp[0]["SellerID"] == 0) ? "(None)" : $temp[0]["SellerID"];
-            $salePrice = $temp[0]["SalePrice"];
-            $saleDate = $temp[0]["SaleDate"];
+            $companyName = $tempCompany[0]["RealName"];
+            $location = $tempOrchard[0]["Latitude"] . ", " . $tempOrchard[0]["Longitude"];
 
             echo("
                 <tr>
@@ -51,19 +36,8 @@
                     <td>" . $row["BlockID"] . "</td>
                     <td>" . $companyName . "</td>
                     <td>" . $location . "</td>
-                    <td>" . $numberOfTrees . "</td>
-                    <td>" . $seller . "</td>
-                    <td>" . $saleID . "</td>
-                    <td>" . $salePrice . "</td>
-                    <td>" . $saleDate . "</td>
-                    <td>
-                        <form action=\"/Client/view_the_block.php\" method=\"get\">
-                            <table>
-                                <input type=\"hidden\" name=\"BlockID\" id=\"BlockID\" value=\"" . $row["BlockID"] . "\">
-                                <input type=\"submit\" name=\"view_block\" value=\"Buy\">
-                            </table>
-                        </form>
-                    </td>
+                    <td>" . $row["SalePrice"] . "</td>
+                    <td>" . $row["SaleDate"] . "</td>
                 </tr>"
             );
         }
@@ -77,7 +51,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Client: Browse Sale Page</title>
+        <title>Client: Sale History Page</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         
@@ -89,7 +63,7 @@
     <body>
         <header>
             <div class="maintheme w3-container">
-                <h1>Client: Browse Sale Page</h1>
+                <h1>Client: Sale History Page</h1>
             </div>
         </header>
 
@@ -97,7 +71,7 @@
 
         <main>
             <div class="w3-container w3-theme-d4 w3-animate-opacity">
-                <h2 class="w3-center">On Sale Blocks:</h2>
+                <h2 class="w3-center">Sale History:</h2>
 
                 <div class="w3-container w3-center" style="align-content:center;">
                     <table class=" w3-center w3-table-all w3-centered w3-hoverable" style="width:100%">
@@ -106,15 +80,11 @@
                             <th>Block ID</th>
                             <th>Company</th>
                             <th>Orchard Location</th>
-                            <th>Total Trees</th>
-                            <th>Seller ID</th>
-                            <th>Sale ID</th>
                             <th>Sale Price</th>
                             <th>Sale Date</th>
-                            <th>Action</th>
                         </tr>
 
-                        <?php displayOnSaleBlocks($conn); ?>
+                        <?php displayOnSaleBlocks($conn, $_SESSION["UserID"]); ?>
                     </table>
                 </div>
         </main>
