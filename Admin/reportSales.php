@@ -166,58 +166,6 @@
                     <?php endforeach; ?>
                 ]
             };
-            
-            // const data = {
-            //     labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'],
-            //     datasets: [
-            //         {
-            //             label: 'Company A',
-            //             backgroundColor: 'rgb(216,51,74)',
-            //             borderColor: 'rgb(216,51,74)',
-            //             data: [1000,2000,3000,4000,5000,6000,5000,8000,7000,6000,6000,5000],
-            //         },
-            //         {
-            //             label: 'Company B',
-            //             backgroundColor: 'rgb(252,110,81)',
-            //             borderColor: 'rgb(252,110,81)',
-            //             data: [2000,3000,5000,3000,3000,4500,3400,2500,4000,4500,5000,6000],
-            //         },
-            //         {
-            //             label: 'Company C',
-            //             backgroundColor: 'rgb(255,206,84)',
-            //             borderColor: 'rgb(255,206,84)',
-            //             data: [3000,3000,3000,3000,4000,4500,4500,6000,5500,5500,5000,4500],
-            //         },
-            //         {
-            //             label: 'Company D',
-            //             backgroundColor: 'rgb(160,212,104)',
-            //             borderColor: 'rgb(160,212,104)',
-            //             data: [4000,5000,3500,6000,5500,5000,8000,5500,4500,5000,5000,6500],
-            //         }
-            //     ]
-            // };
-
-            /*const DATA_COUNT = 7;
-            const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
-
-            const labels = Utils.months({count: 7});
-            const data = {
-            labels: labels,
-            datasets: [
-                {
-                label: 'Dataset 1',
-                data: Utils.numbers(NUMBER_CFG),
-                borderColor: Utils.CHART_COLORS.red,
-                backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-                },
-                {
-                label: 'Dataset 2',
-                data: Utils.numbers(NUMBER_CFG),
-                borderColor: Utils.CHART_COLORS.blue,
-                backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
-                }
-            ]
-            };*/
 
             const config = {
                 type: 'line',
@@ -258,69 +206,6 @@
                 document.getElementById('chart'),
                 config
             );
-
-            
-
-            /*const actions = [
-                {
-                    name: 'Randomize',
-                    handler(chart) {
-                    chart.data.datasets.forEach(dataset => {
-                        dataset.data = Utils.numbers({count: chart.data.labels.length, min: -100, max: 100});
-                    });
-                    chart.update();
-                    }
-                },
-                {
-                    name: 'Add Dataset',
-                    handler(chart) {
-                    const data = chart.data;
-                    const dsColor = Utils.namedColor(chart.data.datasets.length);
-                    const newDataset = {
-                        label: 'Dataset ' + (data.datasets.length + 1),
-                        backgroundColor: Utils.transparentize(dsColor, 0.5),
-                        borderColor: dsColor,
-                        data: Utils.numbers({count: data.labels.length, min: -100, max: 100}),
-                    };
-                    chart.data.datasets.push(newDataset);
-                    chart.update();
-                    }
-                },
-                {
-                    name: 'Add Data',
-                    handler(chart) {
-                    const data = chart.data;
-                    if (data.datasets.length > 0) {
-                        data.labels = Utils.months({count: data.labels.length + 1});
-
-                        for (let index = 0; index < data.datasets.length; ++index) {
-                        data.datasets[index].data.push(Utils.rand(-100, 100));
-                        }
-
-                        chart.update();
-                    }
-                    }
-                },
-                {
-                    name: 'Remove Dataset',
-                    handler(chart) {
-                    chart.data.datasets.pop();
-                    chart.update();
-                    }
-                },
-                {
-                    name: 'Remove Data',
-                    handler(chart) {
-                    chart.data.labels.splice(-1, 1); // remove the label first
-
-                    chart.data.datasets.forEach(dataset => {
-                        dataset.data.pop();
-                    });
-
-                    chart.update();
-                    }
-                }
-            ];*/
 
         </script>
     </body>
