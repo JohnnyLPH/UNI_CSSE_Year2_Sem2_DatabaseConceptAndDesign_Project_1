@@ -67,7 +67,9 @@
                     <input class="fullW" name="back" id="back" type="submit" value="Back to View All Blocks">
                 </form>
 
-                <img id="icon" src="<?php echo(cleanInput($result[0]["TreeImage"])); ?>" alt="* TreeID <?php echo($treeid); ?> img *" width="350">
+                <?php if(!empty($result[0]["TreeImage"])): ?>
+                    <img id="icon" src="<?php echo(cleanInput($result[0]["TreeImage"])); ?>" alt="* TreeID <?php echo($treeid); ?> img *" width="350">
+                <?php endif; ?>
             </div>
             <div class="w3-container w3-threequarter w3-theme-d4 w3-animate-left" style="margin-left:25%; padding-bottom:2%;">
                 <h2>Tree ID <?php echo($treeid); ?>:</h2>
