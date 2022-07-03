@@ -45,28 +45,25 @@
             $salePrice = $temp[0]["SalePrice"];
             $saleDate = $temp[0]["SaleDate"];
 
-            $actionForm = "";
 
-            if($row["ApprovalStatus"] < 1 && $row["ClientID"] > 0) {
-                $actionForm = ($_SESSION["UserID"] == $row["ClientID"]) ? "<td><i>Pending Approval</i></td>" : "<td><i>Block On Hold</i></td>";
-            } else {
                 $actionForm = "                 
                     <td>
                         <form action=\"/Client/purchaseAuth.php\" method=\"get\">
                             <table>
                                 <input type=\"hidden\" name=\"sale_id\" id=\"sale_id\" value=\"" . $row["SaleID"] . "\">
                                 <input type=\"hidden\" name=\"request_block_price\" id=\"request_block_price\" value=\"" . $salePrice . "\">
+                                <input type=\"hidden\" name=\"BlockID\" id=\"BlockID\" value=\"" . $row["BlockID"] . "\">
                                 <label for=\"request_price\">Request Price</label>
                                 <span>
                                     <input type=\"number\" name=\"request_price\" min=\"" . $salePrice . "\" step=\"1000\" placeholder=\"Min " . $salePrice . "\">
 
                                     <input type=\"submit\" value=\"request\">
+                                    <input type=\"submit\" name=\"view_block\" value=\"Buy\" formaction=\"/Client/view_the_block.php\">
                                 </span>
                             </table>
                         </form>
                     </td>
                 ";
-            }
 
             echo("
                 <tr>
@@ -78,7 +75,15 @@
                     <td>" . $seller . "</td>
                     <td>" . $saleID . "</td>
                     <td>" . $salePrice . "</td>
-                    <td>" . $saleDate . "</td>" . $actionForm . "
+                    <td>" . $saleDate . "</td>
+                    <td>
+                        <form action=\"/Client/view_the_block.php\" method=\"get\">
+                            <table>
+                                <input type=\"hidden\" name=\"BlockID\" id=\"BlockID\" value=\"" . $row["BlockID"] . "\">
+                                <input type=\"submit\" name=\"view_block\" value=\"Buy\">
+                            </table>
+                        </form>
+                    </td>
                 </tr>"
             );
         }

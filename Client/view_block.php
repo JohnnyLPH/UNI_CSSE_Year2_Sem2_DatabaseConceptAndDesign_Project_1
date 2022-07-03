@@ -11,40 +11,6 @@
         exit;
     }
 
-    // $queryString = array();
-
-    // if (isset($_SERVER['QUERY_STRING'])) {
-    //     parse_str($_SERVER['QUERY_STRING'], $queryString);
-    // }
-
-    // // Check if valid OrchardID, BlockID or ClientID is provided for search, set to 0 if not.
-    // $orchardID = $blockID = $clientID = (
-    //     !isset($queryString["SearchKey"]) ||
-    //     !is_numeric($queryString["SearchKey"]) ||
-    //     $queryString["SearchKey"] < 1
-    // ) ? 0: $queryString["SearchKey"];
-
-    // // Check if valid SearchOption is provided.
-    // $searchOption = (
-    //     !isset($queryString["SearchOption"]) ||
-    //     !is_numeric($queryString["SearchOption"]) ||
-    //     $queryString["SearchOption"] < 1 ||
-    //     $queryString["SearchOption"] > 3
-    // ) ? 1: $queryString["SearchOption"];
-
-    // // Search by OrchardID.
-    // if ($searchOption == 1) {
-    //     $blockID = $clientID = 0;
-    // }
-    // // Search by BlockID.
-    // elseif ($searchOption == 2) {
-    //     $orchardID = $clientID = 0;
-    // }
-    // // Search by ClientID.
-    // else {
-    //     $orchardID = $blockID = 0;
-    // }
-
     // Return all the block & latest client.
     $allBlock = getBlockLatestClient($conn, 0, 0, 0, $_SESSION["UserID"]);
 ?>
@@ -73,51 +39,6 @@
         <main>
             <div class="w3-container w3-theme-d4 w3-animate-opacity">
                 <h2 class="w3-center">All Blocks:</h2>
-
-                <!-- <form id="reset-search" method="get" action="/Company/manageBlock.php"></form> -->
-
-                <!-- <form class="w3-center" method="get" action="/Company/manageBlock.php">
-                    <input style="width:98%" id="SearchKey" type="number" name="SearchKey" value="<?php
-                        // // Valid SearchKey.
-                        // if ($orchardID > 0) {
-                        //     echo($orchardID);
-                        // }
-                        // elseif ($blockID > 0) {
-                        //     echo($blockID);
-                        // }
-                        // elseif ($clientID > 0) {
-                        //     echo($clientID);
-                        // }
-                    ?>" placeholder="Enter Orchard/Block/Client ID" min="1" required>
-
-                     <label for="SearchOption">Search By:</label> 
-                    <select id="SearchOption" name="SearchOption">
-                        <option value="1"<?php
-                            // if ($searchOption == 1) {
-                            //     echo(" selected");
-                            // }
-                        ?>>OrchardID</option>
-                        <option value="2"<?php
-                            // if ($searchOption == 2) {
-                            //     echo(" selected");
-                            // }
-                        ?>>BlockID</option>
-                        <option value="3"<?php
-                            // if ($searchOption == 3) {
-                            //     echo(" selected");
-                            // }
-                        ?>>ClientID</option>
-                    </select>
-                    
-                    <input type="submit" value="Search">
-
-                    <input form="reset-search" type="submit" value="Reset"<?php
-                        // // Disable if not searching.
-                        // if ($orchardID + $blockID + $clientID < 1) {
-                        //     echo(" disabled");
-                        // }
-                    ?>>
-                </form> -->
 
                 <div class="w3-container w3-center" style="align-content:center;">
                     <?php if (count($allBlock) > 0): ?>
@@ -159,15 +80,9 @@
                                             $conn, $result["CompanyID"], $result["OrchardID"], $result["BlockID"]
                                         ));
                                     ?></td>
-
-                                    <!-- <td><?php
-                                        // echo(getPurchaseRequestCount(
-                                        //     $conn, 1, $_SESSION["UserID"], $result["OrchardID"], $result["BlockID"]
-                                        // ));
-                                    ?></td> -->
                                     
                                     <td>
-                                        <form method="GET" action="/Client/viewEachBlock.php">
+                                        <form method="GET" action="/Client/view_the_block.php">
                                             <input type="hidden" name="BlockID" value="<?php
                                                 echo($result["BlockID"]);
                                             ?>">
@@ -186,7 +101,7 @@
         </main>
 
         <footer>
-            
+            <?php $conn->close(); ?>
         </footer>
     </body>
 </html>
