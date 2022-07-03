@@ -44,6 +44,21 @@
         $availableBlockCount++;
     }
 
+    function getTotalSale($conn, $sellerID) {
+        $query = "SELECT SUM(RequestPrice) sum FROM PurchaseRequest INNER JOIN OnSale USING(SaleID) WHERE OnSale.SellerID = '$sellerID' AND PurchaseRequest.ApprovalStatus = 1;";
+
+        $allRow = array();
+        $rs = $conn->query($query);
+        if ($rs) {
+            while ($resultRow = mysqli_fetch_assoc($rs)) {
+                array_push($allRow, $resultRow);
+            }
+        }
+        return $allRow;
+    }
+
+    $totalSale = getTotalSale($conn, $_SESSION["UserID"])[0]["sum"];
+
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -109,6 +124,14 @@
                                 echo($ownedTreeCount);
                             ?></span>
                             <span class='data-title'>Trees in your Block</span>
+                        </div>
+                        <div class="card fadeIn fourth">
+                            <img src="https://media.indiedb.com/images/members/4/3384/3383828/tree.1.jpg" id="icon" alt="Info" />
+                            <br>
+                            <span class='data-title'>Total Sale</span>
+                            <span class='overall-data'><?php
+                                echo($totalSale);
+                            ?></span>
                         </div>
                     </div>
             </div>
