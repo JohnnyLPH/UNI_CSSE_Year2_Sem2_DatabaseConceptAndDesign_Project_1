@@ -42,11 +42,11 @@
                 $errorMsg = "err";
             }
 
-            header("Location: /Client/browsePage.php?" . $errorMsg);
+            header("Location: /Client/buy_block.php?" . $errorMsg);
             exit;
         }
     } else {
-        header("Location: /Client/browsePage.php");
+        header("Location: /Client/buy_block.php");
         exit;
     } 
 

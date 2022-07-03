@@ -49,12 +49,13 @@
 
     $totalOnSaleCount = count($allOnSale);
 
-    $sellerID = $approvalStatus = "";
+    $sellerID = $salePrice = $approvalStatus = "";
     $approvalCheck = false;
 
     if($queryString["view_block"] == "Buy") {
         $temp = getAllOnSale($conn, 0, 0, 0, $result["SaleID"], 0);
         $sellerID = ($temp[0]["SellerID"] == 0) ? "(None)" : $temp[0]["SellerID"];
+        $salePrice = $temp[0]["SalePrice"];
 
         if($result["ApprovalStatus"] < 1 && $result["ClientID"] > 0) {
             $approvalStatus = ($_SESSION["UserID"] == $result["ClientID"]) ? "<i>Pending Approval</i>" : "<i>Block On Hold</i>";
@@ -194,6 +195,12 @@
                                         <td>Seller ID</td>
                                         <td>
                                             " . $sellerID . "
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sale Price</td>
+                                        <td>
+                                            " . $salePrice . "
                                         </td>
                                     </tr>
                                 ");
