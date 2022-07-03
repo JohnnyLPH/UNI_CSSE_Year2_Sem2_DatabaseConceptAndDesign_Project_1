@@ -141,6 +141,10 @@
                                         echo($result["BlockID"]);
                                     ?></td>
 
+                                    <td><?php
+                                        echo($result["OrchardID"]);
+                                    ?></td>
+
                                     <td>
                                         <?php 
                                             $company = getAllCompany($conn, $result["CompanyID"]);
@@ -148,9 +152,7 @@
                                         ?>
                                     </td>
 
-                                    <td><?php
-                                        echo($result["OrchardID"]);
-                                    ?></td>
+                                    
 
                                     <td><?php
                                         echo(getTreeCount(
