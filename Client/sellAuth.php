@@ -22,7 +22,7 @@
             empty($tempSalePrice) ||
             $tempSalePrice < 5000
         ) {
-            header("Location: /Client/letBlockGo.php");
+            header("Location: /Client/sell_block.php");
             exit;
         } else {
             $tempSellerID = $_SESSION["UserID"];
@@ -34,17 +34,17 @@
             $query .= " VALUES ('$tempBlockID', '$tempDate', '$tempSalePrice', '$tempSellerID')";
             $result = $conn->query($query);
 
-            $errorMsg = "";
+            $message = "success";
 
             if (!$result) {
-                $errorMsg = "err";
+                $message = "error";
             }
 
-            header("Location: /Client/letBlockGo.php?" . $errorMsg);
+            header("Location: /Client/sell_block.php?" . $message);
             exit;
         }
     } else {
-        header("Location: /Client/letBlockGo.php");
+        header("Location: /Client/sell_block.php");
         exit;
     } 
 
