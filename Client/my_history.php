@@ -23,6 +23,20 @@
 
         foreach($result as $row) {
 
+            $saleid = $row["SaleID"];
+
+            $query = "SELECT COUNT(ApprovalStatus) AS success FROM PurchaseRequest INNER JOIN OnSale USING(SaleID) WHERE SaleID = '$saleid' AND PurchaseRequest.ApprovalStatus != 1";
+
+            $allRow = array();
+            $rs = $conn->query($query);
+            if ($rs) {
+                while ($resultRow = mysqli_fetch_assoc($rs)) {
+                    array_push($allRow, $resultRow);
+                }
+            }
+            
+            $status = ($allRow[0]["success"] <= 0) ? "Not Sold" : "Successful"; 
+
             $tempBlock = getAllBlock($conn, 0, 0, $row["BlockID"]);
             $tempOrchard = getAllOrchard($conn, 0, $tempBlock[0]["OrchardID"]);
             $tempCompany = getAllCompany($conn, $tempOrchard[0]["CompanyID"]);
@@ -38,6 +52,7 @@
                     <td>" . $location . "</td>
                     <td>" . $row["SalePrice"] . "</td>
                     <td>" . $row["SaleDate"] . "</td>
+                    <td>" . $status . "</td>
                 </tr>"
             );
         }
@@ -82,6 +97,7 @@
                             <th>Orchard Location</th>
                             <th>Sale Price</th>
                             <th>Sale Date</th>
+                            <th>Sale Status</th>
                         </tr>
 
                         <?php displayOnSaleBlocks($conn, $_SESSION["UserID"]); ?>
