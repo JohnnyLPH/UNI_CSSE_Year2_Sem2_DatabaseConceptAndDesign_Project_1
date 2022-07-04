@@ -15,7 +15,7 @@
         $result = getAllPurchaseRequest($conn, -1, 0, 0, 0, 0, 0, $userid, 0, true);
 
         if(sizeof($result) <= 0) {
-            echo("<i>* No Purchase History! *<\i>");
+            echo("* No Purchase History! *");
             return;
         }
 

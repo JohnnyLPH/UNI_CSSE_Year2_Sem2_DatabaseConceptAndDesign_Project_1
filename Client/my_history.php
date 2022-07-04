@@ -25,7 +25,7 @@
 
             $saleid = $row["SaleID"];
 
-            $query = "SELECT COUNT(ApprovalStatus) AS success FROM PurchaseRequest INNER JOIN OnSale USING(SaleID) WHERE SaleID = '$saleid' AND PurchaseRequest.ApprovalStatus != 1";
+            $query = "SELECT COUNT(ApprovalStatus) AS success FROM PurchaseRequest INNER JOIN OnSale USING(SaleID) WHERE SaleID = '$saleid' AND PurchaseRequest.ApprovalStatus = 1";
 
             $allRow = array();
             $rs = $conn->query($query);
