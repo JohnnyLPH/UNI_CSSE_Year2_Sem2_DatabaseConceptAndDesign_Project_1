@@ -54,10 +54,13 @@
                 array_push($allRow, $resultRow);
             }
         }
-        return $allRow;
+
+        $sale = $allRow[0]["sum"];
+
+        return empty($sale) ? 0 : $sale;
     }
 
-    $totalSale = getTotalSale($conn, $_SESSION["UserID"])[0]["sum"];
+    $totalSale = getTotalSale($conn, $_SESSION["UserID"]);
 
     $conn->close();
 ?>
@@ -128,7 +131,7 @@
                         <div class="card fadeIn fourth">
                             <img src="https://media.indiedb.com/images/members/4/3384/3383828/tree.1.jpg" id="icon" alt="Info" />
                             <br>
-                            <span class='data-title'>Total Sale</span>
+                            <span class='data-title'>Total Successful Sale</span>
                             <span class='overall-data'><?php
                                 echo($totalSale);
                             ?></span>
